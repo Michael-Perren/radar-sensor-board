@@ -67,26 +67,20 @@ static void MX_RTC_Init(void);
 static void MX_USART2_UART_Init(void);
 static void MX_SPI1_Init(void);
 /* USER CODE BEGIN PFP */
-int count = 0;
-uint32_t sum = 0;
-uint16_t avg = 0;
-uint16_t data[1024] = {};
-float32_t data2[1024] = {};
-int  cali[512] = {};
-bool calibrated = false;
-
 xensiv_bgt60trxx_t dev;
-int pinhigh = 0;
 static void hann_init(void);
 static void blackman_init(void);
 static inline void apply_window(float *x /* len = 1024 */);
 static inline void fftmag(float32_t * inp,float32_t * mag,int len);
 static inline void avgmag(float32_t * mag,int len, int div);
-static inline void calibrate(int * cali, float32_t * mag);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+uint32_t sum = 0;
+uint16_t avg = 0;
+uint16_t data[1024] = {};
+float32_t data2[1024] = {};
 uint32_t fftSize = 1024;
 uint32_t ifftFlag = 0;
 uint32_t doBitReverse = 1;
