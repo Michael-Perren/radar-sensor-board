@@ -39,7 +39,7 @@
 /* USER CODE BEGIN PD */
 #define ARM_MATH_MVEF
 #define M_PI 3.14159265358979323846
-#define N_SAMPLES 1024
+#define N_SAMPLES XENSIV_BGT60TRXX_CONF_NUM_SAMPLES_PER_CHIRP
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -79,16 +79,16 @@ static inline void avgmag(float32_t * mag,int len, int div);
 /* USER CODE BEGIN 0 */
 uint32_t sum = 0;
 uint16_t avg = 0;
-uint16_t data[1024] = {};
-float32_t data2[1024] = {};
-uint32_t fftSize = 1024;
+uint16_t data[N_SAMPLES] = {};
+float32_t data2[N_SAMPLES] = {};
+uint32_t fftSize = N_SAMPLES;
 uint32_t ifftFlag = 0;
 uint32_t doBitReverse = 1;
 arm_rfft_fast_instance_f32 rfft;
 arm_status status;
 uint32_t maxindex = 0;
-float32_t freqbin[1024];
-float32_t rangebin[1024];
+float32_t freqbin[N_SAMPLES];
+float32_t rangebin[N_SAMPLES];
 float32_t maxValue;
 float32_t distsum = 0;
 float32_t distance = 0;
@@ -144,8 +144,8 @@ int main(void)
   
 
   for(size_t i = 0; i < 1024;++i){
-    freqbin[i] = i*(XENSIV_BGT60TRXX_CONF_SAMPLE_RATE/(1024));
-    rangebin[i] = ((299792458.0f)*XENSIV_BGT60TRXX_CONF_CHIRP_REPETITION_TIME_S*(i*(XENSIV_BGT60TRXX_CONF_SAMPLE_RATE/(1024))))/((float32_t)2*(XENSIV_BGT60TRXX_CONF_END_FREQ_HZ - XENSIV_BGT60TRXX_CONF_START_FREQ_HZ));
+    freqbin[i] = i*(XENSIV_BGT60TRXX_CONF_SAMPLE_RATE/(N_SAMPLES));
+    rangebin[i] = ((299792458.0f)*XENSIV_BGT60TRXX_CONF_CHIRP_REPETITION_TIME_S*(i*(XENSIV_BGT60TRXX_CONF_SAMPLE_RATE/(N_SAMPLES))))/((float32_t)2*(XENSIV_BGT60TRXX_CONF_END_FREQ_HZ - XENSIV_BGT60TRXX_CONF_START_FREQ_HZ));
   }
   /* USER CODE END 2 */
 
@@ -168,11 +168,11 @@ int main(void)
     while(!(HAL_GPIO_ReadPin(IRQ_R_M_GPIO_Port,IRQ_R_M_Pin))){}
     xensiv_bgt60trxx_get_fifo_data(&dev,data,1024);
     sum = 0;
-    for(size_t i = 0; i < 1024; ++i){ //Remove DC bias
+    for(size_t i = 0; i < N_SAMPLES; ++i){ //Remove DC bias
       sum += (float) data[i];
     }
-    avg = sum/1024;
-    for(size_t i = 0; i < 1024; ++i){
+    avg = sum/N_SAMPLES;
+    for(size_t i = 0; i < N_SAMPLES; ++i){
       data2[i] = (float)(data[i]) - avg;
 
     }  
@@ -180,13 +180,13 @@ int main(void)
 
     arm_rfft_fast_f32(&rfft, data2, fftoutput, ifftFlag);
 
-    fftmag(fftoutput,mag,512);
+    fftmag(fftoutput,mag,N_SAMPLES/2);
         status = ARM_MATH_SUCCESS;
     for(int i = 0; i < 10; ++i){
       mag[i] = 0;
     }
 
-    arm_max_f32(mag, 512, &maxValue, &maxindex); 
+    arm_max_f32(mag, N_SAMPLES/2, &maxValue, &maxindex); 
     distsum += rangebin[maxindex];
   }
   distance = distsum/5; 
