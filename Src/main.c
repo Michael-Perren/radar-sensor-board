@@ -91,13 +91,12 @@ uint32_t ifftFlag = 0;
 uint32_t doBitReverse = 1;
 arm_rfft_fast_instance_f32 rfft;
 arm_status status;
-float32_t maxValue;
-uint32_t refIndex = 213, testIndex = 0;
+uint32_t maxindex = 0;
 float32_t freqbin[1024];
 float32_t rangebin[1024];
-float32_t distancearr[32];
+float32_t maxValue;
+float32_t distsum = 0;
 float32_t distance = 0;
-float32_t actdist = 0;
 static float hann_win[N_SAMPLES];     // coefficients
 static const float hann_gain = 0.5f;
 /* USER CODE END 0 */
@@ -166,8 +165,6 @@ int main(void)
   for(int i = 0; i < 5; ++i){
       /* USER CODE BEGIN 3 */
     float32_t mag[512] = {};    
-    //distance = 0.0f;
-    //for(size_t i = 0; i < 5; ++i){
     uint16_t data[1024] = {};
     float32_t data2[1024] = {};
     float32_t fftoutput[1024] = {};       
@@ -194,11 +191,11 @@ int main(void)
       mag[i] = 0;
     }
 
-    arm_max_f32(mag, 512, &maxValue, &testIndex); 
-    distance += rangebin[testIndex];
+    arm_max_f32(mag, 512, &maxValue, &maxindex); 
+    distsum += rangebin[maxindex];
   }
-  actdist = distance/5; 
-  if(actdist < 1.5){
+  distance = distsum/5; 
+  if(distance < 1.5){
     HAL_GPIO_WritePin(led_select1_GPIO_Port,led_select1_Pin,0);
     HAL_GPIO_WritePin(led_select0_GPIO_Port,led_select0_Pin,1);
     HAL_Delay(100);
@@ -208,7 +205,7 @@ int main(void)
     HAL_GPIO_WritePin(led_select0_GPIO_Port,led_select0_Pin,0);
     HAL_Delay(100);
   }
-  distance = 0;    
+  distsum = 0;    
   /* USER CODE END 3 */
 }
 }
