@@ -1,4 +1,5 @@
 #include "xensiv_bgt60trxx_platform.h"
+#include "xensiv_bgt60trxx_conf.h"
 #include <stdlib.h>
 #include <string.h>
 void xensiv_bgt60trxx_platform_rst_set(const SPI_HandleTypeDef* iface, bool val){
@@ -30,21 +31,23 @@ int32_t xensiv_bgt60trxx_platform_spi_transfer(const SPI_HandleTypeDef* iface, u
 
 int32_t xensiv_bgt60trxx_platform_spi_fifo_read(SPI_HandleTypeDef* iface, uint16_t* rx_data, uint32_t len){ 
     HAL_StatusTypeDef commstatus = HAL_OK;
-    uint8_t buffer[1536]; //1536 is the number of bytes in a burst when the fifo limit is set to 1024(num of 12 bit samples)
-    uint8_t keephigh[1536];
-    memset(keephigh, 0xFF, 1536);
-    commstatus = HAL_SPI_TransmitReceive (iface,keephigh,buffer,1536, HAL_MAX_DELAY/100);
+    uint32_t numbytes = (XENSIV_BGT60TRXX_CONF_NUM_SAMPLES_PER_CHIRP/2)*3;
+    uint8_t buffer[numbytes]; //1536 is the number of bytes in a burst when the fifo limit is set to 1024(num of 12 bit samples)
+    uint8_t keephigh[numbytes];
+    memset(keephigh, 0xFF, numbytes);
+    commstatus = HAL_SPI_TransmitReceive (iface,keephigh,buffer,numbytes, HAL_MAX_DELAY/100);
 
-    for (size_t i = 0, j = 0; i < 1024; i += 2, j += 3) {
+    for (size_t i = 0, j = 0; i < XENSIV_BGT60TRXX_CONF_NUM_SAMPLES_PER_CHIRP; i += 2, j += 3) { //construct 12bit samples from buffer
         uint8_t b0 = buffer[j+0];
         uint8_t b1 = buffer[j+1];
         uint8_t b2 = buffer[j+2];
-        rx_data[i+0] = ((uint16_t)b0 << 4) | (b1 >> 4);
+        rx_data[i+0] = ((uint16_t)b0 << 4) | (b1 >> 4); // from adc: in buffer | 1st 12bit sample | 2nd 12bit sample|
         rx_data[i+1] = ((uint16_t)(b1 & 0x0F) << 8) | b2;
-        if(rx_data[i] < 1000){ //Compensate for 12 bit int overflow
+        //FIX: Compensate for 12 bit int overflow (temporary solution) 
+        if(rx_data[i] < 1000){ 
             rx_data[i] += 4095;
         }
-        if(rx_data[i+1]<1000){
+        if(rx_data[i+1] < 1000){
             rx_data[i+1] += 4095;
         }
     }
@@ -58,7 +61,7 @@ void xensiv_bgt60trxx_platform_delay(uint32_t ms){
 }
 
 
-uint32_t xensiv_bgt60trxx_platform_word_reverse(uint32_t x){
+uint32_t xensiv_bgt60trxx_platform_word_reverse(uint32_t x){ //ARM (little endian) BGT60UTR11AIP (big endian)
     return (((x & 0x000000ffUL) << 24) |
            ((x & 0x0000ff00UL) <<  8) |
            ((x & 0x00ff0000UL) >>  8) |
