@@ -188,7 +188,7 @@ int main(void)
 
     fftmag(fftoutput,mag,512);
         status = ARM_MATH_SUCCESS;
-    for(int i = 0; i < 20; ++i){
+    for(int i = 0; i < 10; ++i){
       mag[i] = 0;
     }
 
