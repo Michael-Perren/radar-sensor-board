@@ -11,7 +11,6 @@ void xensiv_bgt60trxx_platform_spi_cs_set(const SPI_HandleTypeDef* iface, bool v
 
 int32_t xensiv_bgt60trxx_platform_spi_transfer(const SPI_HandleTypeDef* iface, uint8_t* tx_data, uint8_t* rx_data, uint32_t len){
     HAL_StatusTypeDef commstatus = HAL_OK;
-    //xensiv_bgt60trxx_platform_spi_cs_set(iface,false);
     
     if(rx_data == NULL){
         commstatus = HAL_SPI_Transmit(iface,tx_data,len,HAL_MAX_DELAY);
@@ -25,28 +24,24 @@ int32_t xensiv_bgt60trxx_platform_spi_transfer(const SPI_HandleTypeDef* iface, u
     else{
         commstatus = HAL_ERROR;
     }
-    //xensiv_bgt60trxx_platform_spi_cs_set(iface,true);
     return commstatus;
     
 }
 
 int32_t xensiv_bgt60trxx_platform_spi_fifo_read(SPI_HandleTypeDef* iface, uint16_t* rx_data, uint32_t len){ 
     HAL_StatusTypeDef commstatus = HAL_OK;
-    uint8_t buffer[1536];
+    uint8_t buffer[1536]; //1536 is the number of bytes in a burst when the fifo limit is set to 1024(num of 12 bit samples)
     uint8_t keephigh[1536];
     memset(keephigh, 0xFF, 1536);
-    // for(size_t i = 0; i < (len/2); ++i){ //len is the number of 12 bit samples.
     commstatus = HAL_SPI_TransmitReceive (iface,keephigh,buffer,1536, HAL_MAX_DELAY/100);
-    //     rx_data[i*2] = (buffer[0] << 4) | (buffer[1] >> 4);
-    //     rx_data[(i*2)+1] = ((buffer[1] & 0x0f) << 8) | (buffer[2]);
-    // }
+
     for (size_t i = 0, j = 0; i < 1024; i += 2, j += 3) {
         uint8_t b0 = buffer[j+0];
         uint8_t b1 = buffer[j+1];
         uint8_t b2 = buffer[j+2];
         rx_data[i+0] = ((uint16_t)b0 << 4) | (b1 >> 4);
         rx_data[i+1] = ((uint16_t)(b1 & 0x0F) << 8) | b2;
-        if(rx_data[i] < 1000){
+        if(rx_data[i] < 1000){ //Compensate for 12 bit int overflow
             rx_data[i] += 4095;
         }
         if(rx_data[i+1]<1000){
@@ -56,37 +51,7 @@ int32_t xensiv_bgt60trxx_platform_spi_fifo_read(SPI_HandleTypeDef* iface, uint16
     return commstatus;
 }
 
-// int32_t xensiv_bgt60trxx_platform_spi_fifo_read(const SPI_HandleTypeDef* iface,
-//                                                 uint16_t *rx_data,
-//                                                 uint32_t len)
-// {
-    
-//     if (!iface || !rx_data || !len) return 1;
-//     //assert_spi_dsize_12(iface); // FIFO phase uses 12-bit frames
 
-//     // Prepare a small dummy TX buffer filled with 0x0FFF (MOSI held high)
-//     enum { CHUNK = 1024 };
-//     uint16_t dummy[CHUNK];
-//     for (unsigned i = 0; i < CHUNK; ++i) dummy[i] = 0x0FFF;
-
-//     while (len) {
-//         uint32_t n = (len > CHUNK) ? CHUNK : len;
-
-//         // In HAL, when DataSize > 8, the size parameter counts **half-words**
-//         HAL_StatusTypeDef st = HAL_SPI_TransmitReceive(
-//             iface,
-//             (uint8_t*)dummy,                 // TX buffer (n half-words, all 0x0FFF)
-//             (uint8_t*)rx_data,               // RX buffer (n half-words)
-//             n,                               // number of 12-bit frames (half-words)
-//             HAL_MAX_DELAY);
-
-//         if (st != HAL_OK) return 1;
-
-//         rx_data   += n;
-//         len  -= n;
-//     }
-//     return 0;
-// }
 
 void xensiv_bgt60trxx_platform_delay(uint32_t ms){
     HAL_Delay(ms);
