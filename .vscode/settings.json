@@ -1,0 +1,21 @@
+{
+    "files.associations": {
+        "xensiv_bgt60trxx_platform.h": "c",
+        "main.h": "c",
+        "stm32h5xx_hal.h": "c",
+        "cstdint": "cpp",
+        "compare": "c",
+        "avian.h": "c",
+        "deviceconfig.h": "c",
+        "xensiv_bgt60trxx_conf.h": "c",
+        "arm_math.h": "c",
+        "stdint.h": "c",
+        "bit": "c",
+        "unordered_map": "c",
+        "algorithm": "c",
+        "istream": "c",
+        "limits": "c",
+        "ranges": "c",
+        "streambuf": "c"
+    }
+}
