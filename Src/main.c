@@ -78,7 +78,8 @@ bool calibrated = false;
 xensiv_bgt60trxx_t dev;
 int pinhigh = 0;
 static void hann_init(void);
-static inline void hann_apply_inplace(float *x /* len = 1024 */);
+static void blackman_init(void);
+static inline void apply_window(float *x /* len = 1024 */);
 static inline void fftmag(float32_t * inp,float32_t * mag,int len);
 static inline void avgmag(float32_t * mag,int len, int div);
 static inline void calibrate(int * cali, float32_t * mag);
@@ -97,7 +98,7 @@ float32_t rangebin[1024];
 float32_t maxValue;
 float32_t distsum = 0;
 float32_t distance = 0;
-static float hann_win[N_SAMPLES];     // coefficients
+static float win[N_SAMPLES];     // coefficients
 static const float hann_gain = 0.5f;
 /* USER CODE END 0 */
 
@@ -158,7 +159,7 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   
   status=arm_rfft_fast_init_f32(&rfft, 1024);            
-  hann_init();
+  blackman_init(); //hann_init();
   while (1)
   {
     /* USER CODE END WHILE */
@@ -181,7 +182,7 @@ int main(void)
       data2[i] = (float)(data[i]) - avg;
 
     }  
-    hann_apply_inplace(data2);
+    apply_window(data2);
 
     arm_rfft_fast_f32(&rfft, data2, fftoutput, ifftFlag);
 
@@ -558,14 +559,14 @@ static void hann_init(void)
 {
     const float k = 2.0f * (float)M_PI / (float)(N_SAMPLES - 1);
     for (uint32_t n = 0; n < N_SAMPLES; ++n) {
-        hann_win[n] = 0.5f * (1.0f - cosf(k * (float)n));
+        win[n] = 0.5f * (1.0f - cosf(k * (float)n));
     }
 }
 
-static inline void hann_apply_inplace(float *x /* len = 1024 */)
+static inline void apply_window(float *x /* len = 1024 */)
 {
     for (uint32_t n = 0; n < N_SAMPLES; ++n) {
-        x[n] *= hann_win[n];
+        x[n] *= win[n];
     }
 }
 
@@ -587,6 +588,14 @@ static inline void avgmag(float32_t * mag,int len, int div){
   }
 }
 
+static void blackman_init(void){
+  float a0 = (float) 7938/18608;
+  float a1 = (float) 9240/18608;
+  float a2 = (float) 1430/18608;
+  for(uint32_t n = 0; n < N_SAMPLES; ++n){
+    win[n] = a0 - a1*cosf((float)(2*PI*n)/N_SAMPLES) +a2*cosf((float)(4*PI*n)/N_SAMPLES);
+  }
+}
 /* USER CODE END 4 */
 
 /**
