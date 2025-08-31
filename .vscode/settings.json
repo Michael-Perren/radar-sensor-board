@@ -16,6 +16,7 @@
         "istream": "c",
         "limits": "c",
         "ranges": "c",
-        "streambuf": "c"
+        "streambuf": "c",
+        "xensiv_bgt60trxx.h": "c"
     }
 }

@@ -52,6 +52,10 @@
 RTC_HandleTypeDef hrtc;
 
 SPI_HandleTypeDef hspi1;
+DMA_HandleTypeDef handle_GPDMA1_Channel1;
+DMA_NodeTypeDef Node_GPDMA1_Channel0;
+DMA_QListTypeDef List_GPDMA1_Channel0;
+DMA_HandleTypeDef handle_GPDMA1_Channel0;
 
 UART_HandleTypeDef huart2;
 
@@ -62,10 +66,11 @@ UART_HandleTypeDef huart2;
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
+static void MX_GPDMA1_Init(void);
 static void MX_ICACHE_Init(void);
 static void MX_RTC_Init(void);
-static void MX_USART2_UART_Init(void);
 static void MX_SPI1_Init(void);
+static void MX_USART2_UART_Init(void);
 /* USER CODE BEGIN PFP */
 xensiv_bgt60trxx_t dev;
 static void hann_init(void);
@@ -110,7 +115,7 @@ int main(void)
   /* MCU Configuration--------------------------------------------------------*/
 
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
-    HAL_Init();
+  HAL_Init();
 
   /* USER CODE BEGIN Init */
 
@@ -125,10 +130,11 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  MX_GPDMA1_Init();
   MX_ICACHE_Init();
   MX_RTC_Init();
-  MX_USART2_UART_Init();
   MX_SPI1_Init();
+  MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
   HAL_GPIO_WritePin(en_ldo_radar_GPIO_Port,en_ldo_radar_Pin,1);
   HAL_GPIO_WritePin(osc_en_GPIO_Port,osc_en_Pin,1);
@@ -158,7 +164,7 @@ int main(void)
   {
     /* USER CODE END WHILE */
   for(int i = 0; i < 5; ++i){
-      /* USER CODE BEGIN 3 */
+    /* USER CODE BEGIN 3 */
     float32_t mag[512] = {};    
     uint16_t data[1024] = {};
     float32_t data2[1024] = {};
@@ -287,6 +293,36 @@ void SystemClock_Config(void)
   /** Configure the programming delay
   */
   __HAL_FLASH_SET_PROGRAM_DELAY(FLASH_PROGRAMMING_DELAY_2);
+}
+
+/**
+  * @brief GPDMA1 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_GPDMA1_Init(void)
+{
+
+  /* USER CODE BEGIN GPDMA1_Init 0 */
+
+  /* USER CODE END GPDMA1_Init 0 */
+
+  /* Peripheral clock enable */
+  __HAL_RCC_GPDMA1_CLK_ENABLE();
+
+  /* GPDMA1 interrupt Init */
+    HAL_NVIC_SetPriority(GPDMA1_Channel0_IRQn, 0, 0);
+    HAL_NVIC_EnableIRQ(GPDMA1_Channel0_IRQn);
+    HAL_NVIC_SetPriority(GPDMA1_Channel1_IRQn, 0, 0);
+    HAL_NVIC_EnableIRQ(GPDMA1_Channel1_IRQn);
+
+  /* USER CODE BEGIN GPDMA1_Init 1 */
+
+  /* USER CODE END GPDMA1_Init 1 */
+  /* USER CODE BEGIN GPDMA1_Init 2 */
+
+  /* USER CODE END GPDMA1_Init 2 */
+
 }
 
 /**
@@ -517,12 +553,14 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pin = led_select1_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(led_select1_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pin : IRQ_R_M_Pin */
   GPIO_InitStruct.Pin = IRQ_R_M_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
   HAL_GPIO_Init(IRQ_R_M_GPIO_Port, &GPIO_InitStruct);
 
   /* USER CODE BEGIN MX_GPIO_Init_2 */

@@ -16,7 +16,7 @@
 #define XENSIV_BGT60TRXX_CONF_NUM_REGS (40)
 #define XENSIV_BGT60TRXX_CONF_IMPL
 #if defined(XENSIV_BGT60TRXX_CONF_IMPL)
-const uint32_t register_list[] = {
+static const uint32_t register_list[] = {
     0x11c0e20UL,
     0x3088210UL,
     0x9e967fdUL,
