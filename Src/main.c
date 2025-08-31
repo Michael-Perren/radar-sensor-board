@@ -628,6 +628,10 @@ static void blackman_init(void){
     win[n] = a0 - a1*cosf((float)(2*PI*n)/N_SAMPLES) +a2*cosf((float)(4*PI*n)/N_SAMPLES);
   }
 }
+void HAL_SPI_RxCpltCallback(SPI_HandleTypeDef *hspi){
+  int count = 0;
+}
+
 /* USER CODE END 4 */
 
 /**
