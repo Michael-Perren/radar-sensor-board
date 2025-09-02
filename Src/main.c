@@ -74,6 +74,7 @@ static void blackman_init(void);
 static inline void apply_window(float *x /* len = 1024 */);
 static inline void fftmag(float32_t * inp,float32_t * mag,int len);
 static inline void avgmag(float32_t * mag,int len, int div);
+static inline void cacfar(float32_t * fftmag, float32_t * threshold, float32_t Pfa, int guard, int training);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -93,6 +94,7 @@ float32_t rangebin[N_SAMPLES];
 float32_t maxValue;
 float32_t distsum = 0;
 float32_t distance = 0;
+float32_t thres[512];
 static float win[N_SAMPLES];     // coefficients
 static const float hann_gain = 0.5f;
 /* USER CODE END 0 */
@@ -179,16 +181,16 @@ int main(void)
         data2[i] = (float)(data[i]) - avg;
 
       }  
-      apply_window(data2);
+      //apply_window(data2);
 
       arm_rfft_fast_f32(&rfft, data2, fftoutput, ifftFlag);
-
+      
       fftmag(fftoutput,mag,N_SAMPLES/2);
           status = ARM_MATH_SUCCESS;
       for(int i = 0; i < 10; ++i){
         mag[i] = 0;
       }
-
+      cacfar(mag,thres,0.1,5,6);
       arm_max_f32(mag, N_SAMPLES/2, &maxValue, &maxindex); 
       distsum += rangebin[maxindex];
     }
@@ -596,17 +598,21 @@ static void blackman_init(void){
   }
 }
 
-static inline void cacfar(float32_t * fft, float32_t Pfa, int guard, int training){
-  float32_t alpha = N_SAMPLES*(powf(Pfa,(float)-1/N_SAMPLES) - 1);
-  float32_t threshold;
+static inline void cacfar(float32_t * fftmag, float32_t * threshold, float32_t Pfa, int guard, int training){
+  float32_t alpha = (N_SAMPLES/2)*(powf(Pfa,(float)-1/(N_SAMPLES/2)) - 1);
   float32_t suml = 0;
   float32_t sumr = 0;
-  for(int i = (guard + training - 1); i < (N_SAMPLES - (guard + training)); ++i){
-    for(int j = i, k = i; j < (i + guard + training), k > (i - (guard + training - 1)); ++j, --k){
-      suml += fft[k];
-      sumr += fft[j];
+  for(int i = (guard + training - 1); i < ((N_SAMPLES/2) - (guard + training)); ++i){ // i is the CUT (Cell Under Test)
+    for(int j = i+guard, k = i-guard; j < (i + guard + training), k > (i - (guard + training)); ++j, --k){ // j sums the right side, k the left side
+      suml += fftmag[k];
+      sumr += fftmag[j];// |training cells | guard cells | CUT | guard cells | training cells|
     }
-    threshold = sum
+    threshold[i] = alpha*((suml+sumr)/(2*training));
+    if(threshold[i] > fftmag[i]){
+      fftmag[i] = 0;
+    }
+    suml = 0;
+    sumr = 0;
   }
 }
 
