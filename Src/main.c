@@ -18,6 +18,7 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "cmsis_os2.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -61,42 +62,19 @@ UART_HandleTypeDef huart2;
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
+void MX_FREERTOS_Init(void);
 static void MX_GPIO_Init(void);
 static void MX_ICACHE_Init(void);
 static void MX_RTC_Init(void);
 static void MX_SPI1_Init(void);
 static void MX_USART2_UART_Init(void);
 /* USER CODE BEGIN PFP */
-bool firstdata = false;
-xensiv_bgt60trxx_t dev;
-static void hann_init(void);
-static void blackman_init(void);
-static inline void apply_window(float *x /* len = 1024 */);
-static inline void fftmag(float32_t * inp,float32_t * mag,int len);
-static inline void avgmag(float32_t * mag,int len, int div);
-static inline void cacfar(float32_t * fftmag, float32_t * threshold, float32_t Pfa, int guard, int training);
+
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-uint32_t sum = 0;
-uint16_t avg = 0;
-uint16_t data[N_SAMPLES] = {};
-float32_t data2[N_SAMPLES] = {};
-uint32_t fftSize = N_SAMPLES;
-uint32_t ifftFlag = 0;
-uint32_t doBitReverse = 1;
-arm_rfft_fast_instance_f32 rfft;
-arm_status status;
-uint32_t maxindex = 0;
-float32_t freqbin[N_SAMPLES];
-float32_t rangebin[N_SAMPLES];
-float32_t maxValue;
-float32_t distsum = 0;
-float32_t distance = 0;
-float32_t thres[512];
-static float win[N_SAMPLES];     // coefficients
-static const float hann_gain = 0.5f;
+
 /* USER CODE END 0 */
 
 /**
@@ -133,80 +111,30 @@ int main(void)
   MX_SPI1_Init();
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
-  HAL_GPIO_WritePin(en_ldo_radar_GPIO_Port,en_ldo_radar_Pin,1);
-  HAL_GPIO_WritePin(osc_en_GPIO_Port,osc_en_Pin,1);
-  HAL_GPIO_WritePin(Translator_OE_GPIO_Port,Translator_OE_Pin,1);
-  HAL_GPIO_WritePin(led_select0_GPIO_Port,led_select0_Pin,0);
-  HAL_GPIO_WritePin(led_select1_GPIO_Port,led_select1_Pin,0);
-  HAL_Delay(100);
 
-  dev.iface = &hspi1;
-  xensiv_bgt60trxx_hard_reset(&dev);
-  int32_t check1 = xensiv_bgt60trxx_init(&dev, &hspi1,  false);
-  int32_t check0 = xensiv_bgt60trxx_config(&dev,register_list,40);
-  
-
-  for(size_t i = 0; i < 1024;++i){
-    freqbin[i] = i*(XENSIV_BGT60TRXX_CONF_SAMPLE_RATE/(N_SAMPLES));
-    rangebin[i] = ((299792458.0f)*XENSIV_BGT60TRXX_CONF_CHIRP_REPETITION_TIME_S*(i*(XENSIV_BGT60TRXX_CONF_SAMPLE_RATE/(N_SAMPLES))))/((float32_t)2*(XENSIV_BGT60TRXX_CONF_END_FREQ_HZ - XENSIV_BGT60TRXX_CONF_START_FREQ_HZ));
-  }
   /* USER CODE END 2 */
+
+  /* Init scheduler */
+  osKernelInitialize();
+  /* Call init function for freertos objects (in app_freertos.c) */
+  MX_FREERTOS_Init();
+
+  /* Start scheduler */
+  osKernelStart();
+
+  /* We should never get here as control is now taken by the scheduler */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   
-  status=arm_rfft_fast_init_f32(&rfft, 1024);            
-  blackman_init(); //hann_init();
+
   while (1)
   {
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-    for(int i =0; i < 5; ++i){
-      float32_t mag[512] = {};    
-      uint16_t data[1024] = {};
-      float32_t data2[1024] = {};
-      float32_t fftoutput[1024] = {};       
-      uint32_t check2 = xensiv_bgt60trxx_soft_reset(&dev,XENSIV_BGT60TRXX_RESET_FIFO);
-      uint32_t check3 = xensiv_bgt60trxx_start_frame(&dev,true);
-      while(!(HAL_GPIO_ReadPin(IRQ_R_M_GPIO_Port,IRQ_R_M_Pin))){}
-      xensiv_bgt60trxx_get_fifo_data(&dev,data,1024);
 
-      sum = 0;
-      for(size_t i = 0; i < N_SAMPLES; ++i){ //Remove DC bias
-        sum += (float) data[i];
-      }
-      avg = sum/N_SAMPLES;
-      for(size_t i = 0; i < N_SAMPLES; ++i){
-        data2[i] = (float)(data[i]) - avg;
-
-      }  
-      apply_window(data2);
-
-      arm_rfft_fast_f32(&rfft, data2, fftoutput, ifftFlag);
-      
-      fftmag(fftoutput,mag,N_SAMPLES/2);
-          status = ARM_MATH_SUCCESS;
-
-      memset(mag,0,10*sizeof(float32_t));
-      cacfar(mag,thres,0.05,3,7);
-      arm_max_f32(mag, N_SAMPLES/2, &maxValue, &maxindex); 
-      distsum += rangebin[maxindex];
-    }
-  
-  distance = distsum/5; 
-  if(distance < 1.5){
-    HAL_GPIO_WritePin(led_select1_GPIO_Port,led_select1_Pin,0);
-    HAL_GPIO_WritePin(led_select0_GPIO_Port,led_select0_Pin,1);
-    HAL_Delay(100);
-  }
-  else{
-    HAL_GPIO_WritePin(led_select1_GPIO_Port,led_select1_Pin,1);
-    HAL_GPIO_WritePin(led_select0_GPIO_Port,led_select0_Pin,0);
-    HAL_Delay(100);
-  }
-  distsum = 0;
-}    
+}
 }
   /* USER CODE END 3 */
 
@@ -521,7 +449,7 @@ static void MX_GPIO_Init(void)
 
   /*Configure GPIO pin : led_select1_Pin */
   GPIO_InitStruct.Pin = led_select1_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(led_select1_GPIO_Port, &GPIO_InitStruct);
 
@@ -537,93 +465,35 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
-HAL_SPI_StateTypeDef SPI_ChangeDataSize(SPI_HandleTypeDef * spidev, unsigned long datasizemacro){
-    
-  HAL_SPI_StateTypeDef spistatus = HAL_SPI_STATE_BUSY;
-  while(spistatus != 1){
-    spistatus = HAL_SPI_GetState(spidev);
-  }
-  HAL_SPIEx_FlushRxFifo(spidev);
-  bool transferdone = false;
-  while(!transferdone){
-    transferdone = __HAL_SPI_GET_FLAG(spidev,SPI_FLAG_TXC);
-  }
-  __HAL_SPI_DISABLE(spidev);
-  spidev->Init.DataSize = datasizemacro;
-  MODIFY_REG(spidev->Instance->CFG1, SPI_CFG1_DSIZE, datasizemacro);
-  __HAL_SPI_ENABLE(spidev);
 
-  return HAL_SPI_GetState(spidev);
-}
-static void hann_init(void)
-{
-    const float k = 2.0f * (float)M_PI / (float)(N_SAMPLES - 1);
-    for (uint32_t n = 0; n < N_SAMPLES; ++n) {
-        win[n] = 0.5f * (1.0f - cosf(k * (float)n));
-    }
-}
-
-static inline void apply_window(float *x /* len = 1024 */)
-{
-    for (uint32_t n = 0; n < N_SAMPLES; ++n) {
-        x[n] *= win[n];
-    }
-}
-
-static inline void fftmag(float32_t * inp,float32_t * mag,int len){
-  /*
-  X = { real[0], imag[0], real[1], imag[1], real[2], imag[2] ...
-  real[(N/2)-1], imag[(N/2)-1 }
-  */
-  float32_t re;
-  float32_t im;
-  mag[0] = 0.0f;
-  mag[len-1] = fabsf(inp[1]);
-  for(int i =1; i < (len-1); ++i){
-    re = inp[2U*i + 0U];
-    im = inp[2U*i + 1U];
-    mag[i] = sqrtf(re*re + im*im);
-  }
-}
-
-static inline void avgmag(float32_t * mag,int len, int div){
-  for(int i = 0; i < len; ++i){
-    mag[i] = mag[i]/div;
-  }
-}
-
-static void blackman_init(void){
-  float a0 = (float) 7938/18608;
-  float a1 = (float) 9240/18608;
-  float a2 = (float) 1430/18608;
-  for(uint32_t n = 0; n < N_SAMPLES; ++n){
-    win[n] = a0 - a1*cosf((float)(2*PI*n)/N_SAMPLES) +a2*cosf((float)(4*PI*n)/N_SAMPLES);
-  }
-}
-
-static inline void cacfar(float32_t * fftmag, float32_t * threshold, float32_t Pfa, int guard, int training){
-  float32_t alpha = (N_SAMPLES/2)*(powf(Pfa,(float)-1/(N_SAMPLES/2)) - 1);
-  float32_t suml = 0;
-  float32_t sumr = 0;
-  for(int i = (guard + training - 1); i < ((N_SAMPLES/2) - (guard + training)); ++i){ // i is the CUT (Cell Under Test)
-    for(int j = i+guard, k = i-guard; j < (i + guard + training), k > (i - (guard + training)); ++j, --k){ // j sums the right side, k the left side
-      suml += fftmag[k];
-      sumr += fftmag[j];// |training cells | guard cells | CUT | guard cells | training cells|
-    }
-    threshold[i] = alpha*((suml+sumr)/(2*training));
-    if(threshold[i] > fftmag[i]){
-      fftmag[i] = 0;
-    }
-    suml = 0;
-    sumr = 0;
-  }
-}
 
 
 
 
 
 /* USER CODE END 4 */
+
+/**
+  * @brief  Period elapsed callback in non blocking mode
+  * @note   This function is called  when TIM1 interrupt took place, inside
+  * HAL_TIM_IRQHandler(). It makes a direct call to HAL_IncTick() to increment
+  * a global variable "uwTick" used as application time base.
+  * @param  htim : TIM handle
+  * @retval None
+  */
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
+  /* USER CODE BEGIN Callback 0 */
+
+  /* USER CODE END Callback 0 */
+  if (htim->Instance == TIM1)
+  {
+    HAL_IncTick();
+  }
+  /* USER CODE BEGIN Callback 1 */
+
+  /* USER CODE END Callback 1 */
+}
 
 /**
   * @brief  This function is executed in case of error occurrence.

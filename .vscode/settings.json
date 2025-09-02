@@ -18,6 +18,8 @@
         "ranges": "c",
         "streambuf": "c",
         "xensiv_bgt60trxx.h": "c",
-        "cmath": "c"
+        "cmath": "c",
+        "stdio.h": "c",
+        "math.h": "c"
     }
 }
