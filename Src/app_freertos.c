@@ -53,7 +53,7 @@
 extern RTC_HandleTypeDef hrtc;
 extern SPI_HandleTypeDef hspi1;
 extern UART_HandleTypeDef huart2;
-
+bool iscalibrated;
 uint32_t sum = 0;
 uint16_t avg = 0;
 uint16_t data[N_SAMPLES] = {};
@@ -81,6 +81,13 @@ const osThreadAttr_t defaultTask_attributes = {
   .priority = (osPriority_t) osPriorityNormal,
   .stack_size = 16384 * 4
 };
+/* Definitions for calibrationtask */
+osThreadId_t calibrationtaskHandle;
+const osThreadAttr_t calibrationtask_attributes = {
+  .name = "calibrationtask",
+  .priority = (osPriority_t) osPriorityNormal,
+  .stack_size = 8192 * 4
+};
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
@@ -103,6 +110,19 @@ void vApplicationStackOverflowHook(xTaskHandle xTask, char *pcTaskName)
    called if a stack overflow is detected. */
 }
 /* USER CODE END 4 */
+
+/* USER CODE BEGIN 1 */
+/* Functions needed when configGENERATE_RUN_TIME_STATS is on */
+__weak void configureTimerForRunTimeStats(void)
+{
+
+}
+
+__weak unsigned long getRunTimeCounterValue(void)
+{
+return 0;
+}
+/* USER CODE END 1 */
 
 /**
   * @brief  FreeRTOS initialization
@@ -131,6 +151,9 @@ void MX_FREERTOS_Init(void) {
   /* USER CODE END RTOS_QUEUES */
   /* creation of defaultTask */
   defaultTaskHandle = osThreadNew(StartDefaultTask, NULL, &defaultTask_attributes);
+
+  /* creation of calibrationtask */
+  calibrationtaskHandle = osThreadNew(StartTask02, NULL, &calibrationtask_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -201,6 +224,9 @@ void StartDefaultTask(void *argument)
 
       memset(mag,0,10*sizeof(float32_t));
       cacfar(mag,thres,0.05,3,7);
+      if(iscalibrated){
+        applycalibration(mag, 0.5);
+      }
       arm_max_f32(mag, N_SAMPLES/2, &maxValue, &maxindex); 
       distsum += rangebin[maxindex];
   }  
@@ -219,6 +245,72 @@ void StartDefaultTask(void *argument)
  
   }
   /* USER CODE END defaultTask */
+}
+
+/* USER CODE BEGIN Header_StartTask02 */
+/**
+* @brief Function implementing the calibrationtask thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_StartTask02 */
+void StartTask02(void *argument)
+{
+  /* USER CODE BEGIN calibrationtask */
+  /* Infinite loop */
+  for(;;)
+  {
+  dev.iface = &hspi1;
+  xensiv_bgt60trxx_hard_reset(&dev);
+  int32_t check1 = xensiv_bgt60trxx_init(&dev, &hspi1,  false);
+  int32_t check0 = xensiv_bgt60trxx_config(&dev,register_list,40);
+  float32_t mag[512] = {};
+  float32_t magavg[512] = {};    
+    
+  uint16_t data[1024] = {};
+  float32_t data2[1024] = {};
+  float32_t fftoutput[1024] = {};  
+
+  for(size_t i = 0; i < 1024;++i){
+    freqbin[i] = i*(XENSIV_BGT60TRXX_CONF_SAMPLE_RATE/(N_SAMPLES));
+    rangebin[i] = ((299792458.0f)*XENSIV_BGT60TRXX_CONF_CHIRP_REPETITION_TIME_S*(i*(XENSIV_BGT60TRXX_CONF_SAMPLE_RATE/(N_SAMPLES))))/((float32_t)2*(XENSIV_BGT60TRXX_CONF_END_FREQ_HZ - XENSIV_BGT60TRXX_CONF_START_FREQ_HZ));
+  }
+  status=arm_rfft_fast_init_f32(&rfft, 1024);            
+  blackman_init(); //hann_init();
+  /* Infinite loop */
+
+    for(int i =0; i < 5; ++i){
+     
+      uint32_t check2 = xensiv_bgt60trxx_soft_reset(&dev,XENSIV_BGT60TRXX_RESET_FIFO);
+      uint32_t check3 = xensiv_bgt60trxx_start_frame(&dev,true);
+      while(!(HAL_GPIO_ReadPin(IRQ_R_M_GPIO_Port,IRQ_R_M_Pin))){}
+      xensiv_bgt60trxx_get_fifo_data(&dev,data,1024);
+
+      sum = 0;
+      for(size_t i = 0; i < N_SAMPLES; ++i){ //Remove DC bias
+        sum += (float) data[i];
+      }
+      avg = sum/N_SAMPLES;
+      for(size_t i = 0; i < N_SAMPLES; ++i){
+        data2[i] = (float)(data[i]) - avg;
+
+      }  
+      apply_window(data2);
+
+      arm_rfft_fast_f32(&rfft, data2, fftoutput, ifftFlag);
+      
+      fftmag(fftoutput,mag,N_SAMPLES/2);
+      status = ARM_MATH_SUCCESS;
+      memset(mag,0,10*sizeof(float32_t));
+      for(int i =0; i < N_SAMPLES/2; ++i){
+        magavg[i] += mag[i];
+      }
+  }  
+  avgmag(magavg,512,5);
+  cacfar(magavg,thres,0.05,3,7);
+  calibrate(magavg);
+  /* USER CODE END calibrationtask */
+}
 }
 
 /* Private application code --------------------------------------------------*/
@@ -293,6 +385,7 @@ static void calibrate(float32_t * fftmag){
       calibrated[i] = 1;
     }
   }
+  iscalibrated = true;
 }
 
 static inline void applycalibration(float32_t * fftmag, float32_t dampen){
