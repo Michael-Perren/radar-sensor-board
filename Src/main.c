@@ -181,16 +181,15 @@ int main(void)
         data2[i] = (float)(data[i]) - avg;
 
       }  
-      //apply_window(data2);
+      apply_window(data2);
 
       arm_rfft_fast_f32(&rfft, data2, fftoutput, ifftFlag);
       
       fftmag(fftoutput,mag,N_SAMPLES/2);
           status = ARM_MATH_SUCCESS;
-      for(int i = 0; i < 10; ++i){
-        mag[i] = 0;
-      }
-      cacfar(mag,thres,0.1,5,6);
+
+      memset(mag,0,10*sizeof(float32_t));
+      cacfar(mag,thres,0.05,3,7);
       arm_max_f32(mag, N_SAMPLES/2, &maxValue, &maxindex); 
       distsum += rangebin[maxindex];
     }
@@ -572,6 +571,10 @@ static inline void apply_window(float *x /* len = 1024 */)
 }
 
 static inline void fftmag(float32_t * inp,float32_t * mag,int len){
+  /*
+  X = { real[0], imag[0], real[1], imag[1], real[2], imag[2] ...
+  real[(N/2)-1], imag[(N/2)-1 }
+  */
   float32_t re;
   float32_t im;
   mag[0] = 0.0f;
