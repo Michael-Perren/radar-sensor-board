@@ -17,6 +17,7 @@
         "limits": "c",
         "ranges": "c",
         "streambuf": "c",
-        "xensiv_bgt60trxx.h": "c"
+        "xensiv_bgt60trxx.h": "c",
+        "cmath": "c"
     }
 }

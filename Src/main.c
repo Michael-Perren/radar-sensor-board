@@ -52,10 +52,6 @@
 RTC_HandleTypeDef hrtc;
 
 SPI_HandleTypeDef hspi1;
-DMA_HandleTypeDef handle_GPDMA1_Channel1;
-DMA_NodeTypeDef Node_GPDMA1_Channel0;
-DMA_QListTypeDef List_GPDMA1_Channel0;
-DMA_HandleTypeDef handle_GPDMA1_Channel0;
 
 UART_HandleTypeDef huart2;
 
@@ -66,12 +62,12 @@ UART_HandleTypeDef huart2;
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
-static void MX_GPDMA1_Init(void);
 static void MX_ICACHE_Init(void);
 static void MX_RTC_Init(void);
 static void MX_SPI1_Init(void);
 static void MX_USART2_UART_Init(void);
 /* USER CODE BEGIN PFP */
+bool firstdata = false;
 xensiv_bgt60trxx_t dev;
 static void hann_init(void);
 static void blackman_init(void);
@@ -130,7 +126,6 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-  MX_GPDMA1_Init();
   MX_ICACHE_Init();
   MX_RTC_Init();
   MX_SPI1_Init();
@@ -163,38 +158,41 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-  for(int i = 0; i < 5; ++i){
+
     /* USER CODE BEGIN 3 */
-    float32_t mag[512] = {};    
-    uint16_t data[1024] = {};
-    float32_t data2[1024] = {};
-    float32_t fftoutput[1024] = {};       
-    uint32_t check2 = xensiv_bgt60trxx_soft_reset(&dev,XENSIV_BGT60TRXX_RESET_FIFO);
-    uint32_t check3 = xensiv_bgt60trxx_start_frame(&dev,true);
-    while(!(HAL_GPIO_ReadPin(IRQ_R_M_GPIO_Port,IRQ_R_M_Pin))){}
-    xensiv_bgt60trxx_get_fifo_data(&dev,data,1024);
-    sum = 0;
-    for(size_t i = 0; i < N_SAMPLES; ++i){ //Remove DC bias
-      sum += (float) data[i];
+    for(int i =0; i < 5; ++i){
+      float32_t mag[512] = {};    
+      uint16_t data[1024] = {};
+      float32_t data2[1024] = {};
+      float32_t fftoutput[1024] = {};       
+      uint32_t check2 = xensiv_bgt60trxx_soft_reset(&dev,XENSIV_BGT60TRXX_RESET_FIFO);
+      uint32_t check3 = xensiv_bgt60trxx_start_frame(&dev,true);
+      while(!(HAL_GPIO_ReadPin(IRQ_R_M_GPIO_Port,IRQ_R_M_Pin))){}
+      xensiv_bgt60trxx_get_fifo_data(&dev,data,1024);
+
+      sum = 0;
+      for(size_t i = 0; i < N_SAMPLES; ++i){ //Remove DC bias
+        sum += (float) data[i];
+      }
+      avg = sum/N_SAMPLES;
+      for(size_t i = 0; i < N_SAMPLES; ++i){
+        data2[i] = (float)(data[i]) - avg;
+
+      }  
+      apply_window(data2);
+
+      arm_rfft_fast_f32(&rfft, data2, fftoutput, ifftFlag);
+
+      fftmag(fftoutput,mag,N_SAMPLES/2);
+          status = ARM_MATH_SUCCESS;
+      for(int i = 0; i < 10; ++i){
+        mag[i] = 0;
+      }
+
+      arm_max_f32(mag, N_SAMPLES/2, &maxValue, &maxindex); 
+      distsum += rangebin[maxindex];
     }
-    avg = sum/N_SAMPLES;
-    for(size_t i = 0; i < N_SAMPLES; ++i){
-      data2[i] = (float)(data[i]) - avg;
-
-    }  
-    apply_window(data2);
-
-    arm_rfft_fast_f32(&rfft, data2, fftoutput, ifftFlag);
-
-    fftmag(fftoutput,mag,N_SAMPLES/2);
-        status = ARM_MATH_SUCCESS;
-    for(int i = 0; i < 10; ++i){
-      mag[i] = 0;
-    }
-
-    arm_max_f32(mag, N_SAMPLES/2, &maxValue, &maxindex); 
-    distsum += rangebin[maxindex];
-  }
+  
   distance = distsum/5; 
   if(distance < 1.5){
     HAL_GPIO_WritePin(led_select1_GPIO_Port,led_select1_Pin,0);
@@ -206,10 +204,11 @@ int main(void)
     HAL_GPIO_WritePin(led_select0_GPIO_Port,led_select0_Pin,0);
     HAL_Delay(100);
   }
-  distsum = 0;    
+  distsum = 0;
+}    
+}
   /* USER CODE END 3 */
-}
-}
+
 
 /**
   * @brief System Clock Configuration
@@ -293,36 +292,6 @@ void SystemClock_Config(void)
   /** Configure the programming delay
   */
   __HAL_FLASH_SET_PROGRAM_DELAY(FLASH_PROGRAMMING_DELAY_2);
-}
-
-/**
-  * @brief GPDMA1 Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_GPDMA1_Init(void)
-{
-
-  /* USER CODE BEGIN GPDMA1_Init 0 */
-
-  /* USER CODE END GPDMA1_Init 0 */
-
-  /* Peripheral clock enable */
-  __HAL_RCC_GPDMA1_CLK_ENABLE();
-
-  /* GPDMA1 interrupt Init */
-    HAL_NVIC_SetPriority(GPDMA1_Channel0_IRQn, 0, 0);
-    HAL_NVIC_EnableIRQ(GPDMA1_Channel0_IRQn);
-    HAL_NVIC_SetPriority(GPDMA1_Channel1_IRQn, 0, 0);
-    HAL_NVIC_EnableIRQ(GPDMA1_Channel1_IRQn);
-
-  /* USER CODE BEGIN GPDMA1_Init 1 */
-
-  /* USER CODE END GPDMA1_Init 1 */
-  /* USER CODE BEGIN GPDMA1_Init 2 */
-
-  /* USER CODE END GPDMA1_Init 2 */
-
 }
 
 /**
@@ -553,14 +522,12 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pin = led_select1_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(led_select1_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pin : IRQ_R_M_Pin */
   GPIO_InitStruct.Pin = IRQ_R_M_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
   HAL_GPIO_Init(IRQ_R_M_GPIO_Port, &GPIO_InitStruct);
 
   /* USER CODE BEGIN MX_GPIO_Init_2 */
@@ -628,9 +595,24 @@ static void blackman_init(void){
     win[n] = a0 - a1*cosf((float)(2*PI*n)/N_SAMPLES) +a2*cosf((float)(4*PI*n)/N_SAMPLES);
   }
 }
-void HAL_SPI_RxCpltCallback(SPI_HandleTypeDef *hspi){
-  int count = 0;
+
+static inline void cacfar(float32_t * fft, float32_t Pfa, int guard, int training){
+  float32_t alpha = N_SAMPLES*(powf(Pfa,(float)-1/N_SAMPLES) - 1);
+  float32_t threshold;
+  float32_t suml = 0;
+  float32_t sumr = 0;
+  for(int i = (guard + training - 1); i < (N_SAMPLES - (guard + training)); ++i){
+    for(int j = i, k = i; j < (i + guard + training), k > (i - (guard + training - 1)); ++j, --k){
+      suml += fft[k];
+      sumr += fft[j];
+    }
+    threshold = sum
+  }
 }
+
+
+
+
 
 /* USER CODE END 4 */
 
