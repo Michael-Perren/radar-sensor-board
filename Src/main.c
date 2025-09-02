@@ -38,9 +38,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define ARM_MATH_MVEF
-#define M_PI 3.14159265358979323846
-#define N_SAMPLES XENSIV_BGT60TRXX_CONF_NUM_SAMPLES_PER_CHIRP
+
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -111,7 +109,6 @@ int main(void)
   MX_SPI1_Init();
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
-
   /* USER CODE END 2 */
 
   /* Init scheduler */
@@ -135,9 +132,9 @@ int main(void)
     /* USER CODE BEGIN 3 */
 
 }
-}
-  /* USER CODE END 3 */
 
+  /* USER CODE END 3 */
+}
 
 /**
   * @brief System Clock Configuration
@@ -449,7 +446,7 @@ static void MX_GPIO_Init(void)
 
   /*Configure GPIO pin : led_select1_Pin */
   GPIO_InitStruct.Pin = led_select1_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(led_select1_GPIO_Port, &GPIO_InitStruct);
 

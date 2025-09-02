@@ -65,6 +65,8 @@ void StartDefaultTask(void *argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
+/* Hook prototypes */
+void vApplicationStackOverflowHook(xTaskHandle xTask, char *pcTaskName);
 /* Private application code --------------------------------------------------*/
 /* USER CODE BEGIN Application */
 

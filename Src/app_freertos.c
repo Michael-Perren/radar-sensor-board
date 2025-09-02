@@ -70,6 +70,7 @@ float32_t maxValue;
 float32_t distsum = 0;
 float32_t distance = 0;
 float32_t thres[512];
+float32_t calibrated[512];
 static float win[N_SAMPLES];     // coefficients
 static const float hann_gain = 0.5f;
 /* USER CODE END Variables */
@@ -78,7 +79,7 @@ osThreadId_t defaultTaskHandle;
 const osThreadAttr_t defaultTask_attributes = {
   .name = "defaultTask",
   .priority = (osPriority_t) osPriorityNormal,
-  .stack_size = 128 * 4
+  .stack_size = 16384 * 4
 };
 
 /* Private function prototypes -----------------------------------------------*/
@@ -90,7 +91,18 @@ static inline void apply_window(float *x /* len = 1024 */);
 static inline void fftmag(float32_t * inp,float32_t * mag,int len);
 static inline void avgmag(float32_t * mag,int len, int div);
 static inline void cacfar(float32_t * fftmag, float32_t * threshold, float32_t Pfa, int guard, int training);
+static inline void applycalibration(float32_t * fftmag, float32_t dampen);
+static void calibrate(float32_t * fftmag);
 /* USER CODE END FunctionPrototypes */
+
+/* USER CODE BEGIN 4 */
+void vApplicationStackOverflowHook(xTaskHandle xTask, char *pcTaskName)
+{
+   /* Run time stack overflow checking is performed if
+   configCHECK_FOR_STACK_OVERFLOW is defined to 1 or 2. This hook function is
+   called if a stack overflow is detected. */
+}
+/* USER CODE END 4 */
 
 /**
   * @brief  FreeRTOS initialization
@@ -150,7 +162,10 @@ void StartDefaultTask(void *argument)
   xensiv_bgt60trxx_hard_reset(&dev);
   int32_t check1 = xensiv_bgt60trxx_init(&dev, &hspi1,  false);
   int32_t check0 = xensiv_bgt60trxx_config(&dev,register_list,40);
-  
+  float32_t mag[512] = {};    
+  uint16_t data[1024] = {};
+  float32_t data2[1024] = {};
+  float32_t fftoutput[1024] = {};  
 
   for(size_t i = 0; i < 1024;++i){
     freqbin[i] = i*(XENSIV_BGT60TRXX_CONF_SAMPLE_RATE/(N_SAMPLES));
@@ -162,10 +177,7 @@ void StartDefaultTask(void *argument)
   for(;;)
   {
     for(int i =0; i < 5; ++i){
-      float32_t mag[512] = {};    
-      uint16_t data[1024] = {};
-      float32_t data2[1024] = {};
-      float32_t fftoutput[1024] = {};       
+     
       uint32_t check2 = xensiv_bgt60trxx_soft_reset(&dev,XENSIV_BGT60TRXX_RESET_FIFO);
       uint32_t check3 = xensiv_bgt60trxx_start_frame(&dev,true);
       while(!(HAL_GPIO_ReadPin(IRQ_R_M_GPIO_Port,IRQ_R_M_Pin))){}
@@ -205,7 +217,6 @@ void StartDefaultTask(void *argument)
     }
     distsum = 0;
  
-    osDelay(1);
   }
   /* USER CODE END defaultTask */
 }
@@ -273,6 +284,22 @@ static inline void cacfar(float32_t * fftmag, float32_t * threshold, float32_t P
     }
     suml = 0;
     sumr = 0;
+  }
+}
+
+static void calibrate(float32_t * fftmag){
+  for(int i =0; i < N_SAMPLES/2; ++i){
+    if(fftmag[i] > 0){
+      calibrated[i] = 1;
+    }
+  }
+}
+
+static inline void applycalibration(float32_t * fftmag, float32_t dampen){
+    for(int i =0; i < N_SAMPLES/2; ++i){
+      if(calibrated[i] == 1){
+        fftmag[i] = fftmag[i] * dampen;
+    }
   }
 }
 /* USER CODE END Application */
