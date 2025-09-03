@@ -20,6 +20,13 @@
         "xensiv_bgt60trxx.h": "c",
         "cmath": "c",
         "stdio.h": "c",
-        "math.h": "c"
+        "math.h": "c",
+        "numeric": "c",
+        "ratio": "c",
+        "valarray": "c",
+        "array": "c",
+        "string": "c",
+        "string_view": "c",
+        "span": "c"
     }
 }

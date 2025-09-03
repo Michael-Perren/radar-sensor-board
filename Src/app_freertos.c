@@ -41,6 +41,7 @@
 #define ARM_MATH_MVEF
 #define M_PI 3.14159265358979323846
 #define N_SAMPLES XENSIV_BGT60TRXX_CONF_NUM_SAMPLES_PER_CHIRP
+#define semaphoretokens 2
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -53,14 +54,13 @@
 extern RTC_HandleTypeDef hrtc;
 extern SPI_HandleTypeDef hspi1;
 extern UART_HandleTypeDef huart2;
+
+uart_data * rxdata;
 bool iscalibrated;
 uint32_t sum = 0;
 uint16_t avg = 0;
-uint16_t data[N_SAMPLES] = {};
-float32_t data2[N_SAMPLES] = {};
-uint32_t fftSize = N_SAMPLES;
+uint16_t data[semaphoretokens][5][N_SAMPLES] = {};
 uint32_t ifftFlag = 0;
-uint32_t doBitReverse = 1;
 arm_rfft_fast_instance_f32 rfft;
 arm_status status;
 uint32_t maxindex = 0;
@@ -73,25 +73,30 @@ float32_t thres[512];
 float32_t calibrated[512];
 static float win[N_SAMPLES];     // coefficients
 static const float hann_gain = 0.5f;
+xensiv_bgt60trxx_t dev;
 /* USER CODE END Variables */
 /* Definitions for defaultTask */
 osThreadId_t defaultTaskHandle;
 const osThreadAttr_t defaultTask_attributes = {
   .name = "defaultTask",
   .priority = (osPriority_t) osPriorityNormal,
-  .stack_size = 16384 * 4
+  .stack_size = 8192 * 4
 };
-/* Definitions for calibrationtask */
-osThreadId_t calibrationtaskHandle;
-const osThreadAttr_t calibrationtask_attributes = {
-  .name = "calibrationtask",
+/* Definitions for getradardata */
+osThreadId_t getradardataHandle;
+const osThreadAttr_t getradardata_attributes = {
+  .name = "getradardata",
   .priority = (osPriority_t) osPriorityNormal,
   .stack_size = 8192 * 4
+};
+/* Definitions for myCountingSem01 */
+osSemaphoreId_t myCountingSem01Handle;
+const osSemaphoreAttr_t myCountingSem01_attributes = {
+  .name = "myCountingSem01"
 };
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
-xensiv_bgt60trxx_t dev;
 static void hann_init(void);
 static void blackman_init(void);
 static inline void apply_window(float *x /* len = 1024 */);
@@ -99,7 +104,7 @@ static inline void fftmag(float32_t * inp,float32_t * mag,int len);
 static inline void avgmag(float32_t * mag,int len, int div);
 static inline void cacfar(float32_t * fftmag, float32_t * threshold, float32_t Pfa, int guard, int training);
 static inline void applycalibration(float32_t * fftmag, float32_t dampen);
-static void calibrate(float32_t * fftmag);
+static void calibrate(void);
 /* USER CODE END FunctionPrototypes */
 
 /* USER CODE BEGIN 4 */
@@ -131,12 +136,23 @@ return 0;
   */
 void MX_FREERTOS_Init(void) {
   /* USER CODE BEGIN Init */
-
+  HAL_GPIO_WritePin(en_ldo_radar_GPIO_Port,en_ldo_radar_Pin,1);
+  HAL_GPIO_WritePin(osc_en_GPIO_Port,osc_en_Pin,1);
+  HAL_GPIO_WritePin(Translator_OE_GPIO_Port,Translator_OE_Pin,1);
+  HAL_GPIO_WritePin(led_select0_GPIO_Port,led_select0_Pin,0);
+  HAL_GPIO_WritePin(led_select1_GPIO_Port,led_select1_Pin,0);
+  HAL_Delay(100);
+  dev.iface = &hspi1;
+  xensiv_bgt60trxx_hard_reset(&dev);
+  int32_t check1 = xensiv_bgt60trxx_init(&dev, &hspi1,  false);
+  int32_t check0 = xensiv_bgt60trxx_config(&dev,register_list,40);
   /* USER CODE END Init */
 
   /* USER CODE BEGIN RTOS_MUTEX */
   /* add mutexes, ... */
   /* USER CODE END RTOS_MUTEX */
+  /* creation of myCountingSem01 */
+  myCountingSem01Handle = osSemaphoreNew(2, 2, &myCountingSem01_attributes);
 
   /* USER CODE BEGIN RTOS_SEMAPHORES */
   /* add semaphores, ... */
@@ -152,8 +168,8 @@ void MX_FREERTOS_Init(void) {
   /* creation of defaultTask */
   defaultTaskHandle = osThreadNew(StartDefaultTask, NULL, &defaultTask_attributes);
 
-  /* creation of calibrationtask */
-  calibrationtaskHandle = osThreadNew(StartTask02, NULL, &calibrationtask_attributes);
+  /* creation of getradardata */
+  getradardataHandle = osThreadNew(StartTask04, NULL, &getradardata_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -174,47 +190,33 @@ void MX_FREERTOS_Init(void) {
 void StartDefaultTask(void *argument)
 {
   /* USER CODE BEGIN defaultTask */
-  HAL_GPIO_WritePin(en_ldo_radar_GPIO_Port,en_ldo_radar_Pin,1);
-  HAL_GPIO_WritePin(osc_en_GPIO_Port,osc_en_Pin,1);
-  HAL_GPIO_WritePin(Translator_OE_GPIO_Port,Translator_OE_Pin,1);
-  HAL_GPIO_WritePin(led_select0_GPIO_Port,led_select0_Pin,0);
-  HAL_GPIO_WritePin(led_select1_GPIO_Port,led_select1_Pin,0);
-  HAL_Delay(100);
-
-  dev.iface = &hspi1;
-  xensiv_bgt60trxx_hard_reset(&dev);
-  int32_t check1 = xensiv_bgt60trxx_init(&dev, &hspi1,  false);
-  int32_t check0 = xensiv_bgt60trxx_config(&dev,register_list,40);
+  float32_t data2[N_SAMPLES] = {};
   float32_t mag[512] = {};    
-  uint16_t data[1024] = {};
-  float32_t data2[1024] = {};
-  float32_t fftoutput[1024] = {};  
+  float32_t fftoutput[1024] = {};
+  uint8_t * buffer[127];
+  uart_data strucbuffer;
+  int availabledataindex;  
 
   for(size_t i = 0; i < 1024;++i){
     freqbin[i] = i*(XENSIV_BGT60TRXX_CONF_SAMPLE_RATE/(N_SAMPLES));
     rangebin[i] = ((299792458.0f)*XENSIV_BGT60TRXX_CONF_CHIRP_REPETITION_TIME_S*(i*(XENSIV_BGT60TRXX_CONF_SAMPLE_RATE/(N_SAMPLES))))/((float32_t)2*(XENSIV_BGT60TRXX_CONF_END_FREQ_HZ - XENSIV_BGT60TRXX_CONF_START_FREQ_HZ));
   }
-  status=arm_rfft_fast_init_f32(&rfft, 1024);            
+  status=arm_rfft_fast_init_f32(&rfft, N_SAMPLES);            
   blackman_init(); //hann_init();
   /* Infinite loop */
   for(;;)
   {
-    for(int i =0; i < 5; ++i){
-     
-      uint32_t check2 = xensiv_bgt60trxx_soft_reset(&dev,XENSIV_BGT60TRXX_RESET_FIFO);
-      uint32_t check3 = xensiv_bgt60trxx_start_frame(&dev,true);
-      while(!(HAL_GPIO_ReadPin(IRQ_R_M_GPIO_Port,IRQ_R_M_Pin))){}
-      xensiv_bgt60trxx_get_fifo_data(&dev,data,1024);
-
-      sum = 0;
-      for(size_t i = 0; i < N_SAMPLES; ++i){ //Remove DC bias
-        sum += (float) data[i];
+    while(osSemaphoreAcquire(myCountingSem01Handle,0) != osOK){}
+    for(int i =0; i < 5; ++i){ //parses 5 N_SAMPLE arrays at a time;
+      availabledataindex = semaphoretokens - (osSemaphoreGetCount(myCountingSem01Handle) + 1);
+      for(size_t j = 0; j < N_SAMPLES; ++j){ //Remove DC bias
+        sum += (float) data[availabledataindex][i][j]; // semaphore count determines which 5 N_SAMPLE arrays are available.
       }
       avg = sum/N_SAMPLES;
-      for(size_t i = 0; i < N_SAMPLES; ++i){
-        data2[i] = (float)(data[i]) - avg;
+      for(size_t j = 0; j < N_SAMPLES; ++j){
+        data2[j] = (float)(data[availabledataindex][i][j]) - avg;
 
-      }  
+      }
       apply_window(data2);
 
       arm_rfft_fast_f32(&rfft, data2, fftoutput, ifftFlag);
@@ -229,7 +231,8 @@ void StartDefaultTask(void *argument)
       }
       arm_max_f32(mag, N_SAMPLES/2, &maxValue, &maxindex); 
       distsum += rangebin[maxindex];
-  }  
+  }
+  osSemaphoreRelease(myCountingSem01Handle); 
     distance = distsum/5; 
     if(distance < 1.5){
       HAL_GPIO_WritePin(led_select1_GPIO_Port,led_select1_Pin,0);
@@ -241,80 +244,46 @@ void StartDefaultTask(void *argument)
       HAL_GPIO_WritePin(led_select0_GPIO_Port,led_select0_Pin,0);
       HAL_Delay(100);
     }
+    HAL_UART_Receive(&huart2, buffer, 4, 100);
+    memcpy(&strucbuffer,buffer,sizeof(uart_data));
+    rxdata = &strucbuffer;
     distsum = 0;
  
   }
   /* USER CODE END defaultTask */
 }
 
-/* USER CODE BEGIN Header_StartTask02 */
+/* USER CODE BEGIN Header_StartTask04 */
 /**
-* @brief Function implementing the calibrationtask thread.
+* @brief Function implementing the getradardata thread.
 * @param argument: Not used
 * @retval None
 */
-/* USER CODE END Header_StartTask02 */
-void StartTask02(void *argument)
+/* USER CODE END Header_StartTask04 */
+void StartTask04(void *argument)
 {
-  /* USER CODE BEGIN calibrationtask */
+  /* USER CODE BEGIN getradardata */
+  int availabledataindex;
   /* Infinite loop */
   for(;;)
   {
-  dev.iface = &hspi1;
-  xensiv_bgt60trxx_hard_reset(&dev);
-  int32_t check1 = xensiv_bgt60trxx_init(&dev, &hspi1,  false);
-  int32_t check0 = xensiv_bgt60trxx_config(&dev,register_list,40);
-  float32_t mag[512] = {};
-  float32_t magavg[512] = {};    
-    
-  uint16_t data[1024] = {};
-  float32_t data2[1024] = {};
-  float32_t fftoutput[1024] = {};  
-
-  for(size_t i = 0; i < 1024;++i){
-    freqbin[i] = i*(XENSIV_BGT60TRXX_CONF_SAMPLE_RATE/(N_SAMPLES));
-    rangebin[i] = ((299792458.0f)*XENSIV_BGT60TRXX_CONF_CHIRP_REPETITION_TIME_S*(i*(XENSIV_BGT60TRXX_CONF_SAMPLE_RATE/(N_SAMPLES))))/((float32_t)2*(XENSIV_BGT60TRXX_CONF_END_FREQ_HZ - XENSIV_BGT60TRXX_CONF_START_FREQ_HZ));
-  }
-  status=arm_rfft_fast_init_f32(&rfft, 1024);            
-  blackman_init(); //hann_init();
-  /* Infinite loop */
-
-    for(int i =0; i < 5; ++i){
-     
+    while(osSemaphoreAcquire(myCountingSem01Handle,0) != osOK){}
+    for(int i = 0; i < 5; ++i){
+      availabledataindex = semaphoretokens - (osSemaphoreGetCount(myCountingSem01Handle) + 1);
       uint32_t check2 = xensiv_bgt60trxx_soft_reset(&dev,XENSIV_BGT60TRXX_RESET_FIFO);
       uint32_t check3 = xensiv_bgt60trxx_start_frame(&dev,true);
       while(!(HAL_GPIO_ReadPin(IRQ_R_M_GPIO_Port,IRQ_R_M_Pin))){}
-      xensiv_bgt60trxx_get_fifo_data(&dev,data,1024);
+      xensiv_bgt60trxx_get_fifo_data(&dev,data[availabledataindex][i],1024);
+    }
+    osSemaphoreRelease(myCountingSem01Handle);
 
-      sum = 0;
-      for(size_t i = 0; i < N_SAMPLES; ++i){ //Remove DC bias
-        sum += (float) data[i];
-      }
-      avg = sum/N_SAMPLES;
-      for(size_t i = 0; i < N_SAMPLES; ++i){
-        data2[i] = (float)(data[i]) - avg;
-
-      }  
-      apply_window(data2);
-
-      arm_rfft_fast_f32(&rfft, data2, fftoutput, ifftFlag);
-      
-      fftmag(fftoutput,mag,N_SAMPLES/2);
-      status = ARM_MATH_SUCCESS;
-      memset(mag,0,10*sizeof(float32_t));
-      for(int i =0; i < N_SAMPLES/2; ++i){
-        magavg[i] += mag[i];
-      }
-  }  
-  avgmag(magavg,512,5);
-  cacfar(magavg,thres,0.05,3,7);
-  calibrate(magavg);
-  /* USER CODE END calibrationtask */
-}
+  }
+  /* USER CODE END getradardata */
 }
 
 /* Private application code --------------------------------------------------*/
 /* USER CODE BEGIN Application */
+
 static void hann_init(void)
 {
     const float k = 2.0f * (float)M_PI / (float)(N_SAMPLES - 1);
@@ -379,9 +348,57 @@ static inline void cacfar(float32_t * fftmag, float32_t * threshold, float32_t P
   }
 }
 
-static void calibrate(float32_t * fftmag){
+static void calibrate(void){
+  dev.iface = &hspi1;
+  xensiv_bgt60trxx_hard_reset(&dev);
+  int32_t check1 = xensiv_bgt60trxx_init(&dev, &hspi1,  false);
+  int32_t check0 = xensiv_bgt60trxx_config(&dev,register_list,40);
+  float32_t mag[512] = {};
+  float32_t magavg[512] = {};    
+    
+  uint16_t data[1024] = {};
+  float32_t data2[1024] = {};
+  float32_t fftoutput[1024] = {};  
+
+  for(size_t i = 0; i < 1024;++i){
+    freqbin[i] = i*(XENSIV_BGT60TRXX_CONF_SAMPLE_RATE/(N_SAMPLES));
+    rangebin[i] = ((299792458.0f)*XENSIV_BGT60TRXX_CONF_CHIRP_REPETITION_TIME_S*(i*(XENSIV_BGT60TRXX_CONF_SAMPLE_RATE/(N_SAMPLES))))/((float32_t)2*(XENSIV_BGT60TRXX_CONF_END_FREQ_HZ - XENSIV_BGT60TRXX_CONF_START_FREQ_HZ));
+  }
+  status=arm_rfft_fast_init_f32(&rfft, 1024);            
+  blackman_init(); //hann_init();
+  /* Infinite loop */
+
+    for(int i =0; i < 5; ++i){
+     
+      uint32_t check2 = xensiv_bgt60trxx_soft_reset(&dev,XENSIV_BGT60TRXX_RESET_FIFO);
+      uint32_t check3 = xensiv_bgt60trxx_start_frame(&dev,true);
+      while(!(HAL_GPIO_ReadPin(IRQ_R_M_GPIO_Port,IRQ_R_M_Pin))){}
+      xensiv_bgt60trxx_get_fifo_data(&dev,data,1024);
+
+      sum = 0;
+      for(size_t i = 0; i < N_SAMPLES; ++i){ //Remove DC bias
+        sum += (float) data[i];
+      }
+      avg = sum/N_SAMPLES;
+      for(size_t i = 0; i < N_SAMPLES; ++i){
+        data2[i] = (float)(data[i]) - avg;
+
+      }  
+      apply_window(data2);
+
+      arm_rfft_fast_f32(&rfft, data2, fftoutput, ifftFlag);
+      
+      fftmag(fftoutput,mag,N_SAMPLES/2);
+      status = ARM_MATH_SUCCESS;
+      memset(mag,0,10*sizeof(float32_t));
+      for(int i =0; i < N_SAMPLES/2; ++i){
+        magavg[i] += mag[i];
+      }
+  }  
+  avgmag(magavg,512,5);
+  cacfar(magavg,thres,0.05,3,7);
   for(int i =0; i < N_SAMPLES/2; ++i){
-    if(fftmag[i] > 0){
+    if(mag[i] > 0){
       calibrated[i] = 1;
     }
   }
