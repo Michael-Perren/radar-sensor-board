@@ -62,7 +62,7 @@ uint16_t avg = 0;
 uint16_t data[semaphoretokens][5][N_SAMPLES] = {};
 uint32_t ifftFlag = 0;
 arm_rfft_fast_instance_f32 rfft;
-arm_status status;
+
 uint32_t maxindex = 0;
 float32_t freqbin[N_SAMPLES];
 float32_t rangebin[N_SAMPLES];
@@ -72,7 +72,6 @@ float32_t distance = 0;
 float32_t thres[512];
 float32_t calibrated[512];
 static float win[N_SAMPLES];     // coefficients
-static const float hann_gain = 0.5f;
 xensiv_bgt60trxx_t dev;
 /* USER CODE END Variables */
 /* Definitions for defaultTask */
@@ -190,7 +189,7 @@ void MX_FREERTOS_Init(void) {
 void StartDefaultTask(void *argument)
 {
   /* USER CODE BEGIN defaultTask */
-  float32_t data2[N_SAMPLES] = {};
+  float32_t unbiased_data[N_SAMPLES] = {}; //
   float32_t mag[512] = {};    
   float32_t fftoutput[1024] = {};
   uint8_t * buffer[127];
@@ -201,7 +200,7 @@ void StartDefaultTask(void *argument)
     freqbin[i] = i*(XENSIV_BGT60TRXX_CONF_SAMPLE_RATE/(N_SAMPLES));
     rangebin[i] = ((299792458.0f)*XENSIV_BGT60TRXX_CONF_CHIRP_REPETITION_TIME_S*(i*(XENSIV_BGT60TRXX_CONF_SAMPLE_RATE/(N_SAMPLES))))/((float32_t)2*(XENSIV_BGT60TRXX_CONF_END_FREQ_HZ - XENSIV_BGT60TRXX_CONF_START_FREQ_HZ));
   }
-  status=arm_rfft_fast_init_f32(&rfft, N_SAMPLES);            
+  arm_rfft_fast_init_f32(&rfft, N_SAMPLES);            
   blackman_init(); //hann_init();
   /* Infinite loop */
   for(;;)
@@ -214,21 +213,14 @@ void StartDefaultTask(void *argument)
       }
       avg = sum/N_SAMPLES;
       for(size_t j = 0; j < N_SAMPLES; ++j){
-        data2[j] = (float)(data[availabledataindex][i][j]) - avg;
+        unbiased_data[j] = (float)(data[availabledataindex][i][j]) - avg;
 
       }
-      apply_window(data2);
-
-      arm_rfft_fast_f32(&rfft, data2, fftoutput, ifftFlag);
-      
+      apply_window(unbiased_data);
+      arm_rfft_fast_f32(&rfft, unbiased_data, fftoutput, ifftFlag);
       fftmag(fftoutput,mag,N_SAMPLES/2);
-      status = ARM_MATH_SUCCESS;
-
       memset(mag,0,10*sizeof(float32_t));
       cacfar(mag,thres,0.05,3,7);
-      if(iscalibrated){
-        applycalibration(mag, 0.5);
-      }
       arm_max_f32(mag, N_SAMPLES/2, &maxValue, &maxindex); 
       distsum += rangebin[maxindex];
   }
@@ -349,22 +341,18 @@ static inline void cacfar(float32_t * fftmag, float32_t * threshold, float32_t P
 }
 
 static void calibrate(void){
-  dev.iface = &hspi1;
-  xensiv_bgt60trxx_hard_reset(&dev);
-  int32_t check1 = xensiv_bgt60trxx_init(&dev, &hspi1,  false);
-  int32_t check0 = xensiv_bgt60trxx_config(&dev,register_list,40);
   float32_t mag[512] = {};
   float32_t magavg[512] = {};    
     
   uint16_t data[1024] = {};
-  float32_t data2[1024] = {};
+  float32_t unbiased_data[1024] = {};
   float32_t fftoutput[1024] = {};  
 
   for(size_t i = 0; i < 1024;++i){
     freqbin[i] = i*(XENSIV_BGT60TRXX_CONF_SAMPLE_RATE/(N_SAMPLES));
     rangebin[i] = ((299792458.0f)*XENSIV_BGT60TRXX_CONF_CHIRP_REPETITION_TIME_S*(i*(XENSIV_BGT60TRXX_CONF_SAMPLE_RATE/(N_SAMPLES))))/((float32_t)2*(XENSIV_BGT60TRXX_CONF_END_FREQ_HZ - XENSIV_BGT60TRXX_CONF_START_FREQ_HZ));
   }
-  status=arm_rfft_fast_init_f32(&rfft, 1024);            
+  arm_rfft_fast_init_f32(&rfft, 1024);            
   blackman_init(); //hann_init();
   /* Infinite loop */
 
@@ -381,15 +369,14 @@ static void calibrate(void){
       }
       avg = sum/N_SAMPLES;
       for(size_t i = 0; i < N_SAMPLES; ++i){
-        data2[i] = (float)(data[i]) - avg;
+        unbiased_data[i] = (float)(data[i]) - avg;
 
       }  
-      apply_window(data2);
+      apply_window(unbiased_data);
 
-      arm_rfft_fast_f32(&rfft, data2, fftoutput, ifftFlag);
+      arm_rfft_fast_f32(&rfft, unbiased_data, fftoutput, ifftFlag);
       
       fftmag(fftoutput,mag,N_SAMPLES/2);
-      status = ARM_MATH_SUCCESS;
       memset(mag,0,10*sizeof(float32_t));
       for(int i =0; i < N_SAMPLES/2; ++i){
         magavg[i] += mag[i];
