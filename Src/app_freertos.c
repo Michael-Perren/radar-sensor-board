@@ -208,18 +208,20 @@ void StartDefaultTask(void *argument)
     while(osSemaphoreAcquire(myCountingSem01Handle,0) != osOK){}
     for(int i =0; i < 5; ++i){ //parses 5 N_SAMPLE arrays at a time;
       availabledataindex = semaphoretokens - (osSemaphoreGetCount(myCountingSem01Handle) + 1);
-      for(size_t j = 0; j < N_SAMPLES; ++j){ //Remove DC bias
+
+      for(size_t j = 0; j < N_SAMPLES; ++j){ //get average for unbiasing
         sum += (float) data[availabledataindex][i][j]; // semaphore count determines which 5 N_SAMPLE arrays are available.
       }
       avg = sum/N_SAMPLES;
-      for(size_t j = 0; j < N_SAMPLES; ++j){
+      for(size_t j = 0; j < N_SAMPLES; ++j){ //remove dc bias
         unbiased_data[j] = (float)(data[availabledataindex][i][j]) - avg;
 
       }
+
       apply_window(unbiased_data);
       arm_rfft_fast_f32(&rfft, unbiased_data, fftoutput, ifftFlag);
       fftmag(fftoutput,mag,N_SAMPLES/2);
-      memset(mag,0,10*sizeof(float32_t));
+      memset(mag,0,10*sizeof(float32_t)); //first 10 of mag array are garbage values
       cacfar(mag,thres,0.05,3,7);
       arm_max_f32(mag, N_SAMPLES/2, &maxValue, &maxindex); 
       distsum += rangebin[maxindex];
