@@ -192,13 +192,13 @@ void StartDefaultTask(void *argument)
   float32_t unbiased_data[N_SAMPLES] = {}; //
   float32_t mag[512] = {};    
   float32_t fftoutput[1024] = {};
-  uint8_t * buffer[127];
+  uint8_t  buffer[127] = {};
   uart_data strucbuffer;
   int availabledataindex;  
 
   for(size_t i = 0; i < 1024;++i){
     freqbin[i] = i*(XENSIV_BGT60TRXX_CONF_SAMPLE_RATE/(N_SAMPLES));
-    rangebin[i] = ((299792458.0f)*XENSIV_BGT60TRXX_CONF_CHIRP_REPETITION_TIME_S*(i*(XENSIV_BGT60TRXX_CONF_SAMPLE_RATE/(N_SAMPLES))))/((float32_t)2*(XENSIV_BGT60TRXX_CONF_END_FREQ_HZ - XENSIV_BGT60TRXX_CONF_START_FREQ_HZ));
+    rangebin[i] = ((299792458.0f)*XENSIV_BGT60TRXX_CONF_CHIRP_REPETITION_TIME_S*(freqbin[i]))/((float32_t)2*(XENSIV_BGT60TRXX_CONF_END_FREQ_HZ - XENSIV_BGT60TRXX_CONF_START_FREQ_HZ));
   }
   arm_rfft_fast_init_f32(&rfft, N_SAMPLES);            
   blackman_init(); //hann_init();
@@ -238,7 +238,7 @@ void StartDefaultTask(void *argument)
       HAL_GPIO_WritePin(led_select0_GPIO_Port,led_select0_Pin,0);
       HAL_Delay(100);
     }
-    HAL_UART_Receive(&huart2, buffer, 4, 100);
+    HAL_UART_Receive(&huart2, buffer, 4, 1000);
     memcpy(&strucbuffer,buffer,sizeof(uart_data));
     rxdata = &strucbuffer;
     distsum = 0;

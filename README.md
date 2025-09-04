@@ -18,26 +18,18 @@
 - **Peripheral Initialization**  
   - SPI (for radar FIFO reads)  
   - GPIO (power enable, oscillator enable, translator OE, LEDs, IRQ lines)  
-  - DMA (for high-speed SPI transfers, optional)  
-  - FreeRTOS (task creation, scheduler start)  
+  - FreeRTOS (task creation, scheduler start)
+  - UART (for sending radar data)
 
 ##### 2. FreeRTOS Tasks
 ##### Default Task (`StartDefaultTask`)
-- Configures radar power sequence:
-  - Enable LDO (`en_ldo_radar`)  
-  - Enable oscillator (`osc_en`)  
-  - Enable translator (`Translator_OE`)  
-  - Initialize LEDs / status GPIOs
-- Handles radar chip setup:
-  - Reset radar (HW/SW reset)  
-  - Configure registers (`register_list[]`)  
-  - Setup virtual frame (chirps, samples, repetitions, cutoffs, gain, etc.)
+- 
 
 ##### Data Acquisition Task
 - Waits for **IRQ pin** to signal FIFO ready.
-- Calls `xensiv_bgt60trxx_get_fifo_data()` to fetch samples (1024 samples per chirp).
-- Uses **SPI burst reads** to unpack 24-bit words into 12-bit ADC samples.
-- Optional: DMA mode for continuous FIFO reads.
+- Calls `xensiv_bgt60trxx_get_fifo_data()` to fetch samples (1024 samples per buffer)
+- Uses **SPI burst reads** to unpack 24-bit words into 12-bit ADC samples
+- DMA mode for continuous FIFO reads from radar, send buffer to queue
 
 ##### Signal Processing Task
 - Applies **window function** (e.g., Hann).
@@ -50,12 +42,11 @@
   - Detect peaks, compute **range bins** (map FFT index → distance)
 
 ##### Application Task
-- Aggregates results across multiple frames.  
+- Averages results across multiple frames.  
 - Computes distance estimates.  
 - Can recognize static vs moving objects.  
 - Sends results to:
-  - UART (debug output)  
-  - External database or network (future expansion)  
+  - UART (ESP32)  
 
 ##### 3. Memory Management
 - Uses **FreeRTOS heap_4.c** (best-fit allocator with coalescing).  
@@ -65,15 +56,14 @@
   - `float32_t mag[512]`  
 
 ##### 4. Program Flow
-1. **Boot → System Init**  
-2. **Start FreeRTOS Scheduler**  
-3. **Default Task powers radar**  
+1. **Boot → System Init, Radar init**  
+2. **FreeRTOS Init → initalize arrays, start scheduler**  
 4. **Data Acquisition Task reads samples**  
 5. **Signal Processing Task computes FFT**  
-6. **Application Task interprets distances**  
+6. **Application Task interprets distances, commands received from UART**  
 7. **Loop indefinitely**
 
-## Setting the Dev Environment
+## Setting up the Dev Environment
 
 ### Install Git
 ### Installing OpenOCD for STM32 (h5ceu6) (stlinkv3mini)
