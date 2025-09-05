@@ -29,14 +29,14 @@ int32_t xensiv_bgt60trxx_platform_spi_transfer(const SPI_HandleTypeDef* iface, u
     
 }
 
-int32_t xensiv_bgt60trxx_platform_spi_fifo_read(SPI_HandleTypeDef* iface, uint16_t* rx_data, uint32_t len){
+int32_t xensiv_bgt60trxx_platform_spi_fifo_read(SPI_HandleTypeDef* iface, uint8_t* rx_data, uint32_t len){
 
     HAL_StatusTypeDef commstatus = HAL_OK;
     uint32_t numbytes = (XENSIV_BGT60TRXX_CONF_NUM_SAMPLES_PER_CHIRP/2)*3;
     uint8_t buffer[numbytes]; //1536 is the number of bytes in a burst when the fifo limit is set to 1024(num of 12 bit samples)
     uint8_t keephigh[numbytes];
     memset(keephigh, 0xFF, numbytes);
-    commstatus = HAL_SPI_TransmitReceive(iface,keephigh,buffer,numbytes,HAL_MAX_DELAY/100);
+    commstatus = HAL_SPI_TransmitReceive_DMA(iface,keephigh,buffer,numbytes);
 
     for (size_t i = 0, j = 0; i < XENSIV_BGT60TRXX_CONF_NUM_SAMPLES_PER_CHIRP; i += 2, j += 3) { //construct 12bit samples from buffer
         uint8_t b0 = buffer[j+0];
