@@ -54,17 +54,19 @@ extern "C" {
 /* USER CODE BEGIN EM */
 
 /* USER CODE END EM */
-extern osThreadId_t defaultTaskHandle;
+extern osThreadId_t signalprocessingHandle;
 extern osThreadId_t getradardataHandle;
-extern osSemaphoreId_t myCountingSem01Handle;
+extern osThreadId_t applicationHandle;
+extern osMessageQueueId_t radardataqueueHandle;
 
 /* Exported function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
 
 /* USER CODE END FunctionPrototypes */
 
-void StartDefaultTask(void *argument);
-void StartTask04(void *argument);
+void signalprocessing(void *argument);
+void getradardata(void *argument);
+void application(void *argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 

@@ -74,24 +74,31 @@ float32_t calibrated[512];
 static float win[N_SAMPLES];     // coefficients
 xensiv_bgt60trxx_t dev;
 /* USER CODE END Variables */
-/* Definitions for defaultTask */
-osThreadId_t defaultTaskHandle;
-const osThreadAttr_t defaultTask_attributes = {
-  .name = "defaultTask",
+/* Definitions for signalprocessing */
+osThreadId_t signalprocessingHandle;
+const osThreadAttr_t signalprocessing_attributes = {
+  .name = "signalprocessing",
   .priority = (osPriority_t) osPriorityNormal,
-  .stack_size = 8192 * 4
+  .stack_size = 4096 * 4
 };
 /* Definitions for getradardata */
 osThreadId_t getradardataHandle;
 const osThreadAttr_t getradardata_attributes = {
   .name = "getradardata",
   .priority = (osPriority_t) osPriorityNormal,
-  .stack_size = 8192 * 4
+  .stack_size = 4096 * 4
 };
-/* Definitions for myCountingSem01 */
-osSemaphoreId_t myCountingSem01Handle;
-const osSemaphoreAttr_t myCountingSem01_attributes = {
-  .name = "myCountingSem01"
+/* Definitions for application */
+osThreadId_t applicationHandle;
+const osThreadAttr_t application_attributes = {
+  .name = "application",
+  .priority = (osPriority_t) osPriorityNormal,
+  .stack_size = 4096 * 4
+};
+/* Definitions for radardataqueue */
+osMessageQueueId_t radardataqueueHandle;
+const osMessageQueueAttr_t radardataqueue_attributes = {
+  .name = "radardataqueue"
 };
 
 /* Private function prototypes -----------------------------------------------*/
@@ -150,8 +157,6 @@ void MX_FREERTOS_Init(void) {
   /* USER CODE BEGIN RTOS_MUTEX */
   /* add mutexes, ... */
   /* USER CODE END RTOS_MUTEX */
-  /* creation of myCountingSem01 */
-  myCountingSem01Handle = osSemaphoreNew(2, 2, &myCountingSem01_attributes);
 
   /* USER CODE BEGIN RTOS_SEMAPHORES */
   /* add semaphores, ... */
@@ -160,15 +165,20 @@ void MX_FREERTOS_Init(void) {
   /* USER CODE BEGIN RTOS_TIMERS */
   /* start timers, add new ones, ... */
   /* USER CODE END RTOS_TIMERS */
+  /* creation of radardataqueue */
+  radardataqueueHandle = osMessageQueueNew (5, sizeof(uint16_t), &radardataqueue_attributes);
 
   /* USER CODE BEGIN RTOS_QUEUES */
   /* add queues, ... */
   /* USER CODE END RTOS_QUEUES */
-  /* creation of defaultTask */
-  defaultTaskHandle = osThreadNew(StartDefaultTask, NULL, &defaultTask_attributes);
+  /* creation of signalprocessing */
+  signalprocessingHandle = osThreadNew(signalprocessing, NULL, &signalprocessing_attributes);
 
   /* creation of getradardata */
-  getradardataHandle = osThreadNew(StartTask04, NULL, &getradardata_attributes);
+  getradardataHandle = osThreadNew(getradardata, NULL, &getradardata_attributes);
+
+  /* creation of application */
+  applicationHandle = osThreadNew(application, NULL, &application_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -179,16 +189,24 @@ void MX_FREERTOS_Init(void) {
   /* USER CODE END RTOS_EVENTS */
 
 }
-/* USER CODE BEGIN Header_StartDefaultTask */
+/* USER CODE BEGIN Header_signalprocessing */
 /**
-* @brief Function implementing the defaultTask thread.
+* @brief Function implementing the signalprocessing thread.
 * @param argument: Not used
 * @retval None
 */
-/* USER CODE END Header_StartDefaultTask */
-void StartDefaultTask(void *argument)
+/* USER CODE END Header_signalprocessing */
+void signalprocessing(void *argument)
 {
-  /* USER CODE BEGIN defaultTask */
+  /* USER CODE BEGIN signalprocessing */
+  /* Infinite loop */
+  /*
+  TODO:
+  receive data from radardataqueue.
+  Fix the 12bit overflow in this task instead of the fifo_burst_read function.
+  
+  
+  */
   float32_t unbiased_data[N_SAMPLES] = {}; //
   float32_t mag[512] = {};    
   float32_t fftoutput[1024] = {};
@@ -205,9 +223,7 @@ void StartDefaultTask(void *argument)
   /* Infinite loop */
   for(;;)
   {
-    while(osSemaphoreAcquire(myCountingSem01Handle,0) != osOK){}
     for(int i =0; i < 5; ++i){ //parses 5 N_SAMPLE arrays at a time;
-      availabledataindex = semaphoretokens - (osSemaphoreGetCount(myCountingSem01Handle) + 1);
 
       for(size_t j = 0; j < N_SAMPLES; ++j){ //get average for unbiasing
         sum += (float) data[availabledataindex][i][j]; // semaphore count determines which 5 N_SAMPLE arrays are available.
@@ -217,7 +233,6 @@ void StartDefaultTask(void *argument)
         unbiased_data[j] = (float)(data[availabledataindex][i][j]) - avg;
 
       }
-
       apply_window(unbiased_data);
       arm_rfft_fast_f32(&rfft, unbiased_data, fftoutput, ifftFlag);
       fftmag(fftoutput,mag,N_SAMPLES/2);
@@ -226,7 +241,6 @@ void StartDefaultTask(void *argument)
       arm_max_f32(mag, N_SAMPLES/2, &maxValue, &maxindex); 
       distsum += rangebin[maxindex];
   }
-  osSemaphoreRelease(myCountingSem01Handle); 
     distance = distsum/5; 
     if(distance < 1.5){
       HAL_GPIO_WritePin(led_select1_GPIO_Port,led_select1_Pin,0);
@@ -244,35 +258,51 @@ void StartDefaultTask(void *argument)
     distsum = 0;
  
   }
-  /* USER CODE END defaultTask */
+  /* USER CODE END signalprocessing */
 }
 
-/* USER CODE BEGIN Header_StartTask04 */
+/* USER CODE BEGIN Header_getradardata */
 /**
 * @brief Function implementing the getradardata thread.
 * @param argument: Not used
 * @retval None
 */
-/* USER CODE END Header_StartTask04 */
-void StartTask04(void *argument)
+/* USER CODE END Header_getradardata */
+void getradardata(void *argument)
 {
   /* USER CODE BEGIN getradardata */
   int availabledataindex;
   /* Infinite loop */
   for(;;)
   {
-    while(osSemaphoreAcquire(myCountingSem01Handle,0) != osOK){}
+
     for(int i = 0; i < 5; ++i){
-      availabledataindex = semaphoretokens - (osSemaphoreGetCount(myCountingSem01Handle) + 1);
       uint32_t check2 = xensiv_bgt60trxx_soft_reset(&dev,XENSIV_BGT60TRXX_RESET_FIFO);
       uint32_t check3 = xensiv_bgt60trxx_start_frame(&dev,true);
       while(!(HAL_GPIO_ReadPin(IRQ_R_M_GPIO_Port,IRQ_R_M_Pin))){}
       xensiv_bgt60trxx_get_fifo_data(&dev,data[availabledataindex][i],1024);
     }
-    osSemaphoreRelease(myCountingSem01Handle);
 
   }
   /* USER CODE END getradardata */
+}
+
+/* USER CODE BEGIN Header_application */
+/**
+* @brief Function implementing the application thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_application */
+void application(void *argument)
+{
+  /* USER CODE BEGIN application */
+  /* Infinite loop */
+  for(;;)
+  {
+    osDelay(1);
+  }
+  /* USER CODE END application */
 }
 
 /* Private application code --------------------------------------------------*/
