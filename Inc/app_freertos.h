@@ -62,7 +62,7 @@ extern osMessageQueueId_t emptybuffersHandle;
 
 /* Exported function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
-
+extern osMemoryPoolId_t mpid_MemPool;
 /* USER CODE END FunctionPrototypes */
 
 void signalprocessing(void *argument);

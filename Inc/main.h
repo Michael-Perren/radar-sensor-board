@@ -31,7 +31,8 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "xensiv_bgt60trxx.h"
+#include "xensiv_bgt60trxx_conf.h"
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
@@ -40,6 +41,10 @@ typedef struct __attribute__((packed)) uart_data {
     uint16_t  address;
     uint16_t msg;
 } uart_data;
+
+extern uint8_t * activebuffer;
+extern xensiv_bgt60trxx_t dev;
+extern uint8_t keephigh[N_BYTES];
 /* USER CODE END ET */
 
 /* Exported constants --------------------------------------------------------*/

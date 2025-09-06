@@ -78,6 +78,25 @@
 #ifndef XENSIV_BGT60TRXX_RESET_WAIT_TIMEOUT
 #define XENSIV_BGT60TRXX_RESET_WAIT_TIMEOUT             (0xFFFFFFFFU)
 #endif
+#define XENSIV_BGT60TRXX_SPI_REG_XFER_LEN_BYTES         (4U)
+#define XENSIV_BGT60TRXX_SOFT_RESET_DELAY_MS            (10U)
+
+#define XENSIV_BGT60TRXX_SPI_WR_OP_MSK                  (0x01000000UL)
+#define XENSIV_BGT60TRXX_SPI_WR_OP_POS                  (24U)
+#define XENSIV_BGT60TRXX_SPI_GSR0_MSK                   (0x0F000000UL)
+#define XENSIV_BGT60TRXX_SPI_GSR0_POS                   (24U)
+#define XENSIV_BGT60TRXX_SPI_REGADR_MSK                 (0xFE000000UL)
+#define XENSIV_BGT60TRXX_SPI_REGADR_POS                 (25U)
+#define XENSIV_BGT60TRXX_SPI_DATA_MSK                   (0x00FFFFFFUL)
+#define XENSIV_BGT60TRXX_SPI_DATA_POS                   (0U)
+#define XENSIV_BGT60TRXX_SPI_BURST_MODE_CMD             (0xFF000000UL)
+//#define XENSIV_BGT60TRXX_SPI_BURST_MODE_CMD             (0xFF00FE00UL)
+#define XENSIV_BGT60TRXX_SPI_BURST_MODE_SADR_MSK        (0x00FE0000UL)
+#define XENSIV_BGT60TRXX_SPI_BURST_MODE_SADR_POS        (17U)
+#define XENSIV_BGT60TRXX_SPI_BURST_MODE_RWB_MSK         (0x00010000UL)
+#define XENSIV_BGT60TRXX_SPI_BURST_MODE_RWB_POS         (16U)
+#define XENSIV_BGT60TRXX_SPI_BURST_MODE_LEN_MSK         (0x0000FE00UL)
+#define XENSIV_BGT60TRXX_SPI_BURST_MODE_LEN_POS         (9U)
 
 /********************************* Type definitions **************************************/
 
@@ -318,6 +337,9 @@ void xensiv_bgt60trxx_hard_reset(const xensiv_bgt60trxx_t* dev);
  * @return Next word in the LFSR sequence.
  */
 uint16_t xensiv_bgt60trxx_get_next_test_word(uint16_t cur_test_word);
+
+/*custom fifo read function to use with freertos*/
+void custom_get_fifo_data(xensiv_bgt60trxx_t* dev, uint8_t* data, uint32_t num_samples);
 
 #ifdef __cplusplus
 }

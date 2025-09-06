@@ -59,6 +59,7 @@ target_link_directories(${CMAKE_PROJECT_NAME} PRIVATE
 target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     Src/xensiv_bgt60trxx_platform.c
     Src/xensiv_bgt60trxx.c
+    Src/spiglobalmap.c
     # Add user sources here
 )
 

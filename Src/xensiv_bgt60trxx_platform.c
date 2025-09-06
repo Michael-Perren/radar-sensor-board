@@ -12,20 +12,19 @@ void xensiv_bgt60trxx_platform_spi_cs_set(const SPI_HandleTypeDef* iface, bool v
 }
 
 int32_t xensiv_bgt60trxx_platform_spi_transfer(const SPI_HandleTypeDef* iface, uint8_t* tx_data, uint8_t* rx_data, uint32_t len){
-    HAL_StatusTypeDef commstatus = HAL_OK;
-
-    if(rx_data == NULL){
-        commstatus = HAL_SPI_Transmit(iface,tx_data,len,HAL_MAX_DELAY/100);
-    }
-    else if(tx_data == NULL){
-        commstatus = HAL_SPI_Receive (iface, rx_data, len,HAL_MAX_DELAY/100);
-    }
-    else if (rx_data && tx_data){
-        commstatus = HAL_SPI_TransmitReceive(iface, tx_data,rx_data, len,HAL_MAX_DELAY/100);
-    }
-    else{
-        commstatus = HAL_ERROR;
-    }
+    HAL_StatusTypeDef commstatus = HAL_BUSY;
+        if(rx_data == NULL){
+            commstatus = HAL_SPI_Transmit(iface,tx_data,len,HAL_MAX_DELAY/100);
+        }
+        else if(tx_data == NULL){
+            commstatus = HAL_SPI_Receive (iface, rx_data, len,HAL_MAX_DELAY/100);
+        }
+        else if (rx_data && tx_data){
+            commstatus = HAL_SPI_TransmitReceive(iface, tx_data,rx_data, len,HAL_MAX_DELAY/100);
+        }
+        else{
+            commstatus = HAL_ERROR;
+        }
     return commstatus;
     
 }
@@ -33,10 +32,10 @@ int32_t xensiv_bgt60trxx_platform_spi_transfer(const SPI_HandleTypeDef* iface, u
 int32_t xensiv_bgt60trxx_platform_spi_fifo_read(SPI_HandleTypeDef* iface, uint8_t* rx_data, uint32_t len){
 
     HAL_StatusTypeDef commstatus = HAL_OK;
-    uint8_t keephigh[N_BYTES];
+    // uint8_t keephigh[N_BYTES];
     // uint32_t numbytes = N_BYTES;
     // uint8_t buffer[numbytes]; //1536 is the number of bytes in a burst when the fifo limit is set to 1024(num of 12 bit samples)
-    memset(keephigh, 0xFF, N_BYTES);
+    // memset(keephigh, 0xFF, N_BYTES);
     commstatus = HAL_SPI_TransmitReceive_DMA(iface,keephigh,rx_data,N_BYTES);
 
 
@@ -47,6 +46,7 @@ int32_t xensiv_bgt60trxx_platform_spi_fifo_read(SPI_HandleTypeDef* iface, uint8_
 
 void xensiv_bgt60trxx_platform_delay(uint32_t ms){
     HAL_Delay(ms);
+   
 }
 
 

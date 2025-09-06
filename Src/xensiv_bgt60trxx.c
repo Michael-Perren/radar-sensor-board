@@ -27,27 +27,9 @@
 
 #include "xensiv_bgt60trxx.h"
 #include "xensiv_bgt60trxx_platform.h"
+#include "app_freertos.h"
 
 
-#define XENSIV_BGT60TRXX_SPI_REG_XFER_LEN_BYTES         (4U)
-#define XENSIV_BGT60TRXX_SOFT_RESET_DELAY_MS            (10U)
-
-#define XENSIV_BGT60TRXX_SPI_WR_OP_MSK                  (0x01000000UL)
-#define XENSIV_BGT60TRXX_SPI_WR_OP_POS                  (24U)
-#define XENSIV_BGT60TRXX_SPI_GSR0_MSK                   (0x0F000000UL)
-#define XENSIV_BGT60TRXX_SPI_GSR0_POS                   (24U)
-#define XENSIV_BGT60TRXX_SPI_REGADR_MSK                 (0xFE000000UL)
-#define XENSIV_BGT60TRXX_SPI_REGADR_POS                 (25U)
-#define XENSIV_BGT60TRXX_SPI_DATA_MSK                   (0x00FFFFFFUL)
-#define XENSIV_BGT60TRXX_SPI_DATA_POS                   (0U)
-#define XENSIV_BGT60TRXX_SPI_BURST_MODE_CMD             (0xFF000000UL)
-//#define XENSIV_BGT60TRXX_SPI_BURST_MODE_CMD             (0xFF00FE00UL)
-#define XENSIV_BGT60TRXX_SPI_BURST_MODE_SADR_MSK        (0x00FE0000UL)
-#define XENSIV_BGT60TRXX_SPI_BURST_MODE_SADR_POS        (17U)
-#define XENSIV_BGT60TRXX_SPI_BURST_MODE_RWB_MSK         (0x00010000UL)
-#define XENSIV_BGT60TRXX_SPI_BURST_MODE_RWB_POS         (16U)
-#define XENSIV_BGT60TRXX_SPI_BURST_MODE_LEN_MSK         (0x0000FE00UL)
-#define XENSIV_BGT60TRXX_SPI_BURST_MODE_LEN_POS         (9U)
 
 
 struct xensiv_bgt60trxx_type
@@ -167,7 +149,8 @@ int32_t xensiv_bgt60trxx_config(xensiv_bgt60trxx_t* dev,
 
     int32_t status = xensiv_bgt60trxx_soft_reset(dev,
                                                  XENSIV_BGT60TRXX_RESET_SW);
-
+        
+    HAL_Delay(XENSIV_BGT60TRXX_SOFT_RESET_DELAY_MS);
     if (XENSIV_BGT60TRXX_STATUS_OK == status)
     {
         /* Apply register configuration */
@@ -293,8 +276,8 @@ int32_t xensiv_bgt60trxx_get_fifo_data(xensiv_bgt60trxx_t* dev, uint8_t* data,
 {
     xensiv_bgt60trxx_platform_assert(dev != NULL);
     xensiv_bgt60trxx_platform_assert(data != NULL);
-    xensiv_bgt60trxx_platform_assert((num_samples % 2U) == 0U);
-    xensiv_bgt60trxx_platform_assert((num_samples / 2U) <= dev->type->fifo_size);
+    //xensiv_bgt60trxx_platform_assert((num_samples % 2U) == 0U);
+    //xensiv_bgt60trxx_platform_assert((num_samples / 2U) <= dev->type->fifo_size);
 
     uint32_t gsr0;
     uint32_t reg_addr = XENSIV_BGT60TRXX_SPI_BURST_MODE_CMD |
@@ -404,10 +387,6 @@ int32_t xensiv_bgt60trxx_soft_reset(const xensiv_bgt60trxx_t* dev,
         {
             status = XENSIV_BGT60TRXX_STATUS_TIMEOUT_ERROR;
         }
-        else
-        {
-            xensiv_bgt60trxx_platform_delay(XENSIV_BGT60TRXX_SOFT_RESET_DELAY_MS);
-        }
     }
 
     return status;
@@ -475,4 +454,20 @@ uint16_t xensiv_bgt60trxx_get_next_test_word(uint16_t cur_test_word)
                             (cur_test_word <<  3)) & 0x0800U);
 
     return next_value;
+}
+
+
+void custom_get_fifo_data(xensiv_bgt60trxx_t* dev, uint8_t* data, uint32_t num_samples){
+
+    xensiv_bgt60trxx_platform_assert(dev != NULL);
+    xensiv_bgt60trxx_platform_assert(data != NULL);
+
+    uint32_t reg_addr = XENSIV_BGT60TRXX_SPI_BURST_MODE_CMD |
+                        (dev->type->fifo_addr << XENSIV_BGT60TRXX_SPI_BURST_MODE_SADR_POS);
+    reg_addr = xensiv_bgt60trxx_platform_word_reverse(reg_addr);
+    /* SPI read burst mode command */
+    xensiv_bgt60trxx_platform_spi_cs_set(dev->iface, false);
+    HAL_SPI_Transmit_IT(dev->iface,(uint8_t*)&reg_addr,XENSIV_BGT60TRXX_SPI_REG_XFER_LEN_BYTES);
+
+    
 }

@@ -30,6 +30,7 @@
 #include <stdint.h>
 #include <stdio.h>
 #include "app_freertos.h"
+#include "spiglobalmap.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -58,6 +59,9 @@ DMA_HandleTypeDef handle_GPDMA1_Channel0;
 UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
+uint32_t gsr0; //global status register 0 for xensiv radar
+static uint32_t burstcmd = 51455;
+uint8_t keephigh[N_BYTES] = { [0 ... N_BYTES-1] = 0xFF };
 
 /* USER CODE END PV */
 
@@ -76,7 +80,12 @@ static void MX_SPI1_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
+typedef enum{
+  SMALL_TRANSFER,
+  BIG_TRANSFER,
+} spi_context;
+void custom_spi_init();
+static void custom_txrxcplt(SPI_HandleTypeDef *hspi, void *user_ctx);
 /* USER CODE END 0 */
 
 /**
@@ -96,7 +105,6 @@ int main(void)
   HAL_Init();
 
   /* USER CODE BEGIN Init */
-
   /* USER CODE END Init */
 
   /* Configure the system clock */
@@ -114,6 +122,7 @@ int main(void)
   MX_USART2_UART_Init();
   MX_SPI1_Init();
   /* USER CODE BEGIN 2 */
+  custom_spi_init();
   /* USER CODE END 2 */
 
   /* Init scheduler */
@@ -497,24 +506,70 @@ static void MX_GPIO_Init(void)
 /* USER CODE BEGIN 4 */
 
 void HAL_SPI_TxRxCpltCallback(SPI_HandleTypeDef *hspi){
-  uint8_t * buffer;
-  osStatus_t status;
-  status = osMessageQueueGet(emptybuffersHandle,&buffer,0,0);
-  if(status == osOK){
-    osMessageQueuePut(filledbuffersHandle,&buffer,0,0);
-  }
-  /*
-  TODO:
+  // xensiv_bgt60trxx_platform_spi_cs_set(hspi, true);
+  // uint8_t * temp;
+  // osStatus_t status;
+  // //status = osMessageQueueGet(emptybuffersHandle,&temp,0,0);
+  // if(activebuffer != NULL){
+  //   temp = activebuffer;
+  //   activebuffer = NULL;
+  //   status = osMessageQueuePut(filledbuffersHandle,&temp,0,0);
+  // }  
+  // BaseType_t xHPW = pdFALSE;
+  // vTaskNotifyGiveFromISR(getradardataHandle, &xHPW);
+  // portYIELD_FROM_ISR(xHPW);
+  spi_cb_dispatch(hspi, SPI_CB_TXRX_COMPLETE);
+}
+
+void HAL_GPIO_EXTI_Rising_Callback(uint16_t GPIO_Pin){
+  // custom_get_fifo_data(&dev,activebuffer,N_SAMPLES);
+  HAL_NVIC_DisableIRQ(EXTI6_IRQn);
+  // BaseType_t xHPW = pdFALSE;
+  // vTaskNotifyGiveFromISR(getradardataHandle, &xHPW);
+  // portYIELD_FROM_ISR(xHPW);
   
-  send unprocessed data to radardataqueue.
-  if higher priority task awoke, yield from isr to higher priority task.
-  */
-  
+  xensiv_bgt60trxx_platform_spi_cs_set(&hspi1, false);
+  HAL_SPI_TransmitReceive_IT(&hspi1,(uint8_t *)&burstcmd,(uint8_t *)&gsr0,XENSIV_BGT60TRXX_SPI_REG_XFER_LEN_BYTES);
+
 }
 
 
+static void custom_txrxcplt(SPI_HandleTypeDef *hspi, void *user_ctx){
+  spi_context * this_ctx = (spi_context *) user_ctx;
+  if(*this_ctx == BIG_TRANSFER){
+    xensiv_bgt60trxx_platform_spi_cs_set(hspi, true);
+    uint8_t * temp;
+    osStatus_t status;
+    //status = osMessageQueueGet(emptybuffersHandle,&temp,0,0);
+    if(activebuffer != NULL){
+      temp = activebuffer;
+      activebuffer = NULL;
+      status = osMessageQueuePut(filledbuffersHandle,&temp,0,0);
+    }  
+    *this_ctx = SMALL_TRANSFER;
+    BaseType_t xHPW = pdFALSE;
+    vTaskNotifyGiveFromISR(getradardataHandle, &xHPW);
+    portYIELD_FROM_ISR(xHPW);
+  }
+  else{
+    if (gsr0 == 240){
+      *this_ctx = BIG_TRANSFER;
+      xensiv_bgt60trxx_platform_spi_fifo_read(hspi, activebuffer, N_BYTES);
+    }
+    else{
+      BaseType_t xHPW = pdFALSE;
+      osMemoryPoolFree(mpid_MemPool,activebuffer);
+      vTaskNotifyGiveFromISR(getradardataHandle, &xHPW);
+      portYIELD_FROM_ISR(xHPW);
+    }
+    gsr0 = 0;
+  }
+}
 
-
+void custom_spi_init(void){
+  static spi_context ctx = SMALL_TRANSFER;
+  spi_cb_register(&hspi1, SPI_CB_TXRX_COMPLETE, custom_txrxcplt, &ctx);
+}
 /* USER CODE END 4 */
 
 /**

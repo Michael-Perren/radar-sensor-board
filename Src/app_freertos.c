@@ -40,7 +40,8 @@
 /* USER CODE BEGIN PD */
 #define ARM_MATH_MVEF
 #define M_PI 3.14159265358979323846
-#define N_BUFFERS 2
+#define N_BUFFERS 10
+#define XENSIV_BGT60TRXX_SOFT_RESET_DELAY_MS            (10U)
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -53,13 +54,15 @@
 extern RTC_HandleTypeDef hrtc;
 extern SPI_HandleTypeDef hspi1;
 extern UART_HandleTypeDef huart2;
-
+xensiv_bgt60trxx_t dev = {};
+int8_t * buffer = NULL;
+// uint8_t * buffptr = NULL;
+// uint8_t ** buffer = &buffptr; //FreeRTOS queue send and receive functions use memcpy
 uart_data * rxdata;
 bool iscalibrated;
 uint32_t ifftFlag = 0;
 arm_rfft_fast_instance_f32 rfft;
-uint8_t buffers[N_BUFFERS][N_BYTES];
-
+uint8_t * activebuffer = NULL;
 
 uint32_t maxindex = 0;
 float32_t freqbin[N_SAMPLES];
@@ -70,15 +73,13 @@ float32_t distance = 0;
 float32_t thres[N_SAMPLES/2];
 float32_t calibrated[N_SAMPLES/2];
 static float win[N_SAMPLES];     // coefficients
-xensiv_bgt60trxx_t dev;
-osMemoryPoolId_t mpid_MemPool; 
-
+osMemoryPoolId_t mpid_MemPool = NULL;
 /* USER CODE END Variables */
 /* Definitions for signalprocessing */
 osThreadId_t signalprocessingHandle;
 const osThreadAttr_t signalprocessing_attributes = {
   .name = "signalprocessing",
-  .priority = (osPriority_t) osPriorityNormal,
+  .priority = (osPriority_t) osPriorityNormal4,
   .stack_size = 4096 * 4
 };
 /* Definitions for getradardata */
@@ -92,7 +93,7 @@ const osThreadAttr_t getradardata_attributes = {
 osThreadId_t applicationHandle;
 const osThreadAttr_t application_attributes = {
   .name = "application",
-  .priority = (osPriority_t) osPriorityNormal,
+  .priority = (osPriority_t) osPriorityLow,
   .stack_size = 4096 * 4
 };
 /* Definitions for filledbuffers */
@@ -170,6 +171,8 @@ void MX_FREERTOS_Init(void) {
   }
 
   
+
+  
   /* USER CODE END Init */
 
   /* USER CODE BEGIN RTOS_MUTEX */
@@ -184,9 +187,9 @@ void MX_FREERTOS_Init(void) {
   /* start timers, add new ones, ... */
   /* USER CODE END RTOS_TIMERS */
   /* creation of filledbuffers */
-  filledbuffersHandle = osMessageQueueNew (2, sizeof(uint8_t *), &filledbuffers_attributes);
+  filledbuffersHandle = osMessageQueueNew (10, sizeof(uint32_t), &filledbuffers_attributes);
   /* creation of emptybuffers */
-  emptybuffersHandle = osMessageQueueNew (2, sizeof(uint8_t *), &emptybuffers_attributes);
+  emptybuffersHandle = osMessageQueueNew (2, sizeof(uint32_t), &emptybuffers_attributes);
 
   /* USER CODE BEGIN RTOS_QUEUES */
   /* add queues, ... */
@@ -227,7 +230,7 @@ void signalprocessing(void *argument)
   
   */
   osStatus_t status;
-  uint8_t * buffer;
+  uint8_t * raw;
   uint16_t data[N_SAMPLES] = {};
   float32_t unbiased_data[N_SAMPLES] = {}; //
   float32_t mag[N_SAMPLES/2] = {};    
@@ -235,9 +238,10 @@ void signalprocessing(void *argument)
   /* Infinite loop */
   for(;;)
   {
-    status = osMessageQueueGet(filledbuffersHandle, &buffer, NULL, 0U);   // wait for message
+    status = osMessageQueueGet(filledbuffersHandle, &raw, NULL, osWaitForever);   // wait for message
     if (status == osOK) {
-      reconstruct_samples(buffer,data);
+      reconstruct_samples(raw,data);
+      osMemoryPoolFree(mpid_MemPool,raw);
       remove_dcbias(data, unbiased_data);
       apply_window(unbiased_data);
       arm_rfft_fast_f32(&rfft, unbiased_data, fftoutput, ifftFlag);
@@ -246,7 +250,7 @@ void signalprocessing(void *argument)
       cacfar(mag,thres,0.05,3,7);
       arm_max_f32(mag, N_SAMPLES/2, &maxValue, &maxindex); 
       distance = rangebin[maxindex];
-      osMemoryPoolFree(mpid_MemPool,buffer);
+      
   }
 }
   /* USER CODE END signalprocessing */
@@ -262,18 +266,24 @@ void signalprocessing(void *argument)
 void getradardata(void *argument)
 {
   /* USER CODE BEGIN getradardata */
-  uint8_t * buffer;
   /* Infinite loop */
   for(;;)
   {
-    buffer = (uint8_t *) osMemoryPoolAlloc(mpid_MemPool,0U);
-    if(buffer != NULL){
-      osMessageQueuePut(emptybuffersHandle,&buffer,0,0);
+      uint8_t * temp = (uint8_t *) osMemoryPoolAlloc(mpid_MemPool,0U); //
+
+      //osMessageQueuePut(emptybuffersHandle,buffer,0,0);
+      if(temp == NULL){ osDelay(1); continue;}
+      activebuffer = temp;
+      //while(hspi1.State != HAL_SPI_STATE_READY);
       uint32_t check2 = xensiv_bgt60trxx_soft_reset(&dev,XENSIV_BGT60TRXX_RESET_FIFO);
+      osDelay(XENSIV_BGT60TRXX_SOFT_RESET_DELAY_MS/ portTICK_PERIOD_MS);
+      __HAL_GPIO_EXTI_CLEAR_IT(radar_fifo_interrupt_Pin);
+      HAL_NVIC_EnableIRQ(EXTI6_IRQn);
       uint32_t check3 = xensiv_bgt60trxx_start_frame(&dev,true);
-      while(!(HAL_GPIO_ReadPin(IRQ_R_M_GPIO_Port,IRQ_R_M_Pin))){}
-      xensiv_bgt60trxx_get_fifo_data(&dev,buffer,N_SAMPLES);
-    }
+      ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
+      //while(!(HAL_GPIO_ReadPin(IRQ_R_M_GPIO_Port,IRQ_R_M_Pin))){}
+      //xensiv_bgt60trxx_get_fifo_data(&dev,buffer,N_SAMPLES);
+    
   }
   /* USER CODE END getradardata */
 }
@@ -304,7 +314,7 @@ void application(void *argument)
     // HAL_UART_Receive(&huart2, buffer, 4, 1000);
     // memcpy(&strucbuffer,buffer,sizeof(uart_data));
     // rxdata = &strucbuffer;
-    osDelay(1);
+    osDelay(10);
   }
   /* USER CODE END application */
 }
@@ -377,47 +387,10 @@ static inline void cacfar(float32_t * fftmag, float32_t * threshold, float32_t P
 }
 
 static void calibrate(void){
-  float32_t mag[512] = {};
-  float32_t magavg[512] = {};    
-    
-  uint16_t data[1024] = {};
-  float32_t unbiased_data[1024] = {};
-  float32_t fftoutput[1024] = {};  
-
-  for(size_t i = 0; i < 1024;++i){
-    freqbin[i] = i*(XENSIV_BGT60TRXX_CONF_SAMPLE_RATE/(N_SAMPLES));
-    rangebin[i] = ((299792458.0f)*XENSIV_BGT60TRXX_CONF_CHIRP_REPETITION_TIME_S*(i*(XENSIV_BGT60TRXX_CONF_SAMPLE_RATE/(N_SAMPLES))))/((float32_t)2*(XENSIV_BGT60TRXX_CONF_END_FREQ_HZ - XENSIV_BGT60TRXX_CONF_START_FREQ_HZ));
-  }
-  arm_rfft_fast_init_f32(&rfft, 1024);            
-  blackman_init(); //hann_init();
-  /* Infinite loop */
-
-    for(int i =0; i < 5; ++i){
-     
-      uint32_t check2 = xensiv_bgt60trxx_soft_reset(&dev,XENSIV_BGT60TRXX_RESET_FIFO);
-      uint32_t check3 = xensiv_bgt60trxx_start_frame(&dev,true);
-      while(!(HAL_GPIO_ReadPin(IRQ_R_M_GPIO_Port,IRQ_R_M_Pin))){}
-      xensiv_bgt60trxx_get_fifo_data(&dev,data,1024);
-
-      remove_dcbias(data,unbiased_data);
-      apply_window(unbiased_data);
-
-      arm_rfft_fast_f32(&rfft, unbiased_data, fftoutput, ifftFlag);
-      
-      fftmag(fftoutput,mag,N_SAMPLES/2);
-      memset(mag,0,10*sizeof(float32_t));
-      for(int i =0; i < N_SAMPLES/2; ++i){
-        magavg[i] += mag[i];
-      }
-  }  
-  avgmag(magavg,512,5);
-  cacfar(magavg,thres,0.05,3,7);
-  for(int i =0; i < N_SAMPLES/2; ++i){
-    if(mag[i] > 0){
-      calibrated[i] = 1;
-    }
-  }
-  iscalibrated = true;
+  /*
+  Fill array: calibrated with 1s where the fftmag is non-zero
+  This function is meant to be used when there are non objects present in the radars FOV.
+  */
 }
 
 static inline void applycalibration(float32_t * fftmag, float32_t dampen){
