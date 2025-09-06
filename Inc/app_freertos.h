@@ -57,7 +57,8 @@ extern "C" {
 extern osThreadId_t signalprocessingHandle;
 extern osThreadId_t getradardataHandle;
 extern osThreadId_t applicationHandle;
-extern osMessageQueueId_t radardataqueueHandle;
+extern osMessageQueueId_t filledbuffersHandle;
+extern osMessageQueueId_t emptybuffersHandle;
 
 /* Exported function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */

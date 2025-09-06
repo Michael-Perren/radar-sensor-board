@@ -29,6 +29,7 @@
 #include <math.h>
 #include <stdint.h>
 #include <stdio.h>
+#include "app_freertos.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -478,11 +479,15 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : IRQ_R_M_Pin */
-  GPIO_InitStruct.Pin = IRQ_R_M_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  /*Configure GPIO pin : radar_fifo_interrupt_Pin */
+  GPIO_InitStruct.Pin = radar_fifo_interrupt_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(IRQ_R_M_GPIO_Port, &GPIO_InitStruct);
+  HAL_GPIO_Init(radar_fifo_interrupt_GPIO_Port, &GPIO_InitStruct);
+
+  /* EXTI interrupt init*/
+  HAL_NVIC_SetPriority(EXTI6_IRQn, 5, 0);
+  HAL_NVIC_EnableIRQ(EXTI6_IRQn);
 
   /* USER CODE BEGIN MX_GPIO_Init_2 */
 
@@ -491,14 +496,20 @@ static void MX_GPIO_Init(void)
 
 /* USER CODE BEGIN 4 */
 
-void HAL_SPI_RxCpltCallback(SPI_HandleTypeDef *hspi){
+void HAL_SPI_TxRxCpltCallback(SPI_HandleTypeDef *hspi){
+  uint8_t * buffer;
+  osStatus_t status;
+  status = osMessageQueueGet(emptybuffersHandle,&buffer,0,0);
+  if(status == osOK){
+    osMessageQueuePut(filledbuffersHandle,&buffer,0,0);
+  }
   /*
   TODO:
+  
   send unprocessed data to radardataqueue.
   if higher priority task awoke, yield from isr to higher priority task.
-
-  
   */
+  
 }
 
 

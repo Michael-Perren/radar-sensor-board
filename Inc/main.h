@@ -72,8 +72,9 @@ void Error_Handler(void);
 #define led_select0_GPIO_Port GPIOA
 #define led_select1_Pin GPIO_PIN_9
 #define led_select1_GPIO_Port GPIOA
-#define IRQ_R_M_Pin GPIO_PIN_6
-#define IRQ_R_M_GPIO_Port GPIOB
+#define radar_fifo_interrupt_Pin GPIO_PIN_6
+#define radar_fifo_interrupt_GPIO_Port GPIOB
+#define radar_fifo_interrupt_EXTI_IRQn EXTI6_IRQn
 #define RST_M_R_Pin GPIO_PIN_7
 #define RST_M_R_GPIO_Port GPIOB
 

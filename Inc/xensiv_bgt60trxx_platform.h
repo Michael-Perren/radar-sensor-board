@@ -94,7 +94,7 @@ int32_t xensiv_bgt60trxx_platform_spi_transfer(const SPI_HandleTypeDef* iface,
  * otherwise returns XENSIV_BGT60TRXX_STATUS_COM_ERROR.
  */
 int32_t xensiv_bgt60trxx_platform_spi_fifo_read(SPI_HandleTypeDef* iface,
-                                                uint16_t* rx_data,
+                                                uint8_t* rx_data,
                                                 uint32_t len);
 
 /**

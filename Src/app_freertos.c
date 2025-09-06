@@ -40,8 +40,7 @@
 /* USER CODE BEGIN PD */
 #define ARM_MATH_MVEF
 #define M_PI 3.14159265358979323846
-#define N_SAMPLES XENSIV_BGT60TRXX_CONF_NUM_SAMPLES_PER_CHIRP
-#define semaphoretokens 2
+#define N_BUFFERS 2
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -57,11 +56,10 @@ extern UART_HandleTypeDef huart2;
 
 uart_data * rxdata;
 bool iscalibrated;
-uint32_t sum = 0;
-uint16_t avg = 0;
-uint16_t data[semaphoretokens][5][N_SAMPLES] = {};
 uint32_t ifftFlag = 0;
 arm_rfft_fast_instance_f32 rfft;
+uint8_t buffers[N_BUFFERS][N_BYTES];
+
 
 uint32_t maxindex = 0;
 float32_t freqbin[N_SAMPLES];
@@ -69,10 +67,12 @@ float32_t rangebin[N_SAMPLES];
 float32_t maxValue;
 float32_t distsum = 0;
 float32_t distance = 0;
-float32_t thres[512];
-float32_t calibrated[512];
+float32_t thres[N_SAMPLES/2];
+float32_t calibrated[N_SAMPLES/2];
 static float win[N_SAMPLES];     // coefficients
 xensiv_bgt60trxx_t dev;
+osMemoryPoolId_t mpid_MemPool; 
+
 /* USER CODE END Variables */
 /* Definitions for signalprocessing */
 osThreadId_t signalprocessingHandle;
@@ -95,22 +95,31 @@ const osThreadAttr_t application_attributes = {
   .priority = (osPriority_t) osPriorityNormal,
   .stack_size = 4096 * 4
 };
-/* Definitions for radardataqueue */
-osMessageQueueId_t radardataqueueHandle;
-const osMessageQueueAttr_t radardataqueue_attributes = {
-  .name = "radardataqueue"
+/* Definitions for filledbuffers */
+osMessageQueueId_t filledbuffersHandle;
+const osMessageQueueAttr_t filledbuffers_attributes = {
+  .name = "filledbuffers"
+};
+/* Definitions for emptybuffers */
+osMessageQueueId_t emptybuffersHandle;
+const osMessageQueueAttr_t emptybuffers_attributes = {
+  .name = "emptybuffers"
 };
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
 static void hann_init(void);
 static void blackman_init(void);
+static void calibrate(void);
+int Init_MemPool (void); 
 static inline void apply_window(float *x /* len = 1024 */);
 static inline void fftmag(float32_t * inp,float32_t * mag,int len);
 static inline void avgmag(float32_t * mag,int len, int div);
 static inline void cacfar(float32_t * fftmag, float32_t * threshold, float32_t Pfa, int guard, int training);
 static inline void applycalibration(float32_t * fftmag, float32_t dampen);
-static void calibrate(void);
+static inline void reconstruct_samples(uint8_t * buffer, uint16_t * rx_data);
+static inline void remove_dcbias(uint16_t * unprocessed, float32_t * processed);
+
 /* USER CODE END FunctionPrototypes */
 
 /* USER CODE BEGIN 4 */
@@ -152,6 +161,15 @@ void MX_FREERTOS_Init(void) {
   xensiv_bgt60trxx_hard_reset(&dev);
   int32_t check1 = xensiv_bgt60trxx_init(&dev, &hspi1,  false);
   int32_t check0 = xensiv_bgt60trxx_config(&dev,register_list,40);
+  arm_rfft_fast_init_f32(&rfft, N_SAMPLES);            
+  blackman_init(); //hann_init();
+  Init_MemPool();
+  for(size_t i = 0; i < 1024;++i){
+    freqbin[i] = i*(XENSIV_BGT60TRXX_CONF_SAMPLE_RATE/(N_SAMPLES));
+    rangebin[i] = ((299792458.0f)*XENSIV_BGT60TRXX_CONF_CHIRP_REPETITION_TIME_S*(freqbin[i]))/((float32_t)2*(XENSIV_BGT60TRXX_CONF_END_FREQ_HZ - XENSIV_BGT60TRXX_CONF_START_FREQ_HZ));
+  }
+
+  
   /* USER CODE END Init */
 
   /* USER CODE BEGIN RTOS_MUTEX */
@@ -165,8 +183,10 @@ void MX_FREERTOS_Init(void) {
   /* USER CODE BEGIN RTOS_TIMERS */
   /* start timers, add new ones, ... */
   /* USER CODE END RTOS_TIMERS */
-  /* creation of radardataqueue */
-  radardataqueueHandle = osMessageQueueNew (5, sizeof(uint16_t), &radardataqueue_attributes);
+  /* creation of filledbuffers */
+  filledbuffersHandle = osMessageQueueNew (2, sizeof(uint8_t *), &filledbuffers_attributes);
+  /* creation of emptybuffers */
+  emptybuffersHandle = osMessageQueueNew (2, sizeof(uint8_t *), &emptybuffers_attributes);
 
   /* USER CODE BEGIN RTOS_QUEUES */
   /* add queues, ... */
@@ -205,59 +225,30 @@ void signalprocessing(void *argument)
   receive data from radardataqueue.
   Fix the 12bit overflow in this task instead of the fifo_burst_read function.
   
-  
   */
+  osStatus_t status;
+  uint8_t * buffer;
+  uint16_t data[N_SAMPLES] = {};
   float32_t unbiased_data[N_SAMPLES] = {}; //
-  float32_t mag[512] = {};    
-  float32_t fftoutput[1024] = {};
-  uint8_t  buffer[127] = {};
-  uart_data strucbuffer;
-  int availabledataindex;  
-
-  for(size_t i = 0; i < 1024;++i){
-    freqbin[i] = i*(XENSIV_BGT60TRXX_CONF_SAMPLE_RATE/(N_SAMPLES));
-    rangebin[i] = ((299792458.0f)*XENSIV_BGT60TRXX_CONF_CHIRP_REPETITION_TIME_S*(freqbin[i]))/((float32_t)2*(XENSIV_BGT60TRXX_CONF_END_FREQ_HZ - XENSIV_BGT60TRXX_CONF_START_FREQ_HZ));
-  }
-  arm_rfft_fast_init_f32(&rfft, N_SAMPLES);            
-  blackman_init(); //hann_init();
+  float32_t mag[N_SAMPLES/2] = {};    
+  float32_t fftoutput[N_SAMPLES] = {};
   /* Infinite loop */
   for(;;)
   {
-    for(int i =0; i < 5; ++i){ //parses 5 N_SAMPLE arrays at a time;
-
-      for(size_t j = 0; j < N_SAMPLES; ++j){ //get average for unbiasing
-        sum += (float) data[availabledataindex][i][j]; // semaphore count determines which 5 N_SAMPLE arrays are available.
-      }
-      avg = sum/N_SAMPLES;
-      for(size_t j = 0; j < N_SAMPLES; ++j){ //remove dc bias
-        unbiased_data[j] = (float)(data[availabledataindex][i][j]) - avg;
-
-      }
+    status = osMessageQueueGet(filledbuffersHandle, &buffer, NULL, 0U);   // wait for message
+    if (status == osOK) {
+      reconstruct_samples(buffer,data);
+      remove_dcbias(data, unbiased_data);
       apply_window(unbiased_data);
       arm_rfft_fast_f32(&rfft, unbiased_data, fftoutput, ifftFlag);
       fftmag(fftoutput,mag,N_SAMPLES/2);
       memset(mag,0,10*sizeof(float32_t)); //first 10 of mag array are garbage values
       cacfar(mag,thres,0.05,3,7);
       arm_max_f32(mag, N_SAMPLES/2, &maxValue, &maxindex); 
-      distsum += rangebin[maxindex];
+      distance = rangebin[maxindex];
+      osMemoryPoolFree(mpid_MemPool,buffer);
   }
-    distance = distsum/5; 
-    if(distance < 1.5){
-      HAL_GPIO_WritePin(led_select1_GPIO_Port,led_select1_Pin,0);
-      HAL_GPIO_WritePin(led_select0_GPIO_Port,led_select0_Pin,1);
-      HAL_Delay(100);
-    }
-    else{
-      HAL_GPIO_WritePin(led_select1_GPIO_Port,led_select1_Pin,1);
-      HAL_GPIO_WritePin(led_select0_GPIO_Port,led_select0_Pin,0);
-      HAL_Delay(100);
-    }
-    HAL_UART_Receive(&huart2, buffer, 4, 1000);
-    memcpy(&strucbuffer,buffer,sizeof(uart_data));
-    rxdata = &strucbuffer;
-    distsum = 0;
- 
-  }
+}
   /* USER CODE END signalprocessing */
 }
 
@@ -271,18 +262,18 @@ void signalprocessing(void *argument)
 void getradardata(void *argument)
 {
   /* USER CODE BEGIN getradardata */
-  int availabledataindex;
+  uint8_t * buffer;
   /* Infinite loop */
   for(;;)
   {
-
-    for(int i = 0; i < 5; ++i){
+    buffer = (uint8_t *) osMemoryPoolAlloc(mpid_MemPool,0U);
+    if(buffer != NULL){
+      osMessageQueuePut(emptybuffersHandle,&buffer,0,0);
       uint32_t check2 = xensiv_bgt60trxx_soft_reset(&dev,XENSIV_BGT60TRXX_RESET_FIFO);
       uint32_t check3 = xensiv_bgt60trxx_start_frame(&dev,true);
       while(!(HAL_GPIO_ReadPin(IRQ_R_M_GPIO_Port,IRQ_R_M_Pin))){}
-      xensiv_bgt60trxx_get_fifo_data(&dev,data[availabledataindex][i],1024);
+      xensiv_bgt60trxx_get_fifo_data(&dev,buffer,N_SAMPLES);
     }
-
   }
   /* USER CODE END getradardata */
 }
@@ -297,9 +288,22 @@ void getradardata(void *argument)
 void application(void *argument)
 {
   /* USER CODE BEGIN application */
+  // uint8_t  buffer[127] = {};
+  // uart_data strucbuffer;
   /* Infinite loop */
   for(;;)
   {
+    if(distance < 1.5){
+      HAL_GPIO_WritePin(led_select1_GPIO_Port,led_select1_Pin,0);
+      HAL_GPIO_WritePin(led_select0_GPIO_Port,led_select0_Pin,1);
+    }
+    else{
+      HAL_GPIO_WritePin(led_select1_GPIO_Port,led_select1_Pin,1);
+      HAL_GPIO_WritePin(led_select0_GPIO_Port,led_select0_Pin,0);
+    }
+    // HAL_UART_Receive(&huart2, buffer, 4, 1000);
+    // memcpy(&strucbuffer,buffer,sizeof(uart_data));
+    // rxdata = &strucbuffer;
     osDelay(1);
   }
   /* USER CODE END application */
@@ -395,15 +399,7 @@ static void calibrate(void){
       while(!(HAL_GPIO_ReadPin(IRQ_R_M_GPIO_Port,IRQ_R_M_Pin))){}
       xensiv_bgt60trxx_get_fifo_data(&dev,data,1024);
 
-      sum = 0;
-      for(size_t i = 0; i < N_SAMPLES; ++i){ //Remove DC bias
-        sum += (float) data[i];
-      }
-      avg = sum/N_SAMPLES;
-      for(size_t i = 0; i < N_SAMPLES; ++i){
-        unbiased_data[i] = (float)(data[i]) - avg;
-
-      }  
+      remove_dcbias(data,unbiased_data);
       apply_window(unbiased_data);
 
       arm_rfft_fast_f32(&rfft, unbiased_data, fftoutput, ifftFlag);
@@ -430,6 +426,45 @@ static inline void applycalibration(float32_t * fftmag, float32_t dampen){
         fftmag[i] = fftmag[i] * dampen;
     }
   }
+}
+
+int Init_MemPool (void) {
+ 
+  mpid_MemPool = osMemoryPoolNew(N_BUFFERS, N_BYTES, NULL);
+  if (mpid_MemPool == NULL) {
+    return 1; // MemPool object not created, handle failure
+  }
+  return(0);
+}
+ 
+static inline void reconstruct_samples(uint8_t * buffer, uint16_t * rx_data){
+      for (size_t i = 0, j = 0; i < N_SAMPLES; i += 2, j += 3) { //construct 12bit samples from buffer
+        uint8_t b0 = buffer[j+0];
+        uint8_t b1 = buffer[j+1];
+        uint8_t b2 = buffer[j+2];
+        rx_data[i+0] = ((uint16_t)b0 << 4) | (b1 >> 4); // from adc: in buffer | 1st 12bit sample | 2nd 12bit sample|
+        rx_data[i+1] = ((uint16_t)(b1 & 0x0F) << 8) | b2;
+        //FIX: Compensate for 12 bit int overflow (temporary solution) 
+        if(rx_data[i] < 1000){ 
+            rx_data[i] += 4095;
+        }
+        if(rx_data[i+1] < 1000){
+            rx_data[i+1] += 4095;
+        }
+    }
+}
+
+static inline void remove_dcbias(uint16_t * unprocessed, float32_t * processed){
+    uint32_t sum = 0;
+    float32_t avg = 0;
+    for(size_t j = 0; j < N_SAMPLES; ++j){ //get average for unbiasing
+      sum += unprocessed[j]; // semaphore count determines which 5 N_SAMPLE arrays are available.
+    }
+    avg = (float) sum/N_SAMPLES;
+    for(size_t j = 0; j < N_SAMPLES; ++j){ //remove dc bias
+      processed[j] = (float)(unprocessed[j]) - avg;
+
+    }
 }
 /* USER CODE END Application */
 
