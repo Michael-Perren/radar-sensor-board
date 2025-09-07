@@ -31,6 +31,13 @@
         "app_freertos.h": "c",
         "stddef.h": "c",
         "string.h": "c",
-        "stdlib.h": "c"
+        "stdlib.h": "c",
+        "any": "c",
+        "memory_resource": "c",
+        "memory": "c",
+        "format": "c",
+        "fstream": "c",
+        "ostream": "c",
+        "sstream": "c"
     }
 }

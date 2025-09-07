@@ -55,7 +55,6 @@ extern RTC_HandleTypeDef hrtc;
 extern SPI_HandleTypeDef hspi1;
 extern UART_HandleTypeDef huart2;
 xensiv_bgt60trxx_t dev = {};
-int8_t * buffer = NULL;
 // uint8_t * buffptr = NULL;
 // uint8_t ** buffer = &buffptr; //FreeRTOS queue send and receive functions use memcpy
 uart_data * rxdata;
@@ -68,8 +67,6 @@ uint32_t maxindex = 0;
 float32_t freqbin[N_SAMPLES];
 float32_t rangebin[N_SAMPLES];
 float32_t maxValue;
-float32_t distsum = 0;
-float32_t distance = 0;
 float32_t thres[N_SAMPLES/2];
 float32_t calibrated[N_SAMPLES/2];
 static float win[N_SAMPLES];     // coefficients
@@ -101,10 +98,10 @@ osMessageQueueId_t filledbuffersHandle;
 const osMessageQueueAttr_t filledbuffers_attributes = {
   .name = "filledbuffers"
 };
-/* Definitions for emptybuffers */
-osMessageQueueId_t emptybuffersHandle;
-const osMessageQueueAttr_t emptybuffers_attributes = {
-  .name = "emptybuffers"
+/* Definitions for distancequeue */
+osMessageQueueId_t distancequeueHandle;
+const osMessageQueueAttr_t distancequeue_attributes = {
+  .name = "distancequeue"
 };
 
 /* Private function prototypes -----------------------------------------------*/
@@ -188,8 +185,8 @@ void MX_FREERTOS_Init(void) {
   /* USER CODE END RTOS_TIMERS */
   /* creation of filledbuffers */
   filledbuffersHandle = osMessageQueueNew (10, sizeof(uint32_t), &filledbuffers_attributes);
-  /* creation of emptybuffers */
-  emptybuffersHandle = osMessageQueueNew (2, sizeof(uint32_t), &emptybuffers_attributes);
+  /* creation of distancequeue */
+  distancequeueHandle = osMessageQueueNew (10, sizeof(float32_t), &distancequeue_attributes);
 
   /* USER CODE BEGIN RTOS_QUEUES */
   /* add queues, ... */
@@ -223,12 +220,8 @@ void signalprocessing(void *argument)
 {
   /* USER CODE BEGIN signalprocessing */
   /* Infinite loop */
-  /*
-  TODO:
-  receive data from radardataqueue.
-  Fix the 12bit overflow in this task instead of the fifo_burst_read function.
-  
-  */
+  float32_t distance = 0;
+  uint8_t qreceived = 0;
   osStatus_t status;
   uint8_t * raw;
   uint16_t data[N_SAMPLES] = {};
@@ -240,6 +233,7 @@ void signalprocessing(void *argument)
   {
     status = osMessageQueueGet(filledbuffersHandle, &raw, NULL, osWaitForever);   // wait for message
     if (status == osOK) {
+      ++qreceived;
       reconstruct_samples(raw,data);
       osMemoryPoolFree(mpid_MemPool,raw);
       remove_dcbias(data, unbiased_data);
@@ -249,7 +243,12 @@ void signalprocessing(void *argument)
       memset(mag,0,10*sizeof(float32_t)); //first 10 of mag array are garbage values
       cacfar(mag,thres,0.05,3,7);
       arm_max_f32(mag, N_SAMPLES/2, &maxValue, &maxindex); 
-      distance = rangebin[maxindex];
+      distance += rangebin[maxindex];
+      if(qreceived == 10){
+        distance = distance/10;
+        osMessageQueuePut(distancequeueHandle, &distance, 0, 0);
+        qreceived = 0;
+      }
       
   }
 }
@@ -269,20 +268,17 @@ void getradardata(void *argument)
   /* Infinite loop */
   for(;;)
   {
-      uint8_t * temp = (uint8_t *) osMemoryPoolAlloc(mpid_MemPool,0U); //
-
-      //osMessageQueuePut(emptybuffersHandle,buffer,0,0);
-      if(temp == NULL){ osDelay(1); continue;}
+      uint8_t * temp = (uint8_t *) osMemoryPoolAlloc(mpid_MemPool,0U);
+      if(temp == NULL){ osDelay(1); continue;} //wait if memory isn't available 
       activebuffer = temp;
-      //while(hspi1.State != HAL_SPI_STATE_READY);
-      uint32_t check2 = xensiv_bgt60trxx_soft_reset(&dev,XENSIV_BGT60TRXX_RESET_FIFO);
+
+      uint32_t check2 = xensiv_bgt60trxx_soft_reset(&dev,XENSIV_BGT60TRXX_RESET_FIFO); //clear radar's global status register
       osDelay(XENSIV_BGT60TRXX_SOFT_RESET_DELAY_MS/ portTICK_PERIOD_MS);
+
       __HAL_GPIO_EXTI_CLEAR_IT(radar_fifo_interrupt_Pin);
       HAL_NVIC_EnableIRQ(EXTI6_IRQn);
       uint32_t check3 = xensiv_bgt60trxx_start_frame(&dev,true);
       ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
-      //while(!(HAL_GPIO_ReadPin(IRQ_R_M_GPIO_Port,IRQ_R_M_Pin))){}
-      //xensiv_bgt60trxx_get_fifo_data(&dev,buffer,N_SAMPLES);
     
   }
   /* USER CODE END getradardata */
@@ -298,11 +294,12 @@ void getradardata(void *argument)
 void application(void *argument)
 {
   /* USER CODE BEGIN application */
-  // uint8_t  buffer[127] = {};
-  // uart_data strucbuffer;
-  /* Infinite loop */
+  float32_t distance = 0;
+  osStatus_t status;
   for(;;)
   {
+    status = osMessageQueueGet(distancequeueHandle,&distance,0,osWaitForever);
+
     if(distance < 1.5){
       HAL_GPIO_WritePin(led_select1_GPIO_Port,led_select1_Pin,0);
       HAL_GPIO_WritePin(led_select0_GPIO_Port,led_select0_Pin,1);
@@ -311,10 +308,6 @@ void application(void *argument)
       HAL_GPIO_WritePin(led_select1_GPIO_Port,led_select1_Pin,1);
       HAL_GPIO_WritePin(led_select0_GPIO_Port,led_select0_Pin,0);
     }
-    // HAL_UART_Receive(&huart2, buffer, 4, 1000);
-    // memcpy(&strucbuffer,buffer,sizeof(uart_data));
-    // rxdata = &strucbuffer;
-    osDelay(10);
   }
   /* USER CODE END application */
 }

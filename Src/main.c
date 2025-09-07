@@ -61,7 +61,7 @@ UART_HandleTypeDef huart2;
 /* USER CODE BEGIN PV */
 uint32_t gsr0; //global status register 0 for xensiv radar
 static uint32_t burstcmd = 51455;
-uint8_t keephigh[N_BYTES] = { [0 ... N_BYTES-1] = 0xFF };
+uint8_t keephigh[N_BYTES] = { [0 ... N_BYTES-1] = 0xFF }; //mosi must be high when receiving bursts.
 
 /* USER CODE END PV */
 
@@ -506,31 +506,13 @@ static void MX_GPIO_Init(void)
 /* USER CODE BEGIN 4 */
 
 void HAL_SPI_TxRxCpltCallback(SPI_HandleTypeDef *hspi){
-  // xensiv_bgt60trxx_platform_spi_cs_set(hspi, true);
-  // uint8_t * temp;
-  // osStatus_t status;
-  // //status = osMessageQueueGet(emptybuffersHandle,&temp,0,0);
-  // if(activebuffer != NULL){
-  //   temp = activebuffer;
-  //   activebuffer = NULL;
-  //   status = osMessageQueuePut(filledbuffersHandle,&temp,0,0);
-  // }  
-  // BaseType_t xHPW = pdFALSE;
-  // vTaskNotifyGiveFromISR(getradardataHandle, &xHPW);
-  // portYIELD_FROM_ISR(xHPW);
   spi_cb_dispatch(hspi, SPI_CB_TXRX_COMPLETE);
 }
 
-void HAL_GPIO_EXTI_Rising_Callback(uint16_t GPIO_Pin){
-  // custom_get_fifo_data(&dev,activebuffer,N_SAMPLES);
+void HAL_GPIO_EXTI_Rising_Callback(uint16_t GPIO_Pin){ //radar raises irq pin when its fifo buffer is full.
   HAL_NVIC_DisableIRQ(EXTI6_IRQn);
-  // BaseType_t xHPW = pdFALSE;
-  // vTaskNotifyGiveFromISR(getradardataHandle, &xHPW);
-  // portYIELD_FROM_ISR(xHPW);
-  
   xensiv_bgt60trxx_platform_spi_cs_set(&hspi1, false);
-  HAL_SPI_TransmitReceive_IT(&hspi1,(uint8_t *)&burstcmd,(uint8_t *)&gsr0,XENSIV_BGT60TRXX_SPI_REG_XFER_LEN_BYTES);
-
+  HAL_SPI_TransmitReceive_IT(&hspi1,(uint8_t *)&burstcmd,(uint8_t *)&gsr0,XENSIV_BGT60TRXX_SPI_REG_XFER_LEN_BYTES); //send a burst read command.
 }
 
 
@@ -540,24 +522,23 @@ static void custom_txrxcplt(SPI_HandleTypeDef *hspi, void *user_ctx){
     xensiv_bgt60trxx_platform_spi_cs_set(hspi, true);
     uint8_t * temp;
     osStatus_t status;
-    //status = osMessageQueueGet(emptybuffersHandle,&temp,0,0);
-    if(activebuffer != NULL){
+    if(activebuffer != NULL){ //check for activebuffer reallocate race condition (getradardatatask)
       temp = activebuffer;
       activebuffer = NULL;
       status = osMessageQueuePut(filledbuffersHandle,&temp,0,0);
     }  
     *this_ctx = SMALL_TRANSFER;
     BaseType_t xHPW = pdFALSE;
-    vTaskNotifyGiveFromISR(getradardataHandle, &xHPW);
+    vTaskNotifyGiveFromISR(getradardataHandle, &xHPW); //done with activebuffer wake up get radar data task
     portYIELD_FROM_ISR(xHPW);
   }
   else{
-    if (gsr0 == 240){
+    if (gsr0 == 240){ //check that the radar is ready for a fifo burst read.
       *this_ctx = BIG_TRANSFER;
       xensiv_bgt60trxx_platform_spi_fifo_read(hspi, activebuffer, N_BYTES);
     }
     else{
-      BaseType_t xHPW = pdFALSE;
+      BaseType_t xHPW = pdFALSE; //If the radar returns an error return the memory and awake getradardatatask.
       osMemoryPoolFree(mpid_MemPool,activebuffer);
       vTaskNotifyGiveFromISR(getradardataHandle, &xHPW);
       portYIELD_FROM_ISR(xHPW);
@@ -566,7 +547,7 @@ static void custom_txrxcplt(SPI_HandleTypeDef *hspi, void *user_ctx){
   }
 }
 
-void custom_spi_init(void){
+void custom_spi_init(void){ //spi registry is used to differentiate between commands and burst reads.
   static spi_context ctx = SMALL_TRANSFER;
   spi_cb_register(&hspi1, SPI_CB_TXRX_COMPLETE, custom_txrxcplt, &ctx);
 }
