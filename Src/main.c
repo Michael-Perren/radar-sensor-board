@@ -57,6 +57,8 @@ DMA_HandleTypeDef handle_GPDMA1_Channel1;
 DMA_HandleTypeDef handle_GPDMA1_Channel0;
 
 UART_HandleTypeDef huart2;
+DMA_HandleTypeDef handle_GPDMA1_Channel5;
+DMA_HandleTypeDef handle_GPDMA1_Channel4;
 
 /* USER CODE BEGIN PV */
 uint32_t gsr0; //global status register 0 for xensiv radar
@@ -86,6 +88,9 @@ typedef enum{
 } spi_context;
 void custom_spi_init();
 static void custom_txrxcplt(SPI_HandleTypeDef *hspi, void *user_ctx);
+uart_data uartrx = {};
+uint8_t uartrxbuffer[1024] = {};
+static int uartqsize = 0;
 /* USER CODE END 0 */
 
 /**
@@ -123,6 +128,8 @@ int main(void)
   MX_SPI1_Init();
   /* USER CODE BEGIN 2 */
   custom_spi_init();
+  int32_t check30 = HAL_RCC_GetPCLK1Freq();
+
   /* USER CODE END 2 */
 
   /* Init scheduler */
@@ -254,6 +261,10 @@ static void MX_GPDMA1_Init(void)
     HAL_NVIC_EnableIRQ(GPDMA1_Channel0_IRQn);
     HAL_NVIC_SetPriority(GPDMA1_Channel1_IRQn, 5, 0);
     HAL_NVIC_EnableIRQ(GPDMA1_Channel1_IRQn);
+    HAL_NVIC_SetPriority(GPDMA1_Channel4_IRQn, 5, 0);
+    HAL_NVIC_EnableIRQ(GPDMA1_Channel4_IRQn);
+    HAL_NVIC_SetPriority(GPDMA1_Channel5_IRQn, 5, 0);
+    HAL_NVIC_EnableIRQ(GPDMA1_Channel5_IRQn);
 
   /* USER CODE BEGIN GPDMA1_Init 1 */
 
@@ -411,7 +422,7 @@ static void MX_USART2_UART_Init(void)
 
   /* USER CODE END USART2_Init 1 */
   huart2.Instance = USART2;
-  huart2.Init.BaudRate = 9600 ;
+  huart2.Init.BaudRate = 9600;
   huart2.Init.WordLength = UART_WORDLENGTH_8B;
   huart2.Init.StopBits = UART_STOPBITS_1;
   huart2.Init.Parity = UART_PARITY_NONE;
@@ -419,9 +430,9 @@ static void MX_USART2_UART_Init(void)
   huart2.Init.HwFlowCtl = UART_HWCONTROL_NONE;
   huart2.Init.OverSampling = UART_OVERSAMPLING_16;
   huart2.Init.OneBitSampling = UART_ONE_BIT_SAMPLE_DISABLE;
-  huart2.Init.ClockPrescaler = UART_PRESCALER_DIV1;
+  huart2.Init.ClockPrescaler = UART_PRESCALER_DIV8;
   huart2.AdvancedInit.AdvFeatureInit = UART_ADVFEATURE_NO_INIT;
-  if (HAL_RS485Ex_Init(&huart2, UART_DE_POLARITY_HIGH, 0, 0) != HAL_OK)
+  if (HAL_UART_Init(&huart2) != HAL_OK)
   {
     Error_Handler();
   }
@@ -433,7 +444,7 @@ static void MX_USART2_UART_Init(void)
   {
     Error_Handler();
   }
-  if (HAL_UARTEx_DisableFifoMode(&huart2) != HAL_OK)
+  if (HAL_UARTEx_EnableFifoMode(&huart2) != HAL_OK)
   {
     Error_Handler();
   }
@@ -462,10 +473,17 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, SPI1_NSS_Pin|led_select0_Pin|led_select1_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOA, RS485_DE_Pin|SPI1_NSS_Pin|led_select0_Pin|led_select1_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOB, Translator_OE_Pin|en_ldo_radar_Pin|osc_en_Pin|RST_M_R_Pin, GPIO_PIN_RESET);
+
+  /*Configure GPIO pin : RS485_DE_Pin */
+  GPIO_InitStruct.Pin = RS485_DE_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+  HAL_GPIO_Init(RS485_DE_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pin : SPI1_NSS_Pin */
   GPIO_InitStruct.Pin = SPI1_NSS_Pin;
@@ -550,6 +568,29 @@ static void custom_txrxcplt(SPI_HandleTypeDef *hspi, void *user_ctx){
 void custom_spi_init(void){ //spi registry is used to differentiate between commands and burst reads.
   static spi_context ctx = SMALL_TRANSFER;
   spi_cb_register(&hspi1, SPI_CB_TXRX_COMPLETE, custom_txrxcplt, &ctx);
+}
+
+// void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart){
+//   memcpy(&uartrx,uartrxbuffer,sizeof(uart_data));
+//   HAL_UART_Receive_DMA(&huart2,uartrxbuffer,sizeof(uartrx));
+// }
+
+void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size){
+  memcpy(&uartrx,uartrxbuffer,sizeof(uart_data));
+  if(uartrx.address == DEV_ADDRESS){
+     uint16_t uartcommand = uartrx.msg;
+    osMessageQueuePut(uartcommandsHandle,&uartcommand,0,0);
+  }
+  HAL_UARTEx_ReceiveToIdle_DMA(&huart2,uartrxbuffer,sizeof(uart_data));
+}
+
+void HAL_UART_ErrorCallback(UART_HandleTypeDef *huart){
+  uint32_t test = huart->ErrorCode;
+  __HAL_UART_CLEAR_OREFLAG(&huart2);
+  __HAL_UART_CLEAR_FEFLAG(&huart2);
+  __HAL_UART_CLEAR_NEFLAG(&huart2);
+  __HAL_UART_CLEAR_PEFLAG(&huart2);
+  HAL_UARTEx_ReceiveToIdle_DMA(&huart2,uartrxbuffer,sizeof(uart_data));
 }
 /* USER CODE END 4 */
 

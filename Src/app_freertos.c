@@ -57,12 +57,12 @@ extern UART_HandleTypeDef huart2;
 xensiv_bgt60trxx_t dev = {};
 // uint8_t * buffptr = NULL;
 // uint8_t ** buffer = &buffptr; //FreeRTOS queue send and receive functions use memcpy
-uart_data * rxdata;
+
 bool iscalibrated;
 uint32_t ifftFlag = 0;
 arm_rfft_fast_instance_f32 rfft;
 uint8_t * activebuffer = NULL;
-
+float32_t globdist = 0;
 uint32_t maxindex = 0;
 float32_t freqbin[N_SAMPLES];
 float32_t rangebin[N_SAMPLES];
@@ -102,6 +102,11 @@ const osMessageQueueAttr_t filledbuffers_attributes = {
 osMessageQueueId_t distancequeueHandle;
 const osMessageQueueAttr_t distancequeue_attributes = {
   .name = "distancequeue"
+};
+/* Definitions for uartcommands */
+osMessageQueueId_t uartcommandsHandle;
+const osMessageQueueAttr_t uartcommands_attributes = {
+  .name = "uartcommands"
 };
 
 /* Private function prototypes -----------------------------------------------*/
@@ -154,6 +159,7 @@ void MX_FREERTOS_Init(void) {
   HAL_GPIO_WritePin(Translator_OE_GPIO_Port,Translator_OE_Pin,1);
   HAL_GPIO_WritePin(led_select0_GPIO_Port,led_select0_Pin,0);
   HAL_GPIO_WritePin(led_select1_GPIO_Port,led_select1_Pin,0);
+  HAL_GPIO_WritePin(RS485_DE_GPIO_Port,RS485_DE_Pin,0);
   HAL_Delay(100);
   dev.iface = &hspi1;
   xensiv_bgt60trxx_hard_reset(&dev);
@@ -166,8 +172,16 @@ void MX_FREERTOS_Init(void) {
     freqbin[i] = i*(XENSIV_BGT60TRXX_CONF_SAMPLE_RATE/(N_SAMPLES));
     rangebin[i] = ((299792458.0f)*XENSIV_BGT60TRXX_CONF_CHIRP_REPETITION_TIME_S*(freqbin[i]))/((float32_t)2*(XENSIV_BGT60TRXX_CONF_END_FREQ_HZ - XENSIV_BGT60TRXX_CONF_START_FREQ_HZ));
   }
-
   
+  __HAL_UART_CLEAR_OREFLAG(&huart2);
+  __HAL_UART_CLEAR_FEFLAG(&huart2);
+  __HAL_UART_CLEAR_NEFLAG(&huart2);
+  __HAL_UART_CLEAR_PEFLAG(&huart2);
+  __HAL_UART_ENABLE_IT(&huart2, UART_IT_IDLE);
+  
+  HAL_StatusTypeDef check23 = HAL_UARTEx_ReceiveToIdle_DMA(&huart2,uartrxbuffer,sizeof(uart_data));
+  HAL_UART_StateTypeDef test1 = huart2.RxState;
+  // HAL_StatusTypeDef check23 = HAL_UART_Receive_DMA(&huart2,uartrxbuffer,sizeof(uart_data));
 
   
   /* USER CODE END Init */
@@ -187,6 +201,8 @@ void MX_FREERTOS_Init(void) {
   filledbuffersHandle = osMessageQueueNew (10, sizeof(uint32_t), &filledbuffers_attributes);
   /* creation of distancequeue */
   distancequeueHandle = osMessageQueueNew (10, sizeof(float32_t), &distancequeue_attributes);
+  /* creation of uartcommands */
+  uartcommandsHandle = osMessageQueueNew (30, sizeof(uint16_t), &uartcommands_attributes);
 
   /* USER CODE BEGIN RTOS_QUEUES */
   /* add queues, ... */
@@ -295,19 +311,32 @@ void application(void *argument)
 {
   /* USER CODE BEGIN application */
   float32_t distance = 0;
+  uint16_t uartcommand;
   osStatus_t status;
+  bool reserved = false;
   for(;;)
   {
-    status = osMessageQueueGet(distancequeueHandle,&distance,0,osWaitForever);
-
-    if(distance < 1.5){
+    status = osMessageQueueGet(uartcommandsHandle,&uartcommand,0,0);
+    status = osMessageQueueGet(distancequeueHandle,&distance,0,0);
+    globdist = distance;
+    if(distance < 1.5 && !reserved ){
       HAL_GPIO_WritePin(led_select1_GPIO_Port,led_select1_Pin,0);
       HAL_GPIO_WritePin(led_select0_GPIO_Port,led_select0_Pin,1);
     }
-    else{
+    else if(!reserved){
       HAL_GPIO_WritePin(led_select1_GPIO_Port,led_select1_Pin,1);
       HAL_GPIO_WritePin(led_select0_GPIO_Port,led_select0_Pin,0);
     }
+
+    if(uartcommand == RESERVED){
+      reserved = true;
+      HAL_GPIO_WritePin(led_select1_GPIO_Port,led_select1_Pin,1);
+      HAL_GPIO_WritePin(led_select0_GPIO_Port,led_select0_Pin,1);
+    }
+    if(uartcommand == CANCEL){
+      reserved = false;
+    }
+    
   }
   /* USER CODE END application */
 }

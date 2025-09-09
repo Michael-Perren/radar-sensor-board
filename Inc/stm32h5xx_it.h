@@ -55,8 +55,11 @@ void DebugMon_Handler(void);
 void EXTI6_IRQHandler(void);
 void GPDMA1_Channel0_IRQHandler(void);
 void GPDMA1_Channel1_IRQHandler(void);
+void GPDMA1_Channel4_IRQHandler(void);
+void GPDMA1_Channel5_IRQHandler(void);
 void TIM1_UP_IRQHandler(void);
 void SPI1_IRQHandler(void);
+void USART2_IRQHandler(void);
 /* USER CODE BEGIN EFP */
 
 /* USER CODE END EFP */

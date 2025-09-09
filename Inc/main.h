@@ -45,11 +45,15 @@ typedef struct __attribute__((packed)) uart_data {
 extern uint8_t * activebuffer;
 extern xensiv_bgt60trxx_t dev;
 extern uint8_t keephigh[N_BYTES];
+extern uart_data uartrx;
+extern uint8_t uartrxbuffer[1024];
 /* USER CODE END ET */
 
 /* Exported constants --------------------------------------------------------*/
 /* USER CODE BEGIN EC */
-
+#define DEV_ADDRESS 4369
+#define RESERVED 114
+#define CANCEL 99
 /* USER CODE END EC */
 
 /* Exported macro ------------------------------------------------------------*/
@@ -65,6 +69,8 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define RS485_DE_Pin GPIO_PIN_1
+#define RS485_DE_GPIO_Port GPIOA
 #define SPI1_NSS_Pin GPIO_PIN_4
 #define SPI1_NSS_GPIO_Port GPIOA
 #define Translator_OE_Pin GPIO_PIN_1
