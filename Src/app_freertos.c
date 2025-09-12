@@ -159,7 +159,6 @@ void MX_FREERTOS_Init(void) {
   HAL_GPIO_WritePin(Translator_OE_GPIO_Port,Translator_OE_Pin,1);
   HAL_GPIO_WritePin(led_select0_GPIO_Port,led_select0_Pin,0);
   HAL_GPIO_WritePin(led_select1_GPIO_Port,led_select1_Pin,0);
-  HAL_GPIO_WritePin(RS485_DE_GPIO_Port,RS485_DE_Pin,0);
   HAL_Delay(100);
   dev.iface = &hspi1;
   xensiv_bgt60trxx_hard_reset(&dev);
@@ -181,7 +180,7 @@ void MX_FREERTOS_Init(void) {
   
   HAL_StatusTypeDef check23 = HAL_UARTEx_ReceiveToIdle_DMA(&huart2,uartrxbuffer,sizeof(uart_data));
   HAL_UART_StateTypeDef test1 = huart2.RxState;
-  // HAL_StatusTypeDef check23 = HAL_UART_Receive_DMA(&huart2,uartrxbuffer,sizeof(uart_data));
+  HAL_StatusTypeDef check24 = HAL_UART_Transmit_DMA(&huart2,&uarttx,sizeof(uart_data));
 
   
   /* USER CODE END Init */
