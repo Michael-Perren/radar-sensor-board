@@ -93,6 +93,13 @@ const osThreadAttr_t application_attributes = {
   .priority = (osPriority_t) osPriorityLow,
   .stack_size = 4096 * 4
 };
+/* Definitions for uart_task */
+osThreadId_t uart_taskHandle;
+const osThreadAttr_t uart_task_attributes = {
+  .name = "uart_task",
+  .priority = (osPriority_t) osPriorityLow,
+  .stack_size = 128 * 4
+};
 /* Definitions for filledbuffers */
 osMessageQueueId_t filledbuffersHandle;
 const osMessageQueueAttr_t filledbuffers_attributes = {
@@ -172,16 +179,15 @@ void MX_FREERTOS_Init(void) {
     rangebin[i] = ((299792458.0f)*XENSIV_BGT60TRXX_CONF_CHIRP_REPETITION_TIME_S*(freqbin[i]))/((float32_t)2*(XENSIV_BGT60TRXX_CONF_END_FREQ_HZ - XENSIV_BGT60TRXX_CONF_START_FREQ_HZ));
   }
   
-  __HAL_UART_CLEAR_OREFLAG(&huart2);
-  __HAL_UART_CLEAR_FEFLAG(&huart2);
-  __HAL_UART_CLEAR_NEFLAG(&huart2);
-  __HAL_UART_CLEAR_PEFLAG(&huart2);
-  __HAL_UART_ENABLE_IT(&huart2, UART_IT_IDLE);
+  // __HAL_UART_CLEAR_OREFLAG(&huart2);
+  // __HAL_UART_CLEAR_FEFLAG(&huart2);
+  // __HAL_UART_CLEAR_NEFLAG(&huart2);
+  // __HAL_UART_CLEAR_PEFLAG(&huart2);
+  // __HAL_UART_ENABLE_IT(&huart2, UART_IT_IDLE);
   
-  HAL_StatusTypeDef check23 = HAL_UARTEx_ReceiveToIdle_DMA(&huart2,uartrxbuffer,sizeof(uart_data));
-  HAL_UART_StateTypeDef test1 = huart2.RxState;
-  HAL_StatusTypeDef check24 = HAL_UART_Transmit_DMA(&huart2,&uarttx,sizeof(uart_data));
-
+  //HAL_StatusTypeDef check23 = HAL_UARTEx_ReceiveToIdle_DMA(&huart2,uartrxbuffer,sizeof(uart_data));
+  // HAL_StatusTypeDef check24 = HAL_UART_Transmit_DMA(&huart2,&uarttx,sizeof(uart_data));
+  HAL_UART_Receive_DMA(&huart2,uartrxbuffer,sizeof(uart_data));
   
   /* USER CODE END Init */
 
@@ -214,6 +220,9 @@ void MX_FREERTOS_Init(void) {
 
   /* creation of application */
   applicationHandle = osThreadNew(application, NULL, &application_attributes);
+
+  /* creation of uart_task */
+  uart_taskHandle = osThreadNew(uarttask, NULL, &uart_task_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -335,9 +344,28 @@ void application(void *argument)
     if(uartcommand == CANCEL){
       reserved = false;
     }
-    
   }
   /* USER CODE END application */
+}
+
+/* USER CODE BEGIN Header_uarttask */
+/**
+* @brief Function implementing the uart_task thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_uarttask */
+void uarttask(void *argument)
+{
+  /* USER CODE BEGIN uart_task */
+  /* Infinite loop */
+  for(;;)
+  {
+    ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
+    osDelay(10);
+    HAL_UART_Transmit_DMA(&huart2,&uarttx,4);
+  }
+  /* USER CODE END uart_task */
 }
 
 /* Private application code --------------------------------------------------*/

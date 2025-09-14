@@ -38,6 +38,7 @@
         "format": "c",
         "fstream": "c",
         "ostream": "c",
-        "sstream": "c"
+        "sstream": "c",
+        "chrono": "c"
     }
 }

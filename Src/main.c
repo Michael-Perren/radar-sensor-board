@@ -129,8 +129,6 @@ int main(void)
   MX_SPI1_Init();
   /* USER CODE BEGIN 2 */
   custom_spi_init();
-  int32_t check30 = HAL_RCC_GetPCLK1Freq();
-
   /* USER CODE END 2 */
 
   /* Init scheduler */
@@ -572,10 +570,15 @@ void custom_spi_init(void){ //spi registry is used to differentiate between comm
 void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size){
   memcpy(&uartrx,uartrxbuffer,sizeof(uart_data));
   if(uartrx.address == DEV_ADDRESS){
-     uint16_t uartcommand = uartrx.msg;
+    uarttx.address = 4369;
+    uarttx.msg = (uint16_t) 1000*globdist;
+    uint16_t uartcommand = uartrx.msg;
     osMessageQueuePut(uartcommandsHandle,&uartcommand,0,0);
+    //HAL_StatusTypeDef check24 = HAL_UART_Transmit_DMA(&huart2,&uarttx,sizeof(uart_data));
   }
-  HAL_UARTEx_ReceiveToIdle_DMA(&huart2,uartrxbuffer,sizeof(uart_data));
+  else{
+    //HAL_UARTEx_ReceiveToIdle_DMA(&huart2,uartrxbuffer,sizeof(uart_data));
+  }
 }
 
 void HAL_UART_ErrorCallback(UART_HandleTypeDef *huart){
@@ -584,14 +587,23 @@ void HAL_UART_ErrorCallback(UART_HandleTypeDef *huart){
   __HAL_UART_CLEAR_FEFLAG(&huart2);
   __HAL_UART_CLEAR_NEFLAG(&huart2);
   __HAL_UART_CLEAR_PEFLAG(&huart2);
-  HAL_UARTEx_ReceiveToIdle_DMA(&huart2,uartrxbuffer,sizeof(uart_data));
+  HAL_UART_Receive_DMA(&huart2,uartrxbuffer,sizeof(uart_data));
+  //HAL_UARTEx_ReceiveToIdle_DMA(&huart2,uartrxbuffer,sizeof(uart_data));
 }
 
-void HAL_Uart_TxCpltCallback(UART_HandleTypeDef *huart){
+void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart){
+  HAL_UART_Receive_DMA(&huart2,uartrxbuffer,sizeof(uart_data));
+}
+
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart){
+  memcpy(&uartrx,uartrxbuffer,sizeof(uart_data));
   uarttx.address = 4369;
   uarttx.msg = (uint16_t) 1000*globdist;
-  HAL_StatusTypeDef check24 = HAL_UART_Transmit_DMA(&huart2,&uarttx,sizeof(uart_data));
-
+  uint16_t uartcommand = uartrx.msg;
+  osMessageQueuePut(uartcommandsHandle,&uartcommand,0,0);
+  BaseType_t xHPW = pdFALSE;
+  vTaskNotifyGiveFromISR(uart_taskHandle, &xHPW); //done with activebuffer wake up get radar data task
+  portYIELD_FROM_ISR(xHPW);
 }
 /* USER CODE END 4 */
 
