@@ -567,19 +567,19 @@ void custom_spi_init(void){ //spi registry is used to differentiate between comm
 //   HAL_UART_Receive_DMA(&huart2,uartrxbuffer,sizeof(uartrx));
 // }
 
-void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size){
-  memcpy(&uartrx,uartrxbuffer,sizeof(uart_data));
-  if(uartrx.address == DEV_ADDRESS){
-    uarttx.address = 4369;
-    uarttx.msg = (uint16_t) 1000*globdist;
-    uint16_t uartcommand = uartrx.msg;
-    osMessageQueuePut(uartcommandsHandle,&uartcommand,0,0);
-    //HAL_StatusTypeDef check24 = HAL_UART_Transmit_DMA(&huart2,&uarttx,sizeof(uart_data));
-  }
-  else{
-    //HAL_UARTEx_ReceiveToIdle_DMA(&huart2,uartrxbuffer,sizeof(uart_data));
-  }
-}
+// void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size){
+//   memcpy(&uartrx,uartrxbuffer,sizeof(uart_data));
+//   if(uartrx.address == DEV_ADDRESS){
+//     uarttx.address = 4369;
+//     uarttx.msg = (uint16_t) 1000*globdist;
+//     uint16_t uartcommand = uartrx.msg;
+//     osMessageQueuePut(uartcommandsHandle,&uartcommand,0,0);
+//     //HAL_StatusTypeDef check24 = HAL_UART_Transmit_DMA(&huart2,&uarttx,sizeof(uart_data));
+//   }
+//   else{
+//     //HAL_UARTEx_ReceiveToIdle_DMA(&huart2,uartrxbuffer,sizeof(uart_data));
+//   }
+// }
 
 void HAL_UART_ErrorCallback(UART_HandleTypeDef *huart){
   uint32_t test = huart->ErrorCode;

@@ -1,6 +1,8 @@
 # BGT60UTR11AIP with STM32H523CEU6
 >This project uses infineons bgt60utr11aip chip to detect the distance of a stationary object. Interfacing this sensor with the stm32h523ceu6 involved implementing the platform functions specific to the stm32 chip in xensiv_bgt60trxx_platform.c.
 
+
+
 ### Communication protocols
 - SPI: spi is used to communicate with the bgt60utr11aip chip.
 - UART: uart is used to communicate with an esp32 dev board.
@@ -12,7 +14,7 @@
 
 ### Program Structure
 
-##### 1. Initialization
+#### 1. Initialization
 - **System Clock Setup**  
   - Configures PLL, HSE/LSE, and system frequencies.
 - **Peripheral Initialization**  
@@ -21,46 +23,66 @@
   - FreeRTOS (task creation, scheduler start)
   - UART (for sending radar data)
 
-##### 2. FreeRTOS Tasks
-##### Default Task (`StartDefaultTask`)
-- 
+#### 2. FreeRTOS
+- **Tasks**
+  -  getradardata
+  -  signalprocessing
+  -  application
+  -  uarttask
+- **Queues**
+  -  filledbuffers
+  -  distancequeue
+  -  uartcommands
 
-##### Data Acquisition Task
-- Waits for **IRQ pin** to signal FIFO ready.
+#### 3. Callbacks
+- HAL_SPI_TxRxCpltCallback
+- HAL_GPIO_EXTI_Rising_Callback
+- custom_txrxcplt
+- HAL_UART_ErrorCallback
+- HAL_UART_TxCpltCallback
+- HAL_UART_RxCpltCallback
+
+
+
+
+##### getradardata Task
+- Allocates buffer from memory pool
+- Waits for **custom_txrxcplt** to notify.
 - Calls `xensiv_bgt60trxx_get_fifo_data()` to fetch samples (1024 samples per buffer)
-- Uses **SPI burst reads** to unpack 24-bit words into 12-bit ADC samples
-- DMA mode for continuous FIFO reads from radar, send buffer to queue
+- Uses **SPI burst reads** to read (num of 12bit samples / 2) * 3 bytes from the radar
+- DMA mode for continuous FIFO reads from radar, send buffer to **filledbuffers** queue
 
-##### Signal Processing Task
-- Applies **window function** (e.g., Hann).
+##### signalprocessing Task
+- Waits for message from **filledbuffers** queue
+- Reconstructs samples
+- Removes DC bias
+- Applies **window function**
 - Runs **FFT (CMSIS-DSP RFFT)**:
   - Input: 1024 ADC samples  
   - Output: 512 magnitude bins
 - Post-processing:
   - Remove DC bias  
-  - Drop low bins (1–20) to suppress noise  
-  - Detect peaks, compute **range bins** (map FFT index → distance)
+  - Drop low bins (1–10) to suppress noise  
+  - Detect peaks, compute peak **range bin** (map FFT index → distance)
+- average 10 distance values and place the average in the **distancequeue**
 
-##### Application Task
-- Averages results across multiple frames.  
-- Computes distance estimates.  
-- Can recognize static vs moving objects.  
-- Sends results to:
-  - UART (ESP32)  
+##### application Task
+- Get averaged distance value from **distancequeue** 
+- Get uart msg from **uartcommands** queue
+- Toggle LEDs based on the distance threshold (default 1.5 meters) & uart command 
 
-##### 3. Memory Management
-- Uses **FreeRTOS heap_4.c** (best-fit allocator with coalescing).  
-- Large buffers allocated statically when possible:
-  - `uint16_t data[1024]`  
-  - `float32_t fft_output[1024]`  
-  - `float32_t mag[512]`  
+##### uarttask Task
+- Wait for UART message received.
+- Reactivate UART DMA transmit after delay.
+
 
 ##### 4. Program Flow
 1. **Boot → System Init, Radar init**  
 2. **FreeRTOS Init → initalize arrays, start scheduler**  
-4. **Data Acquisition Task reads samples**  
-5. **Signal Processing Task computes FFT**  
-6. **Application Task interprets distances, commands received from UART**  
+4. **getradardata Task reads samples**  
+5. **signalprocessing Task computes FFT**  
+6. **application Task interprets distances, commands received from UART**  
+7. **uarttask Task waits for uart msg and reactivates dma transfer**
 7. **Loop indefinitely**
 
 ## Setting up the Dev Environment

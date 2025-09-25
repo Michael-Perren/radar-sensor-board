@@ -37,7 +37,7 @@ extern "C" {
 
 /* Exported types ------------------------------------------------------------*/
 /* USER CODE BEGIN ET */
-typedef struct __attribute__((packed)) uart_data {
+typedef struct __attribute__((packed)) uart_data { //format of the transmitted and received uart data
     uint16_t  address;
     uint16_t msg;
 } uart_data;
