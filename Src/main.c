@@ -31,6 +31,7 @@
 #include <stdio.h>
 #include "app_freertos.h"
 #include "spiglobalmap.h"
+#include <time.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -40,7 +41,8 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-
+#define TICKSSEC CLOCKS_PER_SEC
+#define BURSTCMD 51455
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -56,14 +58,11 @@ SPI_HandleTypeDef hspi1;
 DMA_HandleTypeDef handle_GPDMA1_Channel1;
 DMA_HandleTypeDef handle_GPDMA1_Channel0;
 
-UART_HandleTypeDef huart2;
-DMA_HandleTypeDef handle_GPDMA1_Channel5;
-DMA_HandleTypeDef handle_GPDMA1_Channel4;
-
 /* USER CODE BEGIN PV */
 uint32_t gsr0; //global status register 0 for xensiv radar
-static uint32_t burstcmd = 51455;
 uint8_t keephigh[N_BYTES] = { [0 ... N_BYTES-1] = 0xFF }; //mosi must be high when receiving bursts.
+uint8_t totaldata[NUM_FRAMES][N_SAMPLES] = {};
+int data_count = 0;
 
 /* USER CODE END PV */
 
@@ -74,7 +73,6 @@ static void MX_GPIO_Init(void);
 static void MX_GPDMA1_Init(void);
 static void MX_ICACHE_Init(void);
 static void MX_RTC_Init(void);
-static void MX_USART2_UART_Init(void);
 static void MX_SPI1_Init(void);
 /* USER CODE BEGIN PFP */
 
@@ -88,10 +86,6 @@ typedef enum{
 } spi_context;
 void custom_spi_init();
 static void custom_txrxcplt(SPI_HandleTypeDef *hspi, void *user_ctx);
-uart_data uartrx = {};
-uart_data uarttx = {};
-uint8_t uartrxbuffer[1024] = {};
-static int uartqsize = 0;
 /* USER CODE END 0 */
 
 /**
@@ -102,7 +96,9 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-  
+  clock_t start_time;
+  clock_t curr_time;
+  start_time = clock();
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -125,7 +121,6 @@ int main(void)
   MX_GPDMA1_Init();
   MX_ICACHE_Init();
   MX_RTC_Init();
-  MX_USART2_UART_Init();
   MX_SPI1_Init();
   /* USER CODE BEGIN 2 */
   custom_spi_init();
@@ -260,10 +255,6 @@ static void MX_GPDMA1_Init(void)
     HAL_NVIC_EnableIRQ(GPDMA1_Channel0_IRQn);
     HAL_NVIC_SetPriority(GPDMA1_Channel1_IRQn, 5, 0);
     HAL_NVIC_EnableIRQ(GPDMA1_Channel1_IRQn);
-    HAL_NVIC_SetPriority(GPDMA1_Channel4_IRQn, 5, 0);
-    HAL_NVIC_EnableIRQ(GPDMA1_Channel4_IRQn);
-    HAL_NVIC_SetPriority(GPDMA1_Channel5_IRQn, 5, 0);
-    HAL_NVIC_EnableIRQ(GPDMA1_Channel5_IRQn);
 
   /* USER CODE BEGIN GPDMA1_Init 1 */
 
@@ -406,54 +397,6 @@ static void MX_SPI1_Init(void)
 }
 
 /**
-  * @brief USART2 Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_USART2_UART_Init(void)
-{
-
-  /* USER CODE BEGIN USART2_Init 0 */
-
-  /* USER CODE END USART2_Init 0 */
-
-  /* USER CODE BEGIN USART2_Init 1 */
-
-  /* USER CODE END USART2_Init 1 */
-  huart2.Instance = USART2;
-  huart2.Init.BaudRate = 9600;
-  huart2.Init.WordLength = UART_WORDLENGTH_8B;
-  huart2.Init.StopBits = UART_STOPBITS_1;
-  huart2.Init.Parity = UART_PARITY_NONE;
-  huart2.Init.Mode = UART_MODE_TX_RX;
-  huart2.Init.HwFlowCtl = UART_HWCONTROL_NONE;
-  huart2.Init.OverSampling = UART_OVERSAMPLING_16;
-  huart2.Init.OneBitSampling = UART_ONE_BIT_SAMPLE_DISABLE;
-  huart2.Init.ClockPrescaler = UART_PRESCALER_DIV8;
-  huart2.AdvancedInit.AdvFeatureInit = UART_ADVFEATURE_NO_INIT;
-  if (HAL_RS485Ex_Init(&huart2, UART_DE_POLARITY_HIGH, 0, 0) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  if (HAL_UARTEx_SetTxFifoThreshold(&huart2, UART_TXFIFO_THRESHOLD_1_8) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  if (HAL_UARTEx_SetRxFifoThreshold(&huart2, UART_RXFIFO_THRESHOLD_1_8) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  if (HAL_UARTEx_EnableFifoMode(&huart2) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /* USER CODE BEGIN USART2_Init 2 */
-
-  /* USER CODE END USART2_Init 2 */
-
-}
-
-/**
   * @brief GPIO Initialization Function
   * @param None
   * @retval None
@@ -520,6 +463,7 @@ void HAL_SPI_TxRxCpltCallback(SPI_HandleTypeDef *hspi){
 }
 
 void HAL_GPIO_EXTI_Rising_Callback(uint16_t GPIO_Pin){ //radar raises irq pin when its fifo buffer is full.
+  uint32_t burstcmd = BURSTCMD;
   HAL_NVIC_DisableIRQ(EXTI6_IRQn);
   xensiv_bgt60trxx_platform_spi_cs_set(&hspi1, false);
   HAL_SPI_TransmitReceive_IT(&hspi1,(uint8_t *)&burstcmd,(uint8_t *)&gsr0,XENSIV_BGT60TRXX_SPI_REG_XFER_LEN_BYTES); //send a burst read command.
@@ -536,7 +480,8 @@ static void custom_txrxcplt(SPI_HandleTypeDef *hspi, void *user_ctx){
       temp = activebuffer;
       activebuffer = NULL;
       status = osMessageQueuePut(filledbuffersHandle,&temp,0,0);
-    }  
+      data_count += 1;
+    }
     *this_ctx = SMALL_TRANSFER;
     BaseType_t xHPW = pdFALSE;
     vTaskNotifyGiveFromISR(getradardataHandle, &xHPW); //done with activebuffer wake up get radar data task
@@ -562,49 +507,7 @@ void custom_spi_init(void){ //spi registry is used to differentiate between comm
   spi_cb_register(&hspi1, SPI_CB_TXRX_COMPLETE, custom_txrxcplt, &ctx);
 }
 
-// void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart){
-//   memcpy(&uartrx,uartrxbuffer,sizeof(uart_data));
-//   HAL_UART_Receive_DMA(&huart2,uartrxbuffer,sizeof(uartrx));
-// }
 
-void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size){
-  memcpy(&uartrx,uartrxbuffer,sizeof(uart_data));
-  if(uartrx.address == DEV_ADDRESS){
-    uarttx.address = 4369;
-    uarttx.msg = (uint16_t) 1000*globdist;
-    uint16_t uartcommand = uartrx.msg;
-    osMessageQueuePut(uartcommandsHandle,&uartcommand,0,0);
-    //HAL_StatusTypeDef check24 = HAL_UART_Transmit_DMA(&huart2,&uarttx,sizeof(uart_data));
-  }
-  else{
-    //HAL_UARTEx_ReceiveToIdle_DMA(&huart2,uartrxbuffer,sizeof(uart_data));
-  }
-}
-
-void HAL_UART_ErrorCallback(UART_HandleTypeDef *huart){
-  uint32_t test = huart->ErrorCode;
-  __HAL_UART_CLEAR_OREFLAG(&huart2);
-  __HAL_UART_CLEAR_FEFLAG(&huart2);
-  __HAL_UART_CLEAR_NEFLAG(&huart2);
-  __HAL_UART_CLEAR_PEFLAG(&huart2);
-  HAL_UART_Receive_DMA(&huart2,uartrxbuffer,sizeof(uart_data));
-  //HAL_UARTEx_ReceiveToIdle_DMA(&huart2,uartrxbuffer,sizeof(uart_data));
-}
-
-void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart){
-  HAL_UART_Receive_DMA(&huart2,uartrxbuffer,sizeof(uart_data));
-}
-
-void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart){
-  memcpy(&uartrx,uartrxbuffer,sizeof(uart_data));
-  uarttx.address = 4369;
-  uarttx.msg = (uint16_t) 1000*globdist;
-  uint16_t uartcommand = uartrx.msg;
-  osMessageQueuePut(uartcommandsHandle,&uartcommand,0,0);
-  BaseType_t xHPW = pdFALSE;
-  vTaskNotifyGiveFromISR(uart_taskHandle, &xHPW); //done with activebuffer wake up get radar data task
-  portYIELD_FROM_ISR(xHPW);
-}
 /* USER CODE END 4 */
 
 /**

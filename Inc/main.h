@@ -37,18 +37,19 @@ extern "C" {
 
 /* Exported types ------------------------------------------------------------*/
 /* USER CODE BEGIN ET */
+#define NUM_FRAMES 150000
+
 typedef struct __attribute__((packed)) uart_data {
     uint16_t  address;
     uint16_t msg;
 } uart_data;
 
 extern uint8_t * activebuffer;
+extern uint8_t totaldata[NUM_FRAMES][N_SAMPLES/2];
 extern xensiv_bgt60trxx_t dev;
 extern uint8_t keephigh[N_BYTES];
-extern uart_data uartrx;
-extern uint8_t uartrxbuffer[1024];
-extern uart_data uarttx;
 extern float globdist;
+extern int data_count;
 /* USER CODE END ET */
 
 /* Exported constants --------------------------------------------------------*/

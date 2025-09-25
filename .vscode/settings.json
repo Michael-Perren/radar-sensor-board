@@ -39,6 +39,9 @@
         "fstream": "c",
         "ostream": "c",
         "sstream": "c",
-        "chrono": "c"
+        "chrono": "c",
+        "functional": "c",
+        "task.h": "c",
+        "freertos.h": "c"
     }
 }

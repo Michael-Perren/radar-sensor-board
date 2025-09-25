@@ -57,10 +57,8 @@ extern "C" {
 extern osThreadId_t signalprocessingHandle;
 extern osThreadId_t getradardataHandle;
 extern osThreadId_t applicationHandle;
-extern osThreadId_t uart_taskHandle;
 extern osMessageQueueId_t filledbuffersHandle;
 extern osMessageQueueId_t distancequeueHandle;
-extern osMessageQueueId_t uartcommandsHandle;
 
 /* Exported function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
@@ -70,7 +68,6 @@ extern osMemoryPoolId_t mpid_MemPool;
 void signalprocessing(void *argument);
 void getradardata(void *argument);
 void application(void *argument);
-void uarttask(void *argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
