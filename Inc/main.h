@@ -56,6 +56,7 @@ extern float globdist;
 #define DEV_ADDRESS 4369
 #define RESERVED 114
 #define CANCEL 99
+#define CALIBRATE 42
 /* USER CODE END EC */
 
 /* Exported macro ------------------------------------------------------------*/

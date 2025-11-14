@@ -57,10 +57,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/mike/Dev/stprojects/h523ceu6
+CMAKE_SOURCE_DIR = /home/michaelp/radar-sensor-board
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/mike/Dev/stprojects/h523ceu6
+CMAKE_BINARY_DIR = /home/michaelp/radar-sensor-board
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -87,14 +87,14 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	cd /home/mike/Dev/stprojects/h523ceu6 && $(CMAKE_COMMAND) -E cmake_progress_start /home/mike/Dev/stprojects/h523ceu6/CMakeFiles /home/mike/Dev/stprojects/h523ceu6/cmake/stm32cubemx//CMakeFiles/progress.marks
-	cd /home/mike/Dev/stprojects/h523ceu6 && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 cmake/stm32cubemx/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/mike/Dev/stprojects/h523ceu6/CMakeFiles 0
+	cd /home/michaelp/radar-sensor-board && $(CMAKE_COMMAND) -E cmake_progress_start /home/michaelp/radar-sensor-board/CMakeFiles /home/michaelp/radar-sensor-board/cmake/stm32cubemx//CMakeFiles/progress.marks
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 cmake/stm32cubemx/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/michaelp/radar-sensor-board/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /home/mike/Dev/stprojects/h523ceu6 && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 cmake/stm32cubemx/clean
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 cmake/stm32cubemx/clean
 .PHONY : clean
 
 # The main clean target
@@ -103,22 +103,22 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /home/mike/Dev/stprojects/h523ceu6 && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 cmake/stm32cubemx/preinstall
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 cmake/stm32cubemx/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /home/mike/Dev/stprojects/h523ceu6 && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 cmake/stm32cubemx/preinstall
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 cmake/stm32cubemx/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /home/mike/Dev/stprojects/h523ceu6 && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /home/michaelp/radar-sensor-board && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/rule:
-	cd /home/mike/Dev/stprojects/h523ceu6 && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/rule
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/rule
 .PHONY : cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/rule
 
 # Convenience name for target.
@@ -127,15 +127,29 @@ STM32_Drivers: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/rule
 
 # fast build rule for target.
 STM32_Drivers/fast:
-	cd /home/mike/Dev/stprojects/h523ceu6 && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build
 .PHONY : STM32_Drivers/fast
+
+# Convenience name for target.
+cmake/stm32cubemx/CMakeFiles/RTOS2.dir/rule:
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 cmake/stm32cubemx/CMakeFiles/RTOS2.dir/rule
+.PHONY : cmake/stm32cubemx/CMakeFiles/RTOS2.dir/rule
+
+# Convenience name for target.
+RTOS2: cmake/stm32cubemx/CMakeFiles/RTOS2.dir/rule
+.PHONY : RTOS2
+
+# fast build rule for target.
+RTOS2/fast:
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/RTOS2.dir/build.make cmake/stm32cubemx/CMakeFiles/RTOS2.dir/build
+.PHONY : RTOS2/fast
 
 __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal.o: __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal.c.o
 .PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal.o
 
 # target to build an object file
 __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal.c.o:
-	cd /home/mike/Dev/stprojects/h523ceu6 && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal.c.o
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal.c.o
 .PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal.c.o
 
 __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal.i: __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal.c.i
@@ -143,7 +157,7 @@ __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal.i: __/__/Drivers/STM32H5xx_
 
 # target to preprocess a source file
 __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal.c.i:
-	cd /home/mike/Dev/stprojects/h523ceu6 && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal.c.i
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal.c.i
 .PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal.c.i
 
 __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal.s: __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal.c.s
@@ -151,7 +165,7 @@ __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal.s: __/__/Drivers/STM32H5xx_
 
 # target to generate assembly for a file
 __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal.c.s:
-	cd /home/mike/Dev/stprojects/h523ceu6 && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal.c.s
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal.c.s
 .PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal.c.s
 
 __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_cortex.o: __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_cortex.c.o
@@ -159,7 +173,7 @@ __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_cortex.o: __/__/Drivers/STM
 
 # target to build an object file
 __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_cortex.c.o:
-	cd /home/mike/Dev/stprojects/h523ceu6 && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_cortex.c.o
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_cortex.c.o
 .PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_cortex.c.o
 
 __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_cortex.i: __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_cortex.c.i
@@ -167,7 +181,7 @@ __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_cortex.i: __/__/Drivers/STM
 
 # target to preprocess a source file
 __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_cortex.c.i:
-	cd /home/mike/Dev/stprojects/h523ceu6 && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_cortex.c.i
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_cortex.c.i
 .PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_cortex.c.i
 
 __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_cortex.s: __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_cortex.c.s
@@ -175,7 +189,7 @@ __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_cortex.s: __/__/Drivers/STM
 
 # target to generate assembly for a file
 __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_cortex.c.s:
-	cd /home/mike/Dev/stprojects/h523ceu6 && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_cortex.c.s
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_cortex.c.s
 .PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_cortex.c.s
 
 __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma.o: __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma.c.o
@@ -183,7 +197,7 @@ __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma.o: __/__/Drivers/STM32H
 
 # target to build an object file
 __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma.c.o:
-	cd /home/mike/Dev/stprojects/h523ceu6 && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma.c.o
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma.c.o
 .PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma.c.o
 
 __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma.i: __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma.c.i
@@ -191,7 +205,7 @@ __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma.i: __/__/Drivers/STM32H
 
 # target to preprocess a source file
 __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma.c.i:
-	cd /home/mike/Dev/stprojects/h523ceu6 && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma.c.i
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma.c.i
 .PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma.c.i
 
 __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma.s: __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma.c.s
@@ -199,7 +213,7 @@ __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma.s: __/__/Drivers/STM32H
 
 # target to generate assembly for a file
 __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma.c.s:
-	cd /home/mike/Dev/stprojects/h523ceu6 && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma.c.s
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma.c.s
 .PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma.c.s
 
 __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma_ex.o: __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma_ex.c.o
@@ -207,7 +221,7 @@ __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma_ex.o: __/__/Drivers/STM
 
 # target to build an object file
 __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma_ex.c.o:
-	cd /home/mike/Dev/stprojects/h523ceu6 && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma_ex.c.o
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma_ex.c.o
 .PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma_ex.c.o
 
 __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma_ex.i: __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma_ex.c.i
@@ -215,7 +229,7 @@ __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma_ex.i: __/__/Drivers/STM
 
 # target to preprocess a source file
 __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma_ex.c.i:
-	cd /home/mike/Dev/stprojects/h523ceu6 && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma_ex.c.i
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma_ex.c.i
 .PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma_ex.c.i
 
 __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma_ex.s: __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma_ex.c.s
@@ -223,7 +237,7 @@ __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma_ex.s: __/__/Drivers/STM
 
 # target to generate assembly for a file
 __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma_ex.c.s:
-	cd /home/mike/Dev/stprojects/h523ceu6 && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma_ex.c.s
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma_ex.c.s
 .PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma_ex.c.s
 
 __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_exti.o: __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_exti.c.o
@@ -231,7 +245,7 @@ __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_exti.o: __/__/Drivers/STM32
 
 # target to build an object file
 __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_exti.c.o:
-	cd /home/mike/Dev/stprojects/h523ceu6 && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_exti.c.o
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_exti.c.o
 .PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_exti.c.o
 
 __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_exti.i: __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_exti.c.i
@@ -239,7 +253,7 @@ __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_exti.i: __/__/Drivers/STM32
 
 # target to preprocess a source file
 __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_exti.c.i:
-	cd /home/mike/Dev/stprojects/h523ceu6 && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_exti.c.i
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_exti.c.i
 .PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_exti.c.i
 
 __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_exti.s: __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_exti.c.s
@@ -247,7 +261,7 @@ __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_exti.s: __/__/Drivers/STM32
 
 # target to generate assembly for a file
 __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_exti.c.s:
-	cd /home/mike/Dev/stprojects/h523ceu6 && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_exti.c.s
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_exti.c.s
 .PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_exti.c.s
 
 __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash.o: __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash.c.o
@@ -255,7 +269,7 @@ __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash.o: __/__/Drivers/STM3
 
 # target to build an object file
 __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash.c.o:
-	cd /home/mike/Dev/stprojects/h523ceu6 && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash.c.o
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash.c.o
 .PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash.c.o
 
 __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash.i: __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash.c.i
@@ -263,7 +277,7 @@ __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash.i: __/__/Drivers/STM3
 
 # target to preprocess a source file
 __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash.c.i:
-	cd /home/mike/Dev/stprojects/h523ceu6 && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash.c.i
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash.c.i
 .PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash.c.i
 
 __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash.s: __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash.c.s
@@ -271,7 +285,7 @@ __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash.s: __/__/Drivers/STM3
 
 # target to generate assembly for a file
 __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash.c.s:
-	cd /home/mike/Dev/stprojects/h523ceu6 && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash.c.s
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash.c.s
 .PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash.c.s
 
 __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash_ex.o: __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash_ex.c.o
@@ -279,7 +293,7 @@ __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash_ex.o: __/__/Drivers/S
 
 # target to build an object file
 __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash_ex.c.o:
-	cd /home/mike/Dev/stprojects/h523ceu6 && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash_ex.c.o
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash_ex.c.o
 .PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash_ex.c.o
 
 __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash_ex.i: __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash_ex.c.i
@@ -287,7 +301,7 @@ __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash_ex.i: __/__/Drivers/S
 
 # target to preprocess a source file
 __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash_ex.c.i:
-	cd /home/mike/Dev/stprojects/h523ceu6 && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash_ex.c.i
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash_ex.c.i
 .PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash_ex.c.i
 
 __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash_ex.s: __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash_ex.c.s
@@ -295,7 +309,7 @@ __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash_ex.s: __/__/Drivers/S
 
 # target to generate assembly for a file
 __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash_ex.c.s:
-	cd /home/mike/Dev/stprojects/h523ceu6 && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash_ex.c.s
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash_ex.c.s
 .PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash_ex.c.s
 
 __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_gpio.o: __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_gpio.c.o
@@ -303,7 +317,7 @@ __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_gpio.o: __/__/Drivers/STM32
 
 # target to build an object file
 __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_gpio.c.o:
-	cd /home/mike/Dev/stprojects/h523ceu6 && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_gpio.c.o
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_gpio.c.o
 .PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_gpio.c.o
 
 __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_gpio.i: __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_gpio.c.i
@@ -311,7 +325,7 @@ __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_gpio.i: __/__/Drivers/STM32
 
 # target to preprocess a source file
 __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_gpio.c.i:
-	cd /home/mike/Dev/stprojects/h523ceu6 && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_gpio.c.i
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_gpio.c.i
 .PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_gpio.c.i
 
 __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_gpio.s: __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_gpio.c.s
@@ -319,15 +333,39 @@ __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_gpio.s: __/__/Drivers/STM32
 
 # target to generate assembly for a file
 __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_gpio.c.s:
-	cd /home/mike/Dev/stprojects/h523ceu6 && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_gpio.c.s
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_gpio.c.s
 .PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_gpio.c.s
+
+__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_icache.o: __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_icache.c.o
+.PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_icache.o
+
+# target to build an object file
+__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_icache.c.o:
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_icache.c.o
+.PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_icache.c.o
+
+__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_icache.i: __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_icache.c.i
+.PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_icache.i
+
+# target to preprocess a source file
+__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_icache.c.i:
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_icache.c.i
+.PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_icache.c.i
+
+__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_icache.s: __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_icache.c.s
+.PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_icache.s
+
+# target to generate assembly for a file
+__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_icache.c.s:
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_icache.c.s
+.PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_icache.c.s
 
 __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr.o: __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr.c.o
 .PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr.o
 
 # target to build an object file
 __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr.c.o:
-	cd /home/mike/Dev/stprojects/h523ceu6 && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr.c.o
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr.c.o
 .PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr.c.o
 
 __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr.i: __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr.c.i
@@ -335,7 +373,7 @@ __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr.i: __/__/Drivers/STM32H
 
 # target to preprocess a source file
 __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr.c.i:
-	cd /home/mike/Dev/stprojects/h523ceu6 && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr.c.i
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr.c.i
 .PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr.c.i
 
 __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr.s: __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr.c.s
@@ -343,7 +381,7 @@ __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr.s: __/__/Drivers/STM32H
 
 # target to generate assembly for a file
 __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr.c.s:
-	cd /home/mike/Dev/stprojects/h523ceu6 && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr.c.s
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr.c.s
 .PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr.c.s
 
 __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr_ex.o: __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr_ex.c.o
@@ -351,7 +389,7 @@ __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr_ex.o: __/__/Drivers/STM
 
 # target to build an object file
 __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr_ex.c.o:
-	cd /home/mike/Dev/stprojects/h523ceu6 && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr_ex.c.o
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr_ex.c.o
 .PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr_ex.c.o
 
 __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr_ex.i: __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr_ex.c.i
@@ -359,7 +397,7 @@ __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr_ex.i: __/__/Drivers/STM
 
 # target to preprocess a source file
 __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr_ex.c.i:
-	cd /home/mike/Dev/stprojects/h523ceu6 && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr_ex.c.i
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr_ex.c.i
 .PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr_ex.c.i
 
 __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr_ex.s: __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr_ex.c.s
@@ -367,7 +405,7 @@ __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr_ex.s: __/__/Drivers/STM
 
 # target to generate assembly for a file
 __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr_ex.c.s:
-	cd /home/mike/Dev/stprojects/h523ceu6 && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr_ex.c.s
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr_ex.c.s
 .PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr_ex.c.s
 
 __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc.o: __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc.c.o
@@ -375,7 +413,7 @@ __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc.o: __/__/Drivers/STM32H
 
 # target to build an object file
 __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc.c.o:
-	cd /home/mike/Dev/stprojects/h523ceu6 && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc.c.o
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc.c.o
 .PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc.c.o
 
 __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc.i: __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc.c.i
@@ -383,7 +421,7 @@ __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc.i: __/__/Drivers/STM32H
 
 # target to preprocess a source file
 __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc.c.i:
-	cd /home/mike/Dev/stprojects/h523ceu6 && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc.c.i
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc.c.i
 .PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc.c.i
 
 __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc.s: __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc.c.s
@@ -391,7 +429,7 @@ __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc.s: __/__/Drivers/STM32H
 
 # target to generate assembly for a file
 __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc.c.s:
-	cd /home/mike/Dev/stprojects/h523ceu6 && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc.c.s
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc.c.s
 .PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc.c.s
 
 __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc_ex.o: __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc_ex.c.o
@@ -399,7 +437,7 @@ __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc_ex.o: __/__/Drivers/STM
 
 # target to build an object file
 __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc_ex.c.o:
-	cd /home/mike/Dev/stprojects/h523ceu6 && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc_ex.c.o
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc_ex.c.o
 .PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc_ex.c.o
 
 __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc_ex.i: __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc_ex.c.i
@@ -407,7 +445,7 @@ __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc_ex.i: __/__/Drivers/STM
 
 # target to preprocess a source file
 __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc_ex.c.i:
-	cd /home/mike/Dev/stprojects/h523ceu6 && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc_ex.c.i
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc_ex.c.i
 .PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc_ex.c.i
 
 __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc_ex.s: __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc_ex.c.s
@@ -415,15 +453,471 @@ __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc_ex.s: __/__/Drivers/STM
 
 # target to generate assembly for a file
 __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc_ex.c.s:
-	cd /home/mike/Dev/stprojects/h523ceu6 && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc_ex.c.s
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc_ex.c.s
 .PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc_ex.c.s
+
+__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rtc.o: __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rtc.c.o
+.PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rtc.o
+
+# target to build an object file
+__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rtc.c.o:
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rtc.c.o
+.PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rtc.c.o
+
+__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rtc.i: __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rtc.c.i
+.PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rtc.i
+
+# target to preprocess a source file
+__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rtc.c.i:
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rtc.c.i
+.PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rtc.c.i
+
+__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rtc.s: __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rtc.c.s
+.PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rtc.s
+
+# target to generate assembly for a file
+__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rtc.c.s:
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rtc.c.s
+.PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rtc.c.s
+
+__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rtc_ex.o: __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rtc_ex.c.o
+.PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rtc_ex.o
+
+# target to build an object file
+__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rtc_ex.c.o:
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rtc_ex.c.o
+.PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rtc_ex.c.o
+
+__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rtc_ex.i: __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rtc_ex.c.i
+.PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rtc_ex.i
+
+# target to preprocess a source file
+__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rtc_ex.c.i:
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rtc_ex.c.i
+.PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rtc_ex.c.i
+
+__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rtc_ex.s: __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rtc_ex.c.s
+.PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rtc_ex.s
+
+# target to generate assembly for a file
+__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rtc_ex.c.s:
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rtc_ex.c.s
+.PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rtc_ex.c.s
+
+__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_spi.o: __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_spi.c.o
+.PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_spi.o
+
+# target to build an object file
+__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_spi.c.o:
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_spi.c.o
+.PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_spi.c.o
+
+__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_spi.i: __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_spi.c.i
+.PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_spi.i
+
+# target to preprocess a source file
+__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_spi.c.i:
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_spi.c.i
+.PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_spi.c.i
+
+__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_spi.s: __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_spi.c.s
+.PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_spi.s
+
+# target to generate assembly for a file
+__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_spi.c.s:
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_spi.c.s
+.PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_spi.c.s
+
+__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_spi_ex.o: __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_spi_ex.c.o
+.PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_spi_ex.o
+
+# target to build an object file
+__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_spi_ex.c.o:
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_spi_ex.c.o
+.PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_spi_ex.c.o
+
+__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_spi_ex.i: __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_spi_ex.c.i
+.PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_spi_ex.i
+
+# target to preprocess a source file
+__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_spi_ex.c.i:
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_spi_ex.c.i
+.PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_spi_ex.c.i
+
+__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_spi_ex.s: __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_spi_ex.c.s
+.PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_spi_ex.s
+
+# target to generate assembly for a file
+__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_spi_ex.c.s:
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_spi_ex.c.s
+.PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_spi_ex.c.s
+
+__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim.o: __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim.c.o
+.PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim.o
+
+# target to build an object file
+__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim.c.o:
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim.c.o
+.PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim.c.o
+
+__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim.i: __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim.c.i
+.PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim.i
+
+# target to preprocess a source file
+__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim.c.i:
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim.c.i
+.PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim.c.i
+
+__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim.s: __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim.c.s
+.PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim.s
+
+# target to generate assembly for a file
+__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim.c.s:
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim.c.s
+.PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim.c.s
+
+__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim_ex.o: __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim_ex.c.o
+.PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim_ex.o
+
+# target to build an object file
+__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim_ex.c.o:
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim_ex.c.o
+.PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim_ex.c.o
+
+__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim_ex.i: __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim_ex.c.i
+.PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim_ex.i
+
+# target to preprocess a source file
+__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim_ex.c.i:
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim_ex.c.i
+.PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim_ex.c.i
+
+__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim_ex.s: __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim_ex.c.s
+.PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim_ex.s
+
+# target to generate assembly for a file
+__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim_ex.c.s:
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim_ex.c.s
+.PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim_ex.c.s
+
+__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart.o: __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart.c.o
+.PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart.o
+
+# target to build an object file
+__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart.c.o:
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart.c.o
+.PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart.c.o
+
+__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart.i: __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart.c.i
+.PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart.i
+
+# target to preprocess a source file
+__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart.c.i:
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart.c.i
+.PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart.c.i
+
+__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart.s: __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart.c.s
+.PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart.s
+
+# target to generate assembly for a file
+__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart.c.s:
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart.c.s
+.PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart.c.s
+
+__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart_ex.o: __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart_ex.c.o
+.PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart_ex.o
+
+# target to build an object file
+__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart_ex.c.o:
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart_ex.c.o
+.PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart_ex.c.o
+
+__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart_ex.i: __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart_ex.c.i
+.PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart_ex.i
+
+# target to preprocess a source file
+__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart_ex.c.i:
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart_ex.c.i
+.PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart_ex.c.i
+
+__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart_ex.s: __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart_ex.c.s
+.PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart_ex.s
+
+# target to generate assembly for a file
+__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart_ex.c.s:
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart_ex.c.s
+.PHONY : __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart_ex.c.s
+
+__/__/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.o: __/__/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c.o
+.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.o
+
+# target to build an object file
+__/__/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c.o:
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/RTOS2.dir/build.make cmake/stm32cubemx/CMakeFiles/RTOS2.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c.o
+.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c.o
+
+__/__/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.i: __/__/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c.i
+.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.i
+
+# target to preprocess a source file
+__/__/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c.i:
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/RTOS2.dir/build.make cmake/stm32cubemx/CMakeFiles/RTOS2.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c.i
+.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c.i
+
+__/__/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.s: __/__/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c.s
+.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.s
+
+# target to generate assembly for a file
+__/__/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c.s:
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/RTOS2.dir/build.make cmake/stm32cubemx/CMakeFiles/RTOS2.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c.s
+.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c.s
+
+__/__/Middlewares/Third_Party/FreeRTOS/Source/croutine.o: __/__/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.o
+.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/croutine.o
+
+# target to build an object file
+__/__/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.o:
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/RTOS2.dir/build.make cmake/stm32cubemx/CMakeFiles/RTOS2.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.o
+.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.o
+
+__/__/Middlewares/Third_Party/FreeRTOS/Source/croutine.i: __/__/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.i
+.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/croutine.i
+
+# target to preprocess a source file
+__/__/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.i:
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/RTOS2.dir/build.make cmake/stm32cubemx/CMakeFiles/RTOS2.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.i
+.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.i
+
+__/__/Middlewares/Third_Party/FreeRTOS/Source/croutine.s: __/__/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.s
+.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/croutine.s
+
+# target to generate assembly for a file
+__/__/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.s:
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/RTOS2.dir/build.make cmake/stm32cubemx/CMakeFiles/RTOS2.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.s
+.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.s
+
+__/__/Middlewares/Third_Party/FreeRTOS/Source/event_groups.o: __/__/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.o
+.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/event_groups.o
+
+# target to build an object file
+__/__/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.o:
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/RTOS2.dir/build.make cmake/stm32cubemx/CMakeFiles/RTOS2.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.o
+.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.o
+
+__/__/Middlewares/Third_Party/FreeRTOS/Source/event_groups.i: __/__/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.i
+.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/event_groups.i
+
+# target to preprocess a source file
+__/__/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.i:
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/RTOS2.dir/build.make cmake/stm32cubemx/CMakeFiles/RTOS2.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.i
+.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.i
+
+__/__/Middlewares/Third_Party/FreeRTOS/Source/event_groups.s: __/__/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.s
+.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/event_groups.s
+
+# target to generate assembly for a file
+__/__/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.s:
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/RTOS2.dir/build.make cmake/stm32cubemx/CMakeFiles/RTOS2.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.s
+.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.s
+
+__/__/Middlewares/Third_Party/FreeRTOS/Source/list.o: __/__/Middlewares/Third_Party/FreeRTOS/Source/list.c.o
+.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/list.o
+
+# target to build an object file
+__/__/Middlewares/Third_Party/FreeRTOS/Source/list.c.o:
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/RTOS2.dir/build.make cmake/stm32cubemx/CMakeFiles/RTOS2.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/list.c.o
+.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/list.c.o
+
+__/__/Middlewares/Third_Party/FreeRTOS/Source/list.i: __/__/Middlewares/Third_Party/FreeRTOS/Source/list.c.i
+.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/list.i
+
+# target to preprocess a source file
+__/__/Middlewares/Third_Party/FreeRTOS/Source/list.c.i:
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/RTOS2.dir/build.make cmake/stm32cubemx/CMakeFiles/RTOS2.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/list.c.i
+.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/list.c.i
+
+__/__/Middlewares/Third_Party/FreeRTOS/Source/list.s: __/__/Middlewares/Third_Party/FreeRTOS/Source/list.c.s
+.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/list.s
+
+# target to generate assembly for a file
+__/__/Middlewares/Third_Party/FreeRTOS/Source/list.c.s:
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/RTOS2.dir/build.make cmake/stm32cubemx/CMakeFiles/RTOS2.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/list.c.s
+.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/list.c.s
+
+__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM33_NTZ/non_secure/port.o: __/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM33_NTZ/non_secure/port.c.o
+.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM33_NTZ/non_secure/port.o
+
+# target to build an object file
+__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM33_NTZ/non_secure/port.c.o:
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/RTOS2.dir/build.make cmake/stm32cubemx/CMakeFiles/RTOS2.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM33_NTZ/non_secure/port.c.o
+.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM33_NTZ/non_secure/port.c.o
+
+__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM33_NTZ/non_secure/port.i: __/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM33_NTZ/non_secure/port.c.i
+.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM33_NTZ/non_secure/port.i
+
+# target to preprocess a source file
+__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM33_NTZ/non_secure/port.c.i:
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/RTOS2.dir/build.make cmake/stm32cubemx/CMakeFiles/RTOS2.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM33_NTZ/non_secure/port.c.i
+.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM33_NTZ/non_secure/port.c.i
+
+__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM33_NTZ/non_secure/port.s: __/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM33_NTZ/non_secure/port.c.s
+.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM33_NTZ/non_secure/port.s
+
+# target to generate assembly for a file
+__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM33_NTZ/non_secure/port.c.s:
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/RTOS2.dir/build.make cmake/stm32cubemx/CMakeFiles/RTOS2.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM33_NTZ/non_secure/port.c.s
+.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM33_NTZ/non_secure/port.c.s
+
+__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM33_NTZ/non_secure/portasm.o: __/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM33_NTZ/non_secure/portasm.c.o
+.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM33_NTZ/non_secure/portasm.o
+
+# target to build an object file
+__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM33_NTZ/non_secure/portasm.c.o:
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/RTOS2.dir/build.make cmake/stm32cubemx/CMakeFiles/RTOS2.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM33_NTZ/non_secure/portasm.c.o
+.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM33_NTZ/non_secure/portasm.c.o
+
+__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM33_NTZ/non_secure/portasm.i: __/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM33_NTZ/non_secure/portasm.c.i
+.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM33_NTZ/non_secure/portasm.i
+
+# target to preprocess a source file
+__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM33_NTZ/non_secure/portasm.c.i:
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/RTOS2.dir/build.make cmake/stm32cubemx/CMakeFiles/RTOS2.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM33_NTZ/non_secure/portasm.c.i
+.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM33_NTZ/non_secure/portasm.c.i
+
+__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM33_NTZ/non_secure/portasm.s: __/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM33_NTZ/non_secure/portasm.c.s
+.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM33_NTZ/non_secure/portasm.s
+
+# target to generate assembly for a file
+__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM33_NTZ/non_secure/portasm.c.s:
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/RTOS2.dir/build.make cmake/stm32cubemx/CMakeFiles/RTOS2.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM33_NTZ/non_secure/portasm.c.s
+.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM33_NTZ/non_secure/portasm.c.s
+
+__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.o: __/__/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.o
+.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.o
+
+# target to build an object file
+__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.o:
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/RTOS2.dir/build.make cmake/stm32cubemx/CMakeFiles/RTOS2.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.o
+.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.o
+
+__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.i: __/__/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.i
+.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.i
+
+# target to preprocess a source file
+__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.i:
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/RTOS2.dir/build.make cmake/stm32cubemx/CMakeFiles/RTOS2.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.i
+.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.i
+
+__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.s: __/__/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.s
+.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.s
+
+# target to generate assembly for a file
+__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.s:
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/RTOS2.dir/build.make cmake/stm32cubemx/CMakeFiles/RTOS2.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.s
+.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.s
+
+__/__/Middlewares/Third_Party/FreeRTOS/Source/queue.o: __/__/Middlewares/Third_Party/FreeRTOS/Source/queue.c.o
+.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/queue.o
+
+# target to build an object file
+__/__/Middlewares/Third_Party/FreeRTOS/Source/queue.c.o:
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/RTOS2.dir/build.make cmake/stm32cubemx/CMakeFiles/RTOS2.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/queue.c.o
+.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/queue.c.o
+
+__/__/Middlewares/Third_Party/FreeRTOS/Source/queue.i: __/__/Middlewares/Third_Party/FreeRTOS/Source/queue.c.i
+.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/queue.i
+
+# target to preprocess a source file
+__/__/Middlewares/Third_Party/FreeRTOS/Source/queue.c.i:
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/RTOS2.dir/build.make cmake/stm32cubemx/CMakeFiles/RTOS2.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/queue.c.i
+.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/queue.c.i
+
+__/__/Middlewares/Third_Party/FreeRTOS/Source/queue.s: __/__/Middlewares/Third_Party/FreeRTOS/Source/queue.c.s
+.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/queue.s
+
+# target to generate assembly for a file
+__/__/Middlewares/Third_Party/FreeRTOS/Source/queue.c.s:
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/RTOS2.dir/build.make cmake/stm32cubemx/CMakeFiles/RTOS2.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/queue.c.s
+.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/queue.c.s
+
+__/__/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.o: __/__/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c.o
+.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.o
+
+# target to build an object file
+__/__/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c.o:
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/RTOS2.dir/build.make cmake/stm32cubemx/CMakeFiles/RTOS2.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c.o
+.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c.o
+
+__/__/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.i: __/__/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c.i
+.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.i
+
+# target to preprocess a source file
+__/__/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c.i:
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/RTOS2.dir/build.make cmake/stm32cubemx/CMakeFiles/RTOS2.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c.i
+.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c.i
+
+__/__/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.s: __/__/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c.s
+.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.s
+
+# target to generate assembly for a file
+__/__/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c.s:
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/RTOS2.dir/build.make cmake/stm32cubemx/CMakeFiles/RTOS2.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c.s
+.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c.s
+
+__/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.o: __/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.o
+.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.o
+
+# target to build an object file
+__/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.o:
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/RTOS2.dir/build.make cmake/stm32cubemx/CMakeFiles/RTOS2.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.o
+.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.o
+
+__/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.i: __/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.i
+.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.i
+
+# target to preprocess a source file
+__/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.i:
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/RTOS2.dir/build.make cmake/stm32cubemx/CMakeFiles/RTOS2.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.i
+.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.i
+
+__/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.s: __/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.s
+.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.s
+
+# target to generate assembly for a file
+__/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.s:
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/RTOS2.dir/build.make cmake/stm32cubemx/CMakeFiles/RTOS2.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.s
+.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.s
+
+__/__/Middlewares/Third_Party/FreeRTOS/Source/timers.o: __/__/Middlewares/Third_Party/FreeRTOS/Source/timers.c.o
+.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/timers.o
+
+# target to build an object file
+__/__/Middlewares/Third_Party/FreeRTOS/Source/timers.c.o:
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/RTOS2.dir/build.make cmake/stm32cubemx/CMakeFiles/RTOS2.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/timers.c.o
+.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/timers.c.o
+
+__/__/Middlewares/Third_Party/FreeRTOS/Source/timers.i: __/__/Middlewares/Third_Party/FreeRTOS/Source/timers.c.i
+.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/timers.i
+
+# target to preprocess a source file
+__/__/Middlewares/Third_Party/FreeRTOS/Source/timers.c.i:
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/RTOS2.dir/build.make cmake/stm32cubemx/CMakeFiles/RTOS2.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/timers.c.i
+.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/timers.c.i
+
+__/__/Middlewares/Third_Party/FreeRTOS/Source/timers.s: __/__/Middlewares/Third_Party/FreeRTOS/Source/timers.c.s
+.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/timers.s
+
+# target to generate assembly for a file
+__/__/Middlewares/Third_Party/FreeRTOS/Source/timers.c.s:
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/RTOS2.dir/build.make cmake/stm32cubemx/CMakeFiles/RTOS2.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/timers.c.s
+.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/timers.c.s
 
 __/__/Src/system_stm32h5xx.o: __/__/Src/system_stm32h5xx.c.o
 .PHONY : __/__/Src/system_stm32h5xx.o
 
 # target to build an object file
 __/__/Src/system_stm32h5xx.c.o:
-	cd /home/mike/Dev/stprojects/h523ceu6 && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Src/system_stm32h5xx.c.o
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Src/system_stm32h5xx.c.o
 .PHONY : __/__/Src/system_stm32h5xx.c.o
 
 __/__/Src/system_stm32h5xx.i: __/__/Src/system_stm32h5xx.c.i
@@ -431,7 +925,7 @@ __/__/Src/system_stm32h5xx.i: __/__/Src/system_stm32h5xx.c.i
 
 # target to preprocess a source file
 __/__/Src/system_stm32h5xx.c.i:
-	cd /home/mike/Dev/stprojects/h523ceu6 && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Src/system_stm32h5xx.c.i
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Src/system_stm32h5xx.c.i
 .PHONY : __/__/Src/system_stm32h5xx.c.i
 
 __/__/Src/system_stm32h5xx.s: __/__/Src/system_stm32h5xx.c.s
@@ -439,7 +933,7 @@ __/__/Src/system_stm32h5xx.s: __/__/Src/system_stm32h5xx.c.s
 
 # target to generate assembly for a file
 __/__/Src/system_stm32h5xx.c.s:
-	cd /home/mike/Dev/stprojects/h523ceu6 && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Src/system_stm32h5xx.c.s
+	cd /home/michaelp/radar-sensor-board && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Src/system_stm32h5xx.c.s
 .PHONY : __/__/Src/system_stm32h5xx.c.s
 
 # Help Target
@@ -450,6 +944,7 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
+	@echo "... RTOS2"
 	@echo "... STM32_Drivers"
 	@echo "... __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal.o"
 	@echo "... __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal.i"
@@ -475,6 +970,9 @@ help:
 	@echo "... __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_gpio.o"
 	@echo "... __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_gpio.i"
 	@echo "... __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_gpio.s"
+	@echo "... __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_icache.o"
+	@echo "... __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_icache.i"
+	@echo "... __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_icache.s"
 	@echo "... __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr.o"
 	@echo "... __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr.i"
 	@echo "... __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr.s"
@@ -487,6 +985,63 @@ help:
 	@echo "... __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc_ex.o"
 	@echo "... __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc_ex.i"
 	@echo "... __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc_ex.s"
+	@echo "... __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rtc.o"
+	@echo "... __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rtc.i"
+	@echo "... __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rtc.s"
+	@echo "... __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rtc_ex.o"
+	@echo "... __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rtc_ex.i"
+	@echo "... __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rtc_ex.s"
+	@echo "... __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_spi.o"
+	@echo "... __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_spi.i"
+	@echo "... __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_spi.s"
+	@echo "... __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_spi_ex.o"
+	@echo "... __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_spi_ex.i"
+	@echo "... __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_spi_ex.s"
+	@echo "... __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim.o"
+	@echo "... __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim.i"
+	@echo "... __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim.s"
+	@echo "... __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim_ex.o"
+	@echo "... __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim_ex.i"
+	@echo "... __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim_ex.s"
+	@echo "... __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart.o"
+	@echo "... __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart.i"
+	@echo "... __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart.s"
+	@echo "... __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart_ex.o"
+	@echo "... __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart_ex.i"
+	@echo "... __/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart_ex.s"
+	@echo "... __/__/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.o"
+	@echo "... __/__/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.i"
+	@echo "... __/__/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.s"
+	@echo "... __/__/Middlewares/Third_Party/FreeRTOS/Source/croutine.o"
+	@echo "... __/__/Middlewares/Third_Party/FreeRTOS/Source/croutine.i"
+	@echo "... __/__/Middlewares/Third_Party/FreeRTOS/Source/croutine.s"
+	@echo "... __/__/Middlewares/Third_Party/FreeRTOS/Source/event_groups.o"
+	@echo "... __/__/Middlewares/Third_Party/FreeRTOS/Source/event_groups.i"
+	@echo "... __/__/Middlewares/Third_Party/FreeRTOS/Source/event_groups.s"
+	@echo "... __/__/Middlewares/Third_Party/FreeRTOS/Source/list.o"
+	@echo "... __/__/Middlewares/Third_Party/FreeRTOS/Source/list.i"
+	@echo "... __/__/Middlewares/Third_Party/FreeRTOS/Source/list.s"
+	@echo "... __/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM33_NTZ/non_secure/port.o"
+	@echo "... __/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM33_NTZ/non_secure/port.i"
+	@echo "... __/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM33_NTZ/non_secure/port.s"
+	@echo "... __/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM33_NTZ/non_secure/portasm.o"
+	@echo "... __/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM33_NTZ/non_secure/portasm.i"
+	@echo "... __/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM33_NTZ/non_secure/portasm.s"
+	@echo "... __/__/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.o"
+	@echo "... __/__/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.i"
+	@echo "... __/__/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.s"
+	@echo "... __/__/Middlewares/Third_Party/FreeRTOS/Source/queue.o"
+	@echo "... __/__/Middlewares/Third_Party/FreeRTOS/Source/queue.i"
+	@echo "... __/__/Middlewares/Third_Party/FreeRTOS/Source/queue.s"
+	@echo "... __/__/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.o"
+	@echo "... __/__/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.i"
+	@echo "... __/__/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.s"
+	@echo "... __/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.o"
+	@echo "... __/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.i"
+	@echo "... __/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.s"
+	@echo "... __/__/Middlewares/Third_Party/FreeRTOS/Source/timers.o"
+	@echo "... __/__/Middlewares/Third_Party/FreeRTOS/Source/timers.i"
+	@echo "... __/__/Middlewares/Third_Party/FreeRTOS/Source/timers.s"
 	@echo "... __/__/Src/system_stm32h5xx.o"
 	@echo "... __/__/Src/system_stm32h5xx.i"
 	@echo "... __/__/Src/system_stm32h5xx.s"
@@ -501,6 +1056,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /home/mike/Dev/stprojects/h523ceu6 && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /home/michaelp/radar-sensor-board && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/mike/Dev/stprojects/h523ceu6
+CMAKE_SOURCE_DIR = /home/michaelp/radar-sensor-board
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/mike/Dev/stprojects/h523ceu6
+CMAKE_BINARY_DIR = /home/michaelp/radar-sensor-board
 
 # Include any dependencies generated for this target.
 include cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/depend.make
@@ -72,186 +72,314 @@ include cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/flags.make
 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Src/system_stm32h5xx.c.o: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/flags.make
 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Src/system_stm32h5xx.c.o: Src/system_stm32h5xx.c
 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Src/system_stm32h5xx.c.o: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/mike/Dev/stprojects/h523ceu6/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Src/system_stm32h5xx.c.o"
-	cd /home/mike/Dev/stprojects/h523ceu6/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Src/system_stm32h5xx.c.o -MF CMakeFiles/STM32_Drivers.dir/__/__/Src/system_stm32h5xx.c.o.d -o CMakeFiles/STM32_Drivers.dir/__/__/Src/system_stm32h5xx.c.o -c /home/mike/Dev/stprojects/h523ceu6/Src/system_stm32h5xx.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/michaelp/radar-sensor-board/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Src/system_stm32h5xx.c.o"
+	cd /home/michaelp/radar-sensor-board/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Src/system_stm32h5xx.c.o -MF CMakeFiles/STM32_Drivers.dir/__/__/Src/system_stm32h5xx.c.o.d -o CMakeFiles/STM32_Drivers.dir/__/__/Src/system_stm32h5xx.c.o -c /home/michaelp/radar-sensor-board/Src/system_stm32h5xx.c
 
 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Src/system_stm32h5xx.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/STM32_Drivers.dir/__/__/Src/system_stm32h5xx.c.i"
-	cd /home/mike/Dev/stprojects/h523ceu6/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/mike/Dev/stprojects/h523ceu6/Src/system_stm32h5xx.c > CMakeFiles/STM32_Drivers.dir/__/__/Src/system_stm32h5xx.c.i
+	cd /home/michaelp/radar-sensor-board/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/michaelp/radar-sensor-board/Src/system_stm32h5xx.c > CMakeFiles/STM32_Drivers.dir/__/__/Src/system_stm32h5xx.c.i
 
 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Src/system_stm32h5xx.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/STM32_Drivers.dir/__/__/Src/system_stm32h5xx.c.s"
-	cd /home/mike/Dev/stprojects/h523ceu6/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/mike/Dev/stprojects/h523ceu6/Src/system_stm32h5xx.c -o CMakeFiles/STM32_Drivers.dir/__/__/Src/system_stm32h5xx.c.s
+	cd /home/michaelp/radar-sensor-board/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/michaelp/radar-sensor-board/Src/system_stm32h5xx.c -o CMakeFiles/STM32_Drivers.dir/__/__/Src/system_stm32h5xx.c.s
+
+cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim.c.o: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/flags.make
+cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim.c.o: Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim.c
+cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim.c.o: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/michaelp/radar-sensor-board/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim.c.o"
+	cd /home/michaelp/radar-sensor-board/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim.c.o -MF CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim.c.o.d -o CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim.c.o -c /home/michaelp/radar-sensor-board/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim.c
+
+cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim.c.i"
+	cd /home/michaelp/radar-sensor-board/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/michaelp/radar-sensor-board/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim.c > CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim.c.i
+
+cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim.c.s"
+	cd /home/michaelp/radar-sensor-board/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/michaelp/radar-sensor-board/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim.c -o CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim.c.s
+
+cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim_ex.c.o: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/flags.make
+cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim_ex.c.o: Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim_ex.c
+cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim_ex.c.o: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/michaelp/radar-sensor-board/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim_ex.c.o"
+	cd /home/michaelp/radar-sensor-board/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim_ex.c.o -MF CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim_ex.c.o.d -o CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim_ex.c.o -c /home/michaelp/radar-sensor-board/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim_ex.c
+
+cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim_ex.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim_ex.c.i"
+	cd /home/michaelp/radar-sensor-board/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/michaelp/radar-sensor-board/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim_ex.c > CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim_ex.c.i
+
+cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim_ex.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim_ex.c.s"
+	cd /home/michaelp/radar-sensor-board/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/michaelp/radar-sensor-board/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim_ex.c -o CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim_ex.c.s
 
 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_cortex.c.o: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/flags.make
 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_cortex.c.o: Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_cortex.c
 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_cortex.c.o: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/mike/Dev/stprojects/h523ceu6/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_cortex.c.o"
-	cd /home/mike/Dev/stprojects/h523ceu6/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_cortex.c.o -MF CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_cortex.c.o.d -o CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_cortex.c.o -c /home/mike/Dev/stprojects/h523ceu6/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_cortex.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/michaelp/radar-sensor-board/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_cortex.c.o"
+	cd /home/michaelp/radar-sensor-board/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_cortex.c.o -MF CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_cortex.c.o.d -o CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_cortex.c.o -c /home/michaelp/radar-sensor-board/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_cortex.c
 
 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_cortex.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_cortex.c.i"
-	cd /home/mike/Dev/stprojects/h523ceu6/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/mike/Dev/stprojects/h523ceu6/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_cortex.c > CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_cortex.c.i
+	cd /home/michaelp/radar-sensor-board/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/michaelp/radar-sensor-board/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_cortex.c > CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_cortex.c.i
 
 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_cortex.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_cortex.c.s"
-	cd /home/mike/Dev/stprojects/h523ceu6/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/mike/Dev/stprojects/h523ceu6/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_cortex.c -o CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_cortex.c.s
+	cd /home/michaelp/radar-sensor-board/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/michaelp/radar-sensor-board/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_cortex.c -o CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_cortex.c.s
 
 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc.c.o: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/flags.make
 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc.c.o: Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc.c
 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc.c.o: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/mike/Dev/stprojects/h523ceu6/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc.c.o"
-	cd /home/mike/Dev/stprojects/h523ceu6/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc.c.o -MF CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc.c.o.d -o CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc.c.o -c /home/mike/Dev/stprojects/h523ceu6/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/michaelp/radar-sensor-board/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc.c.o"
+	cd /home/michaelp/radar-sensor-board/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc.c.o -MF CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc.c.o.d -o CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc.c.o -c /home/michaelp/radar-sensor-board/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc.c
 
 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc.c.i"
-	cd /home/mike/Dev/stprojects/h523ceu6/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/mike/Dev/stprojects/h523ceu6/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc.c > CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc.c.i
+	cd /home/michaelp/radar-sensor-board/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/michaelp/radar-sensor-board/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc.c > CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc.c.i
 
 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc.c.s"
-	cd /home/mike/Dev/stprojects/h523ceu6/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/mike/Dev/stprojects/h523ceu6/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc.c -o CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc.c.s
+	cd /home/michaelp/radar-sensor-board/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/michaelp/radar-sensor-board/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc.c -o CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc.c.s
 
 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc_ex.c.o: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/flags.make
 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc_ex.c.o: Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc_ex.c
 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc_ex.c.o: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/mike/Dev/stprojects/h523ceu6/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc_ex.c.o"
-	cd /home/mike/Dev/stprojects/h523ceu6/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc_ex.c.o -MF CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc_ex.c.o.d -o CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc_ex.c.o -c /home/mike/Dev/stprojects/h523ceu6/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc_ex.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/michaelp/radar-sensor-board/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building C object cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc_ex.c.o"
+	cd /home/michaelp/radar-sensor-board/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc_ex.c.o -MF CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc_ex.c.o.d -o CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc_ex.c.o -c /home/michaelp/radar-sensor-board/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc_ex.c
 
 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc_ex.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc_ex.c.i"
-	cd /home/mike/Dev/stprojects/h523ceu6/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/mike/Dev/stprojects/h523ceu6/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc_ex.c > CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc_ex.c.i
+	cd /home/michaelp/radar-sensor-board/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/michaelp/radar-sensor-board/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc_ex.c > CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc_ex.c.i
 
 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc_ex.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc_ex.c.s"
-	cd /home/mike/Dev/stprojects/h523ceu6/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/mike/Dev/stprojects/h523ceu6/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc_ex.c -o CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc_ex.c.s
+	cd /home/michaelp/radar-sensor-board/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/michaelp/radar-sensor-board/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc_ex.c -o CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc_ex.c.s
 
 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash.c.o: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/flags.make
 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash.c.o: Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash.c
 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash.c.o: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/mike/Dev/stprojects/h523ceu6/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash.c.o"
-	cd /home/mike/Dev/stprojects/h523ceu6/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash.c.o -MF CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash.c.o.d -o CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash.c.o -c /home/mike/Dev/stprojects/h523ceu6/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/michaelp/radar-sensor-board/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building C object cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash.c.o"
+	cd /home/michaelp/radar-sensor-board/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash.c.o -MF CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash.c.o.d -o CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash.c.o -c /home/michaelp/radar-sensor-board/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash.c
 
 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash.c.i"
-	cd /home/mike/Dev/stprojects/h523ceu6/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/mike/Dev/stprojects/h523ceu6/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash.c > CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash.c.i
+	cd /home/michaelp/radar-sensor-board/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/michaelp/radar-sensor-board/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash.c > CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash.c.i
 
 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash.c.s"
-	cd /home/mike/Dev/stprojects/h523ceu6/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/mike/Dev/stprojects/h523ceu6/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash.c -o CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash.c.s
+	cd /home/michaelp/radar-sensor-board/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/michaelp/radar-sensor-board/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash.c -o CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash.c.s
 
 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash_ex.c.o: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/flags.make
 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash_ex.c.o: Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash_ex.c
 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash_ex.c.o: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/mike/Dev/stprojects/h523ceu6/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building C object cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash_ex.c.o"
-	cd /home/mike/Dev/stprojects/h523ceu6/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash_ex.c.o -MF CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash_ex.c.o.d -o CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash_ex.c.o -c /home/mike/Dev/stprojects/h523ceu6/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash_ex.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/michaelp/radar-sensor-board/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building C object cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash_ex.c.o"
+	cd /home/michaelp/radar-sensor-board/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash_ex.c.o -MF CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash_ex.c.o.d -o CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash_ex.c.o -c /home/michaelp/radar-sensor-board/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash_ex.c
 
 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash_ex.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash_ex.c.i"
-	cd /home/mike/Dev/stprojects/h523ceu6/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/mike/Dev/stprojects/h523ceu6/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash_ex.c > CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash_ex.c.i
+	cd /home/michaelp/radar-sensor-board/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/michaelp/radar-sensor-board/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash_ex.c > CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash_ex.c.i
 
 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash_ex.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash_ex.c.s"
-	cd /home/mike/Dev/stprojects/h523ceu6/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/mike/Dev/stprojects/h523ceu6/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash_ex.c -o CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash_ex.c.s
+	cd /home/michaelp/radar-sensor-board/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/michaelp/radar-sensor-board/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash_ex.c -o CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_flash_ex.c.s
 
 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_gpio.c.o: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/flags.make
 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_gpio.c.o: Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_gpio.c
 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_gpio.c.o: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/mike/Dev/stprojects/h523ceu6/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building C object cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_gpio.c.o"
-	cd /home/mike/Dev/stprojects/h523ceu6/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_gpio.c.o -MF CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_gpio.c.o.d -o CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_gpio.c.o -c /home/mike/Dev/stprojects/h523ceu6/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_gpio.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/michaelp/radar-sensor-board/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building C object cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_gpio.c.o"
+	cd /home/michaelp/radar-sensor-board/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_gpio.c.o -MF CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_gpio.c.o.d -o CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_gpio.c.o -c /home/michaelp/radar-sensor-board/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_gpio.c
 
 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_gpio.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_gpio.c.i"
-	cd /home/mike/Dev/stprojects/h523ceu6/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/mike/Dev/stprojects/h523ceu6/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_gpio.c > CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_gpio.c.i
+	cd /home/michaelp/radar-sensor-board/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/michaelp/radar-sensor-board/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_gpio.c > CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_gpio.c.i
 
 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_gpio.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_gpio.c.s"
-	cd /home/mike/Dev/stprojects/h523ceu6/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/mike/Dev/stprojects/h523ceu6/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_gpio.c -o CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_gpio.c.s
+	cd /home/michaelp/radar-sensor-board/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/michaelp/radar-sensor-board/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_gpio.c -o CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_gpio.c.s
 
 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma.c.o: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/flags.make
 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma.c.o: Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma.c
 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma.c.o: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/mike/Dev/stprojects/h523ceu6/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building C object cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma.c.o"
-	cd /home/mike/Dev/stprojects/h523ceu6/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma.c.o -MF CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma.c.o.d -o CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma.c.o -c /home/mike/Dev/stprojects/h523ceu6/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/michaelp/radar-sensor-board/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building C object cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma.c.o"
+	cd /home/michaelp/radar-sensor-board/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma.c.o -MF CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma.c.o.d -o CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma.c.o -c /home/michaelp/radar-sensor-board/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma.c
 
 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma.c.i"
-	cd /home/mike/Dev/stprojects/h523ceu6/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/mike/Dev/stprojects/h523ceu6/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma.c > CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma.c.i
+	cd /home/michaelp/radar-sensor-board/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/michaelp/radar-sensor-board/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma.c > CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma.c.i
 
 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma.c.s"
-	cd /home/mike/Dev/stprojects/h523ceu6/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/mike/Dev/stprojects/h523ceu6/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma.c -o CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma.c.s
+	cd /home/michaelp/radar-sensor-board/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/michaelp/radar-sensor-board/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma.c -o CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma.c.s
 
 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma_ex.c.o: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/flags.make
 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma_ex.c.o: Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma_ex.c
 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma_ex.c.o: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/mike/Dev/stprojects/h523ceu6/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building C object cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma_ex.c.o"
-	cd /home/mike/Dev/stprojects/h523ceu6/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma_ex.c.o -MF CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma_ex.c.o.d -o CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma_ex.c.o -c /home/mike/Dev/stprojects/h523ceu6/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma_ex.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/michaelp/radar-sensor-board/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building C object cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma_ex.c.o"
+	cd /home/michaelp/radar-sensor-board/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma_ex.c.o -MF CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma_ex.c.o.d -o CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma_ex.c.o -c /home/michaelp/radar-sensor-board/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma_ex.c
 
 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma_ex.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma_ex.c.i"
-	cd /home/mike/Dev/stprojects/h523ceu6/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/mike/Dev/stprojects/h523ceu6/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma_ex.c > CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma_ex.c.i
+	cd /home/michaelp/radar-sensor-board/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/michaelp/radar-sensor-board/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma_ex.c > CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma_ex.c.i
 
 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma_ex.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma_ex.c.s"
-	cd /home/mike/Dev/stprojects/h523ceu6/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/mike/Dev/stprojects/h523ceu6/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma_ex.c -o CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma_ex.c.s
+	cd /home/michaelp/radar-sensor-board/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/michaelp/radar-sensor-board/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma_ex.c -o CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_dma_ex.c.s
 
 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr.c.o: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/flags.make
 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr.c.o: Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr.c
 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr.c.o: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/mike/Dev/stprojects/h523ceu6/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building C object cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr.c.o"
-	cd /home/mike/Dev/stprojects/h523ceu6/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr.c.o -MF CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr.c.o.d -o CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr.c.o -c /home/mike/Dev/stprojects/h523ceu6/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/michaelp/radar-sensor-board/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building C object cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr.c.o"
+	cd /home/michaelp/radar-sensor-board/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr.c.o -MF CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr.c.o.d -o CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr.c.o -c /home/michaelp/radar-sensor-board/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr.c
 
 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr.c.i"
-	cd /home/mike/Dev/stprojects/h523ceu6/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/mike/Dev/stprojects/h523ceu6/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr.c > CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr.c.i
+	cd /home/michaelp/radar-sensor-board/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/michaelp/radar-sensor-board/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr.c > CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr.c.i
 
 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr.c.s"
-	cd /home/mike/Dev/stprojects/h523ceu6/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/mike/Dev/stprojects/h523ceu6/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr.c -o CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr.c.s
+	cd /home/michaelp/radar-sensor-board/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/michaelp/radar-sensor-board/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr.c -o CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr.c.s
 
 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr_ex.c.o: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/flags.make
 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr_ex.c.o: Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr_ex.c
 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr_ex.c.o: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/mike/Dev/stprojects/h523ceu6/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building C object cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr_ex.c.o"
-	cd /home/mike/Dev/stprojects/h523ceu6/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr_ex.c.o -MF CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr_ex.c.o.d -o CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr_ex.c.o -c /home/mike/Dev/stprojects/h523ceu6/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr_ex.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/michaelp/radar-sensor-board/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building C object cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr_ex.c.o"
+	cd /home/michaelp/radar-sensor-board/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr_ex.c.o -MF CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr_ex.c.o.d -o CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr_ex.c.o -c /home/michaelp/radar-sensor-board/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr_ex.c
 
 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr_ex.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr_ex.c.i"
-	cd /home/mike/Dev/stprojects/h523ceu6/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/mike/Dev/stprojects/h523ceu6/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr_ex.c > CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr_ex.c.i
+	cd /home/michaelp/radar-sensor-board/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/michaelp/radar-sensor-board/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr_ex.c > CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr_ex.c.i
 
 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr_ex.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr_ex.c.s"
-	cd /home/mike/Dev/stprojects/h523ceu6/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/mike/Dev/stprojects/h523ceu6/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr_ex.c -o CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr_ex.c.s
+	cd /home/michaelp/radar-sensor-board/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/michaelp/radar-sensor-board/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr_ex.c -o CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr_ex.c.s
 
 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal.c.o: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/flags.make
 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal.c.o: Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal.c
 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal.c.o: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/mike/Dev/stprojects/h523ceu6/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building C object cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal.c.o"
-	cd /home/mike/Dev/stprojects/h523ceu6/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal.c.o -MF CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal.c.o.d -o CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal.c.o -c /home/mike/Dev/stprojects/h523ceu6/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/michaelp/radar-sensor-board/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building C object cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal.c.o"
+	cd /home/michaelp/radar-sensor-board/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal.c.o -MF CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal.c.o.d -o CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal.c.o -c /home/michaelp/radar-sensor-board/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal.c
 
 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal.c.i"
-	cd /home/mike/Dev/stprojects/h523ceu6/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/mike/Dev/stprojects/h523ceu6/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal.c > CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal.c.i
+	cd /home/michaelp/radar-sensor-board/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/michaelp/radar-sensor-board/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal.c > CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal.c.i
 
 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal.c.s"
-	cd /home/mike/Dev/stprojects/h523ceu6/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/mike/Dev/stprojects/h523ceu6/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal.c -o CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal.c.s
+	cd /home/michaelp/radar-sensor-board/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/michaelp/radar-sensor-board/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal.c -o CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal.c.s
 
 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_exti.c.o: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/flags.make
 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_exti.c.o: Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_exti.c
 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_exti.c.o: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/mike/Dev/stprojects/h523ceu6/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building C object cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_exti.c.o"
-	cd /home/mike/Dev/stprojects/h523ceu6/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_exti.c.o -MF CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_exti.c.o.d -o CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_exti.c.o -c /home/mike/Dev/stprojects/h523ceu6/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_exti.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/michaelp/radar-sensor-board/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building C object cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_exti.c.o"
+	cd /home/michaelp/radar-sensor-board/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_exti.c.o -MF CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_exti.c.o.d -o CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_exti.c.o -c /home/michaelp/radar-sensor-board/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_exti.c
 
 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_exti.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_exti.c.i"
-	cd /home/mike/Dev/stprojects/h523ceu6/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/mike/Dev/stprojects/h523ceu6/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_exti.c > CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_exti.c.i
+	cd /home/michaelp/radar-sensor-board/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/michaelp/radar-sensor-board/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_exti.c > CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_exti.c.i
 
 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_exti.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_exti.c.s"
-	cd /home/mike/Dev/stprojects/h523ceu6/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/mike/Dev/stprojects/h523ceu6/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_exti.c -o CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_exti.c.s
+	cd /home/michaelp/radar-sensor-board/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/michaelp/radar-sensor-board/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_exti.c -o CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_exti.c.s
+
+cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_icache.c.o: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/flags.make
+cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_icache.c.o: Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_icache.c
+cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_icache.c.o: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/michaelp/radar-sensor-board/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building C object cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_icache.c.o"
+	cd /home/michaelp/radar-sensor-board/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_icache.c.o -MF CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_icache.c.o.d -o CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_icache.c.o -c /home/michaelp/radar-sensor-board/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_icache.c
+
+cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_icache.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_icache.c.i"
+	cd /home/michaelp/radar-sensor-board/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/michaelp/radar-sensor-board/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_icache.c > CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_icache.c.i
+
+cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_icache.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_icache.c.s"
+	cd /home/michaelp/radar-sensor-board/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/michaelp/radar-sensor-board/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_icache.c -o CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_icache.c.s
+
+cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rtc.c.o: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/flags.make
+cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rtc.c.o: Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rtc.c
+cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rtc.c.o: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/michaelp/radar-sensor-board/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building C object cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rtc.c.o"
+	cd /home/michaelp/radar-sensor-board/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rtc.c.o -MF CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rtc.c.o.d -o CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rtc.c.o -c /home/michaelp/radar-sensor-board/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rtc.c
+
+cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rtc.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rtc.c.i"
+	cd /home/michaelp/radar-sensor-board/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/michaelp/radar-sensor-board/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rtc.c > CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rtc.c.i
+
+cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rtc.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rtc.c.s"
+	cd /home/michaelp/radar-sensor-board/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/michaelp/radar-sensor-board/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rtc.c -o CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rtc.c.s
+
+cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rtc_ex.c.o: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/flags.make
+cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rtc_ex.c.o: Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rtc_ex.c
+cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rtc_ex.c.o: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/michaelp/radar-sensor-board/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building C object cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rtc_ex.c.o"
+	cd /home/michaelp/radar-sensor-board/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rtc_ex.c.o -MF CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rtc_ex.c.o.d -o CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rtc_ex.c.o -c /home/michaelp/radar-sensor-board/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rtc_ex.c
+
+cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rtc_ex.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rtc_ex.c.i"
+	cd /home/michaelp/radar-sensor-board/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/michaelp/radar-sensor-board/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rtc_ex.c > CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rtc_ex.c.i
+
+cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rtc_ex.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rtc_ex.c.s"
+	cd /home/michaelp/radar-sensor-board/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/michaelp/radar-sensor-board/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rtc_ex.c -o CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rtc_ex.c.s
+
+cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_spi.c.o: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/flags.make
+cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_spi.c.o: Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_spi.c
+cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_spi.c.o: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/michaelp/radar-sensor-board/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building C object cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_spi.c.o"
+	cd /home/michaelp/radar-sensor-board/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_spi.c.o -MF CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_spi.c.o.d -o CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_spi.c.o -c /home/michaelp/radar-sensor-board/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_spi.c
+
+cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_spi.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_spi.c.i"
+	cd /home/michaelp/radar-sensor-board/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/michaelp/radar-sensor-board/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_spi.c > CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_spi.c.i
+
+cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_spi.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_spi.c.s"
+	cd /home/michaelp/radar-sensor-board/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/michaelp/radar-sensor-board/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_spi.c -o CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_spi.c.s
+
+cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_spi_ex.c.o: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/flags.make
+cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_spi_ex.c.o: Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_spi_ex.c
+cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_spi_ex.c.o: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/michaelp/radar-sensor-board/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building C object cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_spi_ex.c.o"
+	cd /home/michaelp/radar-sensor-board/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_spi_ex.c.o -MF CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_spi_ex.c.o.d -o CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_spi_ex.c.o -c /home/michaelp/radar-sensor-board/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_spi_ex.c
+
+cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_spi_ex.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_spi_ex.c.i"
+	cd /home/michaelp/radar-sensor-board/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/michaelp/radar-sensor-board/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_spi_ex.c > CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_spi_ex.c.i
+
+cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_spi_ex.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_spi_ex.c.s"
+	cd /home/michaelp/radar-sensor-board/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/michaelp/radar-sensor-board/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_spi_ex.c -o CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_spi_ex.c.s
+
+cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart.c.o: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/flags.make
+cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart.c.o: Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart.c
+cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart.c.o: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/michaelp/radar-sensor-board/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building C object cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart.c.o"
+	cd /home/michaelp/radar-sensor-board/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart.c.o -MF CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart.c.o.d -o CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart.c.o -c /home/michaelp/radar-sensor-board/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart.c
+
+cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart.c.i"
+	cd /home/michaelp/radar-sensor-board/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/michaelp/radar-sensor-board/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart.c > CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart.c.i
+
+cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart.c.s"
+	cd /home/michaelp/radar-sensor-board/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/michaelp/radar-sensor-board/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart.c -o CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart.c.s
+
+cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart_ex.c.o: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/flags.make
+cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart_ex.c.o: Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart_ex.c
+cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart_ex.c.o: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/michaelp/radar-sensor-board/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Building C object cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart_ex.c.o"
+	cd /home/michaelp/radar-sensor-board/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart_ex.c.o -MF CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart_ex.c.o.d -o CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart_ex.c.o -c /home/michaelp/radar-sensor-board/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart_ex.c
+
+cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart_ex.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart_ex.c.i"
+	cd /home/michaelp/radar-sensor-board/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/michaelp/radar-sensor-board/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart_ex.c > CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart_ex.c.i
+
+cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart_ex.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart_ex.c.s"
+	cd /home/michaelp/radar-sensor-board/cmake/stm32cubemx && /usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/michaelp/radar-sensor-board/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart_ex.c -o CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart_ex.c.s
 
 STM32_Drivers: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Src/system_stm32h5xx.c.o
+STM32_Drivers: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim.c.o
+STM32_Drivers: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_tim_ex.c.o
 STM32_Drivers: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_cortex.c.o
 STM32_Drivers: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc.c.o
 STM32_Drivers: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rcc_ex.c.o
@@ -264,6 +392,13 @@ STM32_Drivers: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM3
 STM32_Drivers: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_pwr_ex.c.o
 STM32_Drivers: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal.c.o
 STM32_Drivers: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_exti.c.o
+STM32_Drivers: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_icache.c.o
+STM32_Drivers: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rtc.c.o
+STM32_Drivers: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_rtc_ex.c.o
+STM32_Drivers: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_spi.c.o
+STM32_Drivers: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_spi_ex.c.o
+STM32_Drivers: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart.c.o
+STM32_Drivers: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32H5xx_HAL_Driver/Src/stm32h5xx_hal_uart_ex.c.o
 STM32_Drivers: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make
 .PHONY : STM32_Drivers
 
@@ -272,10 +407,10 @@ cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build: STM32_Drivers
 .PHONY : cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build
 
 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/clean:
-	cd /home/mike/Dev/stprojects/h523ceu6/cmake/stm32cubemx && $(CMAKE_COMMAND) -P CMakeFiles/STM32_Drivers.dir/cmake_clean.cmake
+	cd /home/michaelp/radar-sensor-board/cmake/stm32cubemx && $(CMAKE_COMMAND) -P CMakeFiles/STM32_Drivers.dir/cmake_clean.cmake
 .PHONY : cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/clean
 
 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/depend:
-	cd /home/mike/Dev/stprojects/h523ceu6 && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/mike/Dev/stprojects/h523ceu6 /home/mike/Dev/stprojects/h523ceu6/cmake/stm32cubemx /home/mike/Dev/stprojects/h523ceu6 /home/mike/Dev/stprojects/h523ceu6/cmake/stm32cubemx /home/mike/Dev/stprojects/h523ceu6/cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/DependInfo.cmake "--color=$(COLOR)"
+	cd /home/michaelp/radar-sensor-board && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/michaelp/radar-sensor-board /home/michaelp/radar-sensor-board/cmake/stm32cubemx /home/michaelp/radar-sensor-board /home/michaelp/radar-sensor-board/cmake/stm32cubemx /home/michaelp/radar-sensor-board/cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/DependInfo.cmake "--color=$(COLOR)"
 .PHONY : cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/depend
 

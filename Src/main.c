@@ -596,11 +596,10 @@ void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart){
 }
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart){
-  memcpy(&uartrx,uartrxbuffer,sizeof(uart_data));
-  uarttx.address = 4369;
-  uarttx.msg = (uint16_t) 1000*globdist;
-  uint16_t uartcommand = uartrx.msg;
-  osMessageQueuePut(uartcommandsHandle,&uartcommand,0,0);
+  // uarttx.address = 4369;
+  // uarttx.msg = (uint16_t) 1000*globdist;
+  // uint16_t uartcommand = uartrx.msg;
+  // osMessageQueuePut(uartcommandsHandle,&uartcommand,0,0);
   BaseType_t xHPW = pdFALSE;
   vTaskNotifyGiveFromISR(uart_taskHandle, &xHPW); //done with activebuffer wake up get radar data task
   portYIELD_FROM_ISR(xHPW);

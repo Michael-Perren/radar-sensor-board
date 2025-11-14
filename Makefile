@@ -57,10 +57,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/mike/Dev/stprojects/h523ceu6
+CMAKE_SOURCE_DIR = /home/michaelp/radar-sensor-board
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/mike/Dev/stprojects/h523ceu6
+CMAKE_BINARY_DIR = /home/michaelp/radar-sensor-board
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -87,9 +87,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/mike/Dev/stprojects/h523ceu6/CMakeFiles /home/mike/Dev/stprojects/h523ceu6//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/michaelp/radar-sensor-board/CMakeFiles /home/michaelp/radar-sensor-board//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/mike/Dev/stprojects/h523ceu6/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/michaelp/radar-sensor-board/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -142,6 +142,43 @@ STM32_Drivers/fast:
 	$(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build
 .PHONY : STM32_Drivers/fast
 
+#=============================================================================
+# Target rules for targets named RTOS2
+
+# Build rule for target.
+RTOS2: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 RTOS2
+.PHONY : RTOS2
+
+# fast build rule for target.
+RTOS2/fast:
+	$(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/RTOS2.dir/build.make cmake/stm32cubemx/CMakeFiles/RTOS2.dir/build
+.PHONY : RTOS2/fast
+
+Src/app_freertos.o: Src/app_freertos.c.o
+.PHONY : Src/app_freertos.o
+
+# target to build an object file
+Src/app_freertos.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/h523ceu6.dir/build.make CMakeFiles/h523ceu6.dir/Src/app_freertos.c.o
+.PHONY : Src/app_freertos.c.o
+
+Src/app_freertos.i: Src/app_freertos.c.i
+.PHONY : Src/app_freertos.i
+
+# target to preprocess a source file
+Src/app_freertos.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/h523ceu6.dir/build.make CMakeFiles/h523ceu6.dir/Src/app_freertos.c.i
+.PHONY : Src/app_freertos.c.i
+
+Src/app_freertos.s: Src/app_freertos.c.s
+.PHONY : Src/app_freertos.s
+
+# target to generate assembly for a file
+Src/app_freertos.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/h523ceu6.dir/build.make CMakeFiles/h523ceu6.dir/Src/app_freertos.c.s
+.PHONY : Src/app_freertos.c.s
+
 Src/main.o: Src/main.c.o
 .PHONY : Src/main.o
 
@@ -166,6 +203,30 @@ Src/main.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/h523ceu6.dir/build.make CMakeFiles/h523ceu6.dir/Src/main.c.s
 .PHONY : Src/main.c.s
 
+Src/spiglobalmap.o: Src/spiglobalmap.c.o
+.PHONY : Src/spiglobalmap.o
+
+# target to build an object file
+Src/spiglobalmap.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/h523ceu6.dir/build.make CMakeFiles/h523ceu6.dir/Src/spiglobalmap.c.o
+.PHONY : Src/spiglobalmap.c.o
+
+Src/spiglobalmap.i: Src/spiglobalmap.c.i
+.PHONY : Src/spiglobalmap.i
+
+# target to preprocess a source file
+Src/spiglobalmap.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/h523ceu6.dir/build.make CMakeFiles/h523ceu6.dir/Src/spiglobalmap.c.i
+.PHONY : Src/spiglobalmap.c.i
+
+Src/spiglobalmap.s: Src/spiglobalmap.c.s
+.PHONY : Src/spiglobalmap.s
+
+# target to generate assembly for a file
+Src/spiglobalmap.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/h523ceu6.dir/build.make CMakeFiles/h523ceu6.dir/Src/spiglobalmap.c.s
+.PHONY : Src/spiglobalmap.c.s
+
 Src/stm32h5xx_hal_msp.o: Src/stm32h5xx_hal_msp.c.o
 .PHONY : Src/stm32h5xx_hal_msp.o
 
@@ -189,6 +250,30 @@ Src/stm32h5xx_hal_msp.s: Src/stm32h5xx_hal_msp.c.s
 Src/stm32h5xx_hal_msp.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/h523ceu6.dir/build.make CMakeFiles/h523ceu6.dir/Src/stm32h5xx_hal_msp.c.s
 .PHONY : Src/stm32h5xx_hal_msp.c.s
+
+Src/stm32h5xx_hal_timebase_tim.o: Src/stm32h5xx_hal_timebase_tim.c.o
+.PHONY : Src/stm32h5xx_hal_timebase_tim.o
+
+# target to build an object file
+Src/stm32h5xx_hal_timebase_tim.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/h523ceu6.dir/build.make CMakeFiles/h523ceu6.dir/Src/stm32h5xx_hal_timebase_tim.c.o
+.PHONY : Src/stm32h5xx_hal_timebase_tim.c.o
+
+Src/stm32h5xx_hal_timebase_tim.i: Src/stm32h5xx_hal_timebase_tim.c.i
+.PHONY : Src/stm32h5xx_hal_timebase_tim.i
+
+# target to preprocess a source file
+Src/stm32h5xx_hal_timebase_tim.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/h523ceu6.dir/build.make CMakeFiles/h523ceu6.dir/Src/stm32h5xx_hal_timebase_tim.c.i
+.PHONY : Src/stm32h5xx_hal_timebase_tim.c.i
+
+Src/stm32h5xx_hal_timebase_tim.s: Src/stm32h5xx_hal_timebase_tim.c.s
+.PHONY : Src/stm32h5xx_hal_timebase_tim.s
+
+# target to generate assembly for a file
+Src/stm32h5xx_hal_timebase_tim.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/h523ceu6.dir/build.make CMakeFiles/h523ceu6.dir/Src/stm32h5xx_hal_timebase_tim.c.s
+.PHONY : Src/stm32h5xx_hal_timebase_tim.c.s
 
 Src/stm32h5xx_it.o: Src/stm32h5xx_it.c.o
 .PHONY : Src/stm32h5xx_it.o
@@ -262,6 +347,54 @@ Src/sysmem.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/h523ceu6.dir/build.make CMakeFiles/h523ceu6.dir/Src/sysmem.c.s
 .PHONY : Src/sysmem.c.s
 
+Src/xensiv_bgt60trxx.o: Src/xensiv_bgt60trxx.c.o
+.PHONY : Src/xensiv_bgt60trxx.o
+
+# target to build an object file
+Src/xensiv_bgt60trxx.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/h523ceu6.dir/build.make CMakeFiles/h523ceu6.dir/Src/xensiv_bgt60trxx.c.o
+.PHONY : Src/xensiv_bgt60trxx.c.o
+
+Src/xensiv_bgt60trxx.i: Src/xensiv_bgt60trxx.c.i
+.PHONY : Src/xensiv_bgt60trxx.i
+
+# target to preprocess a source file
+Src/xensiv_bgt60trxx.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/h523ceu6.dir/build.make CMakeFiles/h523ceu6.dir/Src/xensiv_bgt60trxx.c.i
+.PHONY : Src/xensiv_bgt60trxx.c.i
+
+Src/xensiv_bgt60trxx.s: Src/xensiv_bgt60trxx.c.s
+.PHONY : Src/xensiv_bgt60trxx.s
+
+# target to generate assembly for a file
+Src/xensiv_bgt60trxx.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/h523ceu6.dir/build.make CMakeFiles/h523ceu6.dir/Src/xensiv_bgt60trxx.c.s
+.PHONY : Src/xensiv_bgt60trxx.c.s
+
+Src/xensiv_bgt60trxx_platform.o: Src/xensiv_bgt60trxx_platform.c.o
+.PHONY : Src/xensiv_bgt60trxx_platform.o
+
+# target to build an object file
+Src/xensiv_bgt60trxx_platform.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/h523ceu6.dir/build.make CMakeFiles/h523ceu6.dir/Src/xensiv_bgt60trxx_platform.c.o
+.PHONY : Src/xensiv_bgt60trxx_platform.c.o
+
+Src/xensiv_bgt60trxx_platform.i: Src/xensiv_bgt60trxx_platform.c.i
+.PHONY : Src/xensiv_bgt60trxx_platform.i
+
+# target to preprocess a source file
+Src/xensiv_bgt60trxx_platform.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/h523ceu6.dir/build.make CMakeFiles/h523ceu6.dir/Src/xensiv_bgt60trxx_platform.c.i
+.PHONY : Src/xensiv_bgt60trxx_platform.c.i
+
+Src/xensiv_bgt60trxx_platform.s: Src/xensiv_bgt60trxx_platform.c.s
+.PHONY : Src/xensiv_bgt60trxx_platform.s
+
+# target to generate assembly for a file
+Src/xensiv_bgt60trxx_platform.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/h523ceu6.dir/build.make CMakeFiles/h523ceu6.dir/Src/xensiv_bgt60trxx_platform.c.s
+.PHONY : Src/xensiv_bgt60trxx_platform.c.s
+
 startup_stm32h523xx.o: startup_stm32h523xx.s.o
 .PHONY : startup_stm32h523xx.o
 
@@ -278,14 +411,24 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
+	@echo "... RTOS2"
 	@echo "... STM32_Drivers"
 	@echo "... h523ceu6"
+	@echo "... Src/app_freertos.o"
+	@echo "... Src/app_freertos.i"
+	@echo "... Src/app_freertos.s"
 	@echo "... Src/main.o"
 	@echo "... Src/main.i"
 	@echo "... Src/main.s"
+	@echo "... Src/spiglobalmap.o"
+	@echo "... Src/spiglobalmap.i"
+	@echo "... Src/spiglobalmap.s"
 	@echo "... Src/stm32h5xx_hal_msp.o"
 	@echo "... Src/stm32h5xx_hal_msp.i"
 	@echo "... Src/stm32h5xx_hal_msp.s"
+	@echo "... Src/stm32h5xx_hal_timebase_tim.o"
+	@echo "... Src/stm32h5xx_hal_timebase_tim.i"
+	@echo "... Src/stm32h5xx_hal_timebase_tim.s"
 	@echo "... Src/stm32h5xx_it.o"
 	@echo "... Src/stm32h5xx_it.i"
 	@echo "... Src/stm32h5xx_it.s"
@@ -295,6 +438,12 @@ help:
 	@echo "... Src/sysmem.o"
 	@echo "... Src/sysmem.i"
 	@echo "... Src/sysmem.s"
+	@echo "... Src/xensiv_bgt60trxx.o"
+	@echo "... Src/xensiv_bgt60trxx.i"
+	@echo "... Src/xensiv_bgt60trxx.s"
+	@echo "... Src/xensiv_bgt60trxx_platform.o"
+	@echo "... Src/xensiv_bgt60trxx_platform.i"
+	@echo "... Src/xensiv_bgt60trxx_platform.s"
 	@echo "... startup_stm32h523xx.o"
 .PHONY : help
 

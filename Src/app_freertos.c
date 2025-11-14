@@ -322,12 +322,15 @@ void application(void *argument)
   uint16_t uartcommand;
   osStatus_t status;
   bool reserved = false;
+  bool calibrate = false;
+  int calicounter = 0;
+  int threshold = 1.5;
   for(;;)
   {
     status = osMessageQueueGet(uartcommandsHandle,&uartcommand,0,0);
     status = osMessageQueueGet(distancequeueHandle,&distance,0,0);
     globdist = distance;
-    if(distance < 1.5 && !reserved ){
+    if(distance < threshold && !reserved ){
       HAL_GPIO_WritePin(led_select1_GPIO_Port,led_select1_Pin,0);
       HAL_GPIO_WritePin(led_select0_GPIO_Port,led_select0_Pin,1);
     }
@@ -343,6 +346,17 @@ void application(void *argument)
     }
     if(uartcommand == CANCEL){
       reserved = false;
+    }
+    if(uartcommand == CALIBRATE){
+      calibrate = true;
+    }
+    if(calibrate && calicounter < 10){
+      threshold += distance;
+      ++calicounter;
+      if(calicounter == 9){
+        threshold = threshold/10;
+        calibrate = false;
+      }
     }
   }
   /* USER CODE END application */
@@ -363,7 +377,17 @@ void uarttask(void *argument)
   {
     ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
     osDelay(10);
-    HAL_UART_Transmit_DMA(&huart2,&uarttx,4);
+    memcpy(&uartrx,uartrxbuffer,sizeof(uart_data));
+    if(uartrx.address == 4369){
+      uarttx.address = 4369;
+      uarttx.msg = (uint16_t) 1000*globdist;
+      HAL_UART_Transmit_DMA(&huart2,&uarttx,4);
+      uint16_t uartcommand = uartrx.msg;
+      osMessageQueuePut(uartcommandsHandle,&uartcommand,0,0);
+    }
+    else{
+      HAL_UART_Receive_DMA(&huart2,uartrxbuffer,sizeof(uart_data));
+    }
   }
   /* USER CODE END uart_task */
 }
