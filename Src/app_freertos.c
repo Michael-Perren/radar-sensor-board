@@ -324,7 +324,7 @@ void application(void *argument)
   bool reserved = false;
   bool calibrate = false;
   int calicounter = 0;
-  int threshold = 1.5;
+  float threshold = 1.5;
   for(;;)
   {
     status = osMessageQueueGet(uartcommandsHandle,&uartcommand,0,0);
