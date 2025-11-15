@@ -111,8 +111,8 @@ add your user to the plugdev group
 `sudo usermod -a -G plugdev $USER`
 
 ### Initializing bare gdb server using open ocd
-- `gdb`
 - `openocd -f interface/stlink-dap.cfg -f target/stm32h5x.cfg`
+- `gdb-multiarch build/Debug/h523ceu6.elf`
 - `target extended-remote :3333`
 
 ### WSL USB passthrough:
