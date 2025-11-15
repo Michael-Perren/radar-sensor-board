@@ -114,6 +114,10 @@ add your user to the plugdev group
 - `openocd -f interface/stlink-dap.cfg -f target/stm32h5x.cfg`
 - `gdb-multiarch build/Debug/h523ceu6.elf`
 - `target extended-remote :3333`
+- `set logging file <filename>`
+- `set logging on`
+- `set print elements 0`
+- `set print repeats 0`
 
 ### WSL USB passthrough:
 - wsl shell session open in background
