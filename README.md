@@ -3,10 +3,12 @@
 
 ![Alt text](Screenshot%20from%202026-01-30%2010-49-24.png)
 ![Less than 5% error for distances less than 5m](Screenshot%20from%202026-01-30%2010-49-47.png)
+![Alt text](sensorconnections-Page-2.drawio.png)
 ![Alt text](Capture.PNG)
 ![Alt text](sheet1.PNG)
 ![Alt text](sheet2.PNG)
 ![Alt text](IMG_5601.png)
+
 
 ### Communication protocols
 - SPI: spi is used to communicate with the bgt60utr11aip chip.
