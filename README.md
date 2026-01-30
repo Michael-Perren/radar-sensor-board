@@ -1,7 +1,7 @@
 # BGT60UTR11AIP with STM32H523CEU6
 >This project uses infineons bgt60utr11aip chip to detect the distance of a stationary object. Interfacing this sensor with the stm32h523ceu6 involved implementing the platform functions specific to the stm32 chip in xensiv_bgt60trxx_platform.c.
 
-
+![Alt text](Screenshot from 2026-01-30 10-49-24.png)
 
 ### Communication protocols
 - SPI: spi is used to communicate with the bgt60utr11aip chip.
